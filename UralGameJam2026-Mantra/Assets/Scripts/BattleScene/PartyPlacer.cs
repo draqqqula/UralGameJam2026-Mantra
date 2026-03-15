@@ -7,10 +7,10 @@ public class PartyPlacer : MonoBehaviour
 
     [SerializeField] private PlaceDirection _direction;
 
-    [SerializeField] private float _gap = .5f;
+    [Range(1f, 10f)]
+    [SerializeField] private float _gap = 1.25f;
 
-    //no member's margin yet
-    [SerializeField] private List<Transform> _partyMembers = new();
+    [SerializeField] private List<PartyMemberGap> _partyMembers = new();
     [SerializeField] private Transform _startPoint;
 
     private void Awake()
@@ -28,7 +28,18 @@ public class PartyPlacer : MonoBehaviour
         {
             var member = _partyMembers[i];
 
-            newPoint.x = _gap * i;
+            if (i == 0)
+            {
+                newPoint.x = _gap * i;
+                newPoint *= direction;
+
+                member.transform.position = newPoint;
+                continue;
+            }
+
+            var previousMember = _partyMembers[i - 1];
+
+            newPoint.x = _gap * i * member.MemberGap;
             newPoint *= direction;
 
             member.transform.position = newPoint;

@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 306146433}
   - component: {fileID: 306146432}
   - component: {fileID: 306146431}
+  - component: {fileID: 306146434}
   m_Layer: 0
   m_Name: member (2)
   m_TagString: Untagged
@@ -253,6 +254,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 996389945}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &306146434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306146430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9421e0f62c35c474084616c18b546e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MemberGap: 0.75
 --- !u!1 &442763604
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,9 +300,9 @@ MonoBehaviour:
   _direction: 0
   _gap: 1.25
   _partyMembers:
-  - {fileID: 1391546545}
-  - {fileID: 1759894098}
-  - {fileID: 306146433}
+  - {fileID: 1391546548}
+  - {fileID: 1759894101}
+  - {fileID: 306146434}
   _startPoint: {fileID: 1100287428}
 --- !u!4 &442763606
 Transform:
@@ -604,6 +618,7 @@ GameObject:
   - component: {fileID: 1391546545}
   - component: {fileID: 1391546546}
   - component: {fileID: 1391546547}
+  - component: {fileID: 1391546548}
   m_Layer: 0
   m_Name: member
   m_TagString: Untagged
@@ -727,6 +742,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1391546548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391546544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9421e0f62c35c474084616c18b546e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MemberGap: 0.25
 --- !u!1 &1759894097
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,6 +766,7 @@ GameObject:
   - component: {fileID: 1759894098}
   - component: {fileID: 1759894099}
   - component: {fileID: 1759894100}
+  - component: {fileID: 1759894101}
   m_Layer: 0
   m_Name: member (1)
   m_TagString: Untagged
@@ -861,6 +890,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1759894101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759894097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9421e0f62c35c474084616c18b546e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MemberGap: 0.25
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
