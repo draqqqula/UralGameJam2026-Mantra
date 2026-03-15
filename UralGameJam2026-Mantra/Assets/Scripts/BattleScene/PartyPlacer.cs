@@ -7,8 +7,8 @@ public class PartyPlacer : MonoBehaviour
 
     [SerializeField] private PlaceDirection _direction;
 
-    [Range(1f, 10f)]
-    [SerializeField] private float _gap = 1.25f;
+    [Range(0f, 2f)]
+    [SerializeField] private float _gap = 1f;
 
     [SerializeField] private List<PartyMemberGap> _partyMembers = new();
     [SerializeField] private Transform _startPoint;
@@ -18,11 +18,19 @@ public class PartyPlacer : MonoBehaviour
         if(_placeInAwake) PlaceMembers();
     }
 
+    private void FixedUpdate()
+    {
+#if UNITY_EDITOR
+        PlaceMembers();
+#endif
+    }
+
     public void PlaceMembers()
     {
         var newPoint = _startPoint.transform.position;
-
         var direction = _direction == PlaceDirection.Right ? Vector2.right : Vector2.left;
+
+        var prevPoint = Vector2.zero;
 
         for (int i = 0; i < _partyMembers.Count; i++)
         {
@@ -30,19 +38,19 @@ public class PartyPlacer : MonoBehaviour
 
             if (i == 0)
             {
-                newPoint.x = _gap * i;
-                newPoint *= direction;
+                newPoint.x = 0;
 
                 member.transform.position = newPoint;
+                prevPoint = newPoint;
                 continue;
             }
 
             var previousMember = _partyMembers[i - 1];
 
-            newPoint.x = _gap * i * member.MemberGap;
-            newPoint *= direction;
+            newPoint.x = _gap + previousMember.MemberGap + member.MemberGap + prevPoint.x;
+            prevPoint = newPoint;
 
-            member.transform.position = newPoint;
+            member.transform.position = newPoint * direction;
         }
     }
 }
