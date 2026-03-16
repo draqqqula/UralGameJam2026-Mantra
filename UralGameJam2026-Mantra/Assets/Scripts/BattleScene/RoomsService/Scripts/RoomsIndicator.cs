@@ -15,6 +15,9 @@ public class RoomsIndicator : MonoBehaviour
     [SerializeField] private RectTransform _content;
     [SerializeField] private RectTransform _viewport;
     
+    private RoomsController _roomsController;
+    [SerializeField] private Image _nodePrefab;
+    
     [SerializeField] private int _countInViewport;
     private float _spaceOffset;
     
@@ -23,11 +26,13 @@ public class RoomsIndicator : MonoBehaviour
 
     private void Awake()
     {
-        var images = _horizontalLayoutGroup.GetComponentsInChildren<Image>();
+        _roomsController = ServiceLocator.Instance.GetService<RoomsController>();
+        _roomsController.OnRoomUpdated += UpdateRoom;
         
-        for (int i = 0; i < images.Length; i++)
+        for (int i = 0; i < _roomsController.RoomsCount; i++)
         {
-            _roomsNodes.Add(new RoomNode() {Image = images[i], Index = i});
+            var image = Instantiate(_nodePrefab, _content);
+            _roomsNodes.Add(new RoomNode() {Image = image, Index = i});
         }
         
         SetCurrentNode(_roomsNodes[0]);
@@ -66,10 +71,17 @@ public class RoomsIndicator : MonoBehaviour
         var currentNode = GetCurrentNode();
         if (currentNode.Index + 1 >= _roomsNodes.Count) return;
         
+        UpdateRoom(currentNode.Index + 1);
+    }
+
+    private void UpdateRoom(int roomIndex)
+    {
+        var currentNode = GetCurrentNode();
+        
         currentNode.IsCurrent = false;
         currentNode.Image.sprite = _prevRoomImage;
         
-        var newNode = _roomsNodes[currentNode.Index + 1];
+        var newNode = _roomsNodes[roomIndex];
         SetCurrentNode(newNode);
         SlideIndicator(newNode);
     }
@@ -103,6 +115,11 @@ public class RoomsIndicator : MonoBehaviour
     {
         currentNode.IsCurrent = true;
         currentNode.Image.sprite = _currentRoomImage;
+    }
+
+    private void OnDestroy()
+    {
+        _roomsController.OnRoomUpdated -= UpdateRoom;
     }
 }
 
