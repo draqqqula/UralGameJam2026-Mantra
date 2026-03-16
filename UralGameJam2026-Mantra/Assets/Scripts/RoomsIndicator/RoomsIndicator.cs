@@ -10,7 +10,6 @@ public class RoomsIndicator : MonoBehaviour
     [SerializeField] private HorizontalLayoutGroup _horizontalLayoutGroup;
     
     [SerializeField] private Sprite _currentRoomImage;
-    [SerializeField] private Sprite _nextRoomImage;
     [SerializeField] private Sprite _prevRoomImage;
     
     [SerializeField] private RectTransform _content;
