@@ -21,9 +21,19 @@ public static class CustomSceneManager
     }
 
 
-    public static void LoadOutroScene()
+    public static void LoadVictoryOutroScene()
     {
         LoadScene(3, IntroOutroLoadingAction);
+    }
+
+    public static void LoadDefeatOutroScene()
+    {
+        LoadScene(4, IntroOutroLoadingAction);
+    }
+
+    public static void LoadGameOverScene()
+    {
+        LoadScene(5, GameOverLoadingAction);
     }
 
     public static void LoadScene(int sceneIndex, Action<float> loadingAction)
@@ -58,6 +68,12 @@ public static class CustomSceneManager
     }
     
     private static void IntroOutroLoadingAction(float progress)
+    {
+        
+    }
+    
+    
+    private static void GameOverLoadingAction(float progress)
     {
         
     }

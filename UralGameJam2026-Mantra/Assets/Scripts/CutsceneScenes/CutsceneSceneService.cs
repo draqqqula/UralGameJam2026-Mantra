@@ -7,19 +7,21 @@ public class CutsceneSceneService : MonoBehaviour
     [SerializeField] private float _duration;
     [SerializeField] private bool _isIntro;
     
-    private WindowsService _windowsService;
-    
     private Action _loadAction;
     private Coroutine _coroutine;
     
     private void Awake()
     {
-        if (_isIntro) _coroutine = StartCoroutine(WaitingCutscene(CustomSceneManager.LoadBattleScene));
+        if (_isIntro) ActivateCutscene(CustomSceneManager.LoadBattleScene);
         else
         {
-            _windowsService = ServiceLocator.Instance.GetService<WindowsService>();
-            _coroutine = StartCoroutine(WaitingCutscene(() => _windowsService.ActivateWindow(WindowsService.WindowType.Win)));
+            ActivateCutscene(CustomSceneManager.LoadGameOverScene);
         }
+    }
+
+    private void ActivateCutscene(Action loadAction)
+    {
+        _coroutine = StartCoroutine(WaitingCutscene(loadAction));
     }
 
     private IEnumerator WaitingCutscene(Action loadAction)

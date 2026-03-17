@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class MatchManager : MonoBehaviour, IService
 {
     private RoomsController _roomsController;
-    private WindowsService _windowsService;
+    private MatchResultHandler _matchResultHandler;
     
     public event Action OnVictory;
     public event Action OnDefeat;
@@ -13,21 +13,23 @@ public class MatchManager : MonoBehaviour, IService
     public void Init()
     {
         _roomsController = ServiceLocator.Instance.GetService<RoomsController>();
-        _windowsService = ServiceLocator.Instance.GetService<WindowsService>();
+        _matchResultHandler = ServiceLocator.Instance.GetService<MatchResultHandler>();
     }
     
     public void DeclareVictory()
     {
         if (!_roomsController.TryUpdateCurrentRoom())
         {
-            CustomSceneManager.LoadOutroScene();
+            _matchResultHandler.MatchResult = MatchResultHandler.Result.Victory;
+            CustomSceneManager.LoadVictoryOutroScene();
         }
         OnVictory?.Invoke();
     }
 
     public void DeclareDefeat()
     {
-        _windowsService.ActivateWindow(WindowsService.WindowType.Lose);
+        _matchResultHandler.MatchResult = MatchResultHandler.Result.Defeat;
+        CustomSceneManager.LoadDefeatOutroScene();
         OnDefeat?.Invoke();
     }
 }

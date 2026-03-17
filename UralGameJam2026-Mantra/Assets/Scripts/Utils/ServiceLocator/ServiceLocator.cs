@@ -9,6 +9,7 @@ public class ServiceLocator : MonoBehaviour
     public static ServiceLocator Instance;
 
     [SerializeField] private WindowsService _windowsService;
+    [SerializeField] private MatchResultHandler _matchResultHandler;
     
     private Dictionary<Type, IService> _services = new Dictionary<Type, IService>();
 
@@ -28,6 +29,7 @@ public class ServiceLocator : MonoBehaviour
     private void RegisterDefaultServices()
     {
         RegisterService(_windowsService);
+        RegisterService(_matchResultHandler);
     }
 
     public void RegisterService(IService service)
