@@ -6,5 +6,5 @@ public abstract class UnitAction : MonoBehaviour
 
     public abstract void Invoke(Unit person, Unit target);
     public abstract void Undo();
-
+    public abstract bool CanUse();
 }

@@ -10,20 +10,20 @@ public class UnitDamage
     public ModifableValue CritChance { get; set; }
     public ModifableValue CritMultiplyer { get; set; }
 
-    [SerializeField] private float _minDefaultDamage;
-    [SerializeField] private float _maxDefaultDamage;
+    public float MinDefaultDamage;
+    public float MaxDefaultDamage;
     [Space(10)]
 
-    [SerializeField] private float _defaultCritChance;
-    [SerializeField] private float _defaultCritMultiplyer;
+    public float DefaultCritChance;
+    public float DefaultCritMultiplyer;
 
     public void Setup()
     {
-        MinDamage = new(_minDefaultDamage);
-        MaxDamage = new(_maxDefaultDamage);
+        MinDamage = new(MinDefaultDamage);
+        MaxDamage = new(MaxDefaultDamage);
 
-        CritChance = new(_defaultCritChance);
-        CritMultiplyer = new(_defaultCritMultiplyer);
+        CritChance = new(DefaultCritChance);
+        CritMultiplyer = new(DefaultCritMultiplyer);
     }
 
     public float DealBaseDamage()

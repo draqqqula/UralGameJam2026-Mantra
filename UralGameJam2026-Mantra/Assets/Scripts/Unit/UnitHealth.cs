@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [System.Serializable]
-public class UnitHealth
+public class UnitHealth : IDisposable
 {
     public Action OnDeath;
     public Action<float> OnTakeDamage;
@@ -11,13 +11,14 @@ public class UnitHealth
     public float MaxDefense { get; set; }
     public float CurrentHealth { get; set; }
     public float CurrentDefense { get; set; }
-    [SerializeField] private float _maxDefaultHealth;
-    [SerializeField] private float _maxDefaultDefense;
+
+    public float MaxDefaultHealth;
+    public float MaxDefaultDefense;
 
     public void Setup()
     {
-        MaxHealth = CurrentHealth = _maxDefaultDefense;
-        MaxDefense = CurrentDefense = _maxDefaultHealth;
+        MaxHealth = CurrentHealth = MaxDefaultDefense;
+        MaxDefense = CurrentDefense = MaxDefaultHealth;
 
         OnTakeDamage += TakeDamage;
         OnHeal += Heal;
@@ -25,7 +26,6 @@ public class UnitHealth
 
     public void ApplyDamage(float damage)
     {
-        //защита режет урон процентно
         var defensePercent = Mathf.Clamp01(CurrentDefense / damage);
         var calcDamage = damage * defensePercent;
 

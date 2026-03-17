@@ -4,6 +4,11 @@ public class SupportAction : UnitAction
 {
     [SerializeField] private Skill _skill;
 
+    public override bool CanUse()
+    {
+        return true;
+    }
+
     public override void Invoke(Unit person, Unit target)
     {
         _person = person;

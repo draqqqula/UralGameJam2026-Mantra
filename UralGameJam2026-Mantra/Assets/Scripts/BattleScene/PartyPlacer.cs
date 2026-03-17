@@ -1,15 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PartyPlacer : MonoBehaviour
 {
     [SerializeField] private bool _placeInAwake = true;
+    [SerializeField] private bool _placeInUpdate = true;
 
     [SerializeField] private PlaceDirection _direction;
     [Range(0f, 2f)]
     [SerializeField] private float _gap = 1f;
 
-    [SerializeField] private List<PartyMemberGap> _partyMembers = new();
+    [SerializeField] private Party _partyMembers;
     [SerializeField] private Transform _startPoint;
 
     private void Awake()
@@ -20,7 +20,7 @@ public class PartyPlacer : MonoBehaviour
     private void FixedUpdate()
     {
 #if UNITY_EDITOR
-        PlaceMembers();
+        if(_placeInUpdate) PlaceMembers();
 #endif
     }
 
@@ -30,9 +30,9 @@ public class PartyPlacer : MonoBehaviour
         var direction = _direction == PlaceDirection.Right ? 1f : -1f;
         var prevPoint = newPoint;
 
-        for (int i = 0; i < _partyMembers.Count; i++)
+        for (int i = 0; i < _partyMembers.Members.Count; i++)
         {
-            var member = _partyMembers[i];
+            var member = _partyMembers.Members[i].GetComponent<PartyMemberGap>();
 
             if (i == 0)
             {
@@ -41,7 +41,7 @@ public class PartyPlacer : MonoBehaviour
                 continue;
             }
 
-            var previousMember = _partyMembers[i - 1];
+            var previousMember = _partyMembers.Members[i - 1].GetComponent<PartyMemberGap>();
 
             var step = _gap + previousMember.MemberGap + member.MemberGap;
             var newPos = prevPoint + new Vector2(step * direction, 0);

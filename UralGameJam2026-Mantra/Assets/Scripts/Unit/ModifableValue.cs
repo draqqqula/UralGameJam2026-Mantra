@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ModifableValue
 {
-    private List<ModifierEffect> _modifiers = new();
+    public List<ModifierEffect> Modifiers { get; private set; } = new();
 
     public float ModValue { get; private set; }
     private float _value;
@@ -16,11 +16,11 @@ public class ModifableValue
     public void ApplyModifier(Modifier modifier)
     {
         var effect = new ModifierEffect(modifier.ModifierTurns, modifier.Multiplyer);
-        _modifiers.Add(effect);
+        Modifiers.Add(effect);
 
         ModValue = _value;
 
-        foreach(var mod in _modifiers)
+        foreach(var mod in Modifiers)
         {
             ModValue *= mod.Multiplyer;
         }
@@ -28,11 +28,11 @@ public class ModifableValue
 
     public void CheckModifiers()
     {
-        for(int i = 0; i < _modifiers.Count; i++)
+        for(int i = 0; i < Modifiers.Count; i++)
         {
-            _modifiers[i].Turn--;
+            Modifiers[i].Turn--;
 
-            if (_modifiers[i].Turn <= 0) _modifiers.RemoveAt(i);
+            if (Modifiers[i].Turn <= 0) Modifiers.RemoveAt(i);
         }
     }
 }

@@ -4,6 +4,11 @@ public class AttackAction : UnitAction
 {
     private float _damageValue;
 
+    public override bool CanUse()
+    {
+        return true;
+    }
+
     public override void Invoke(Unit person, Unit target)
     {
         //пока что просто бьет
