@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Hoverable : MonoBehaviour
+public class HighlightEffect : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] private Color _color;
 
-    public void SetHover(bool value)
+    public void SetActive(bool value)
     {
         if (value)
         {
-            _sprite.color = Color.yellow;
+            _sprite.color = _color;
         }
         else
         {

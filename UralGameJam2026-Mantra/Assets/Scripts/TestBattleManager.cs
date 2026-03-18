@@ -13,6 +13,8 @@ public class TestBattleManager : MonoBehaviour
 
     private Unit _currentUnit;
 
+    public Unit Current => _currentUnit;
+
     private void Awake()
     {
         if(Instance == null)
@@ -92,6 +94,43 @@ public class TestBattleManager : MonoBehaviour
     public bool UnitIsCurrent(Unit unit)
     {
         return _currentUnit == unit;
+    }
+
+    public UnitRelationship GetRelationship(Unit unitA, Unit unitB)
+    {
+        // ineffective
+        if (unitA == unitB)
+        {
+            return UnitRelationship.Self;
+        }
+        else if (IsPlayerPartyMember(unitA) && IsPlayerPartyMember(unitB))
+        {
+            return UnitRelationship.Friend;
+        }
+        else if (IsEnemyPartyMember(unitA) && IsEnemyPartyMember(unitB))
+        {
+            return UnitRelationship.Friend;
+        }
+        else
+        {
+            return UnitRelationship.Enemy;
+        }
+    }
+
+    public UnitRelationship GetRelationShipToCurrent(Unit unit)
+    {
+        return GetRelationship(unit, _currentUnit);
+    }
+
+    public void UseActionOn(Unit source, Unit target)
+    {
+        var relationship = GetRelationship(source, target);
+        switch (relationship)
+        {
+            case UnitRelationship.Self: source.UpdateUltimateCooldown(); break;
+            case UnitRelationship.Friend: source.Use<SupportAction>(target); break;
+            case UnitRelationship.Enemy: source.Use<AttackAction>(target); break;
+        }
     }
 
     public bool IsPlayerPartyMember(Unit target)
