@@ -60,7 +60,7 @@ public class CutsceneSceneService : MonoBehaviour
     private void ActivateCutscenePart(CutscenePartInfo part)
     {
         _textField.text = part.Text;
-        if (part.ImageGO != null)
+        if (part.ImageGO != null && part.ImageGO != _curImageGO)
         {
             _curImageGO?.SetActive(false);
             _curImageGO = part.ImageGO;
