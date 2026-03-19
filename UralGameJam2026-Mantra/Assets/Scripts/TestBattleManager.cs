@@ -16,12 +16,15 @@ public class TestBattleManager : MonoBehaviour
 
     private ReactiveProperty<Unit> _currentUnit = new ReactiveProperty<Unit>();
     public ReadOnlyReactiveProperty<Unit> Current => _currentUnit;
+    
+    private MatchManager _matchManager;
 
     private void Awake()
     {
         if(Instance == null)
         {
             Instance = this;
+            _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
         }
     }
 
@@ -214,7 +217,8 @@ public class TestBattleManager : MonoBehaviour
         {
             print("enemy won");
             _currentUnit.Value = null;
-
+            _matchManager.DeclareDefeat();
+            
             return;
         }
 
