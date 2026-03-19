@@ -893,6 +893,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _windowsService: {fileID: 737060987863470701}
   _matchResultHandler: {fileID: 4545023302453622472}
+  _settings: {fileID: 3342914491186476905}
 --- !u!1 &4748698649035607857
 GameObject:
   m_ObjectHideFlags: 0

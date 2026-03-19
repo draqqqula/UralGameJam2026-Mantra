@@ -17,6 +17,12 @@ public class MenuBootstrap : MonoBehaviour
         _windowService = ServiceLocator.Instance.GetService<WindowsService>();
     }
 
+    private void Start()
+    {
+        var settings = ServiceLocator.Instance.GetService<Settings>();
+        settings.Init();
+    }
+
     private void OnNewGameButton()
     {
         CustomSceneManager.LoadIntroScene();
