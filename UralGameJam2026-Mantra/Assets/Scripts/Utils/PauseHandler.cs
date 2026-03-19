@@ -5,6 +5,8 @@ public class PauseHandler : MonoBehaviour, IService
 {
     [SerializeField] private InputActionReference _pauseAction;
     private WindowsService _windowsService;
+    
+    private bool _pauseActivated = false;
 
     public void Init()
     {
@@ -12,17 +14,37 @@ public class PauseHandler : MonoBehaviour, IService
         _pauseAction.action.performed += OnActionPerformed;
     }
 
+    public void ActivatePause()
+    {
+        if (_pauseActivated) return;
+        Debug.Log("Pause activated");
+        
+        _windowsService.ActivateWindow(WindowsService.WindowType.Pause);
+        Time.timeScale = 0;
+        _pauseActivated = true;
+    }
+    
+
+    public void StopPause()
+    {
+        if (!_pauseActivated) return;
+        Debug.Log("Pause stopped");
+        
+        _windowsService.DeactivateWindow(WindowsService.WindowType.Pause);
+        _windowsService.DeactivateWindow(WindowsService.WindowType.Settings);
+        Time.timeScale = 1;
+        _pauseActivated = false;
+    }
+
     private void OnActionPerformed(InputAction.CallbackContext context)
     {
-        if (!_windowsService.IsActiveWindow(WindowsService.WindowType.Pause))
+        if (!_pauseActivated)
         {
-            _windowsService.ActivateWindow(WindowsService.WindowType.Pause);
-            Time.timeScale = 0;
+            ActivatePause();
         }
         else
         {
-            _windowsService.DeactivateWindow(WindowsService.WindowType.Pause);
-            Time.timeScale = 1;
+            StopPause();
         }
     }
 
