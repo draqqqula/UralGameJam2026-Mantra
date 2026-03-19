@@ -8,7 +8,7 @@ public class Settings : MonoBehaviour, IService
     [SerializeField] private Slider _soundsSlider;
     [SerializeField] private AudioMixer _audioMixer;
 
-    private void Start()
+    private void OnEnable()
     {
         Init();
     }

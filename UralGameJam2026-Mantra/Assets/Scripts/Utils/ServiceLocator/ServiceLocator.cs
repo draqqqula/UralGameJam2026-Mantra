@@ -19,7 +19,7 @@ public class ServiceLocator : MonoBehaviour
         if (Instance == null) Instance = this;
         else
         {
-            Destroy(this);
+            Destroy(gameObject);
             return;
         }
         
