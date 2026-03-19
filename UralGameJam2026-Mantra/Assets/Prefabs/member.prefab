@@ -180,6 +180,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6411153150140909402}
+  - {fileID: 1075929346049605092}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8677326802797275154
@@ -323,6 +324,8 @@ MonoBehaviour:
   - {fileID: 4973877450969783446}
   _isUniqueUnit: 0
   _attackCooldown: 0
+  _healthbarPoint: {fileID: 1075929346049605092}
+  _healthbarPrefab: {fileID: 2338016816414332837, guid: 69b39b346f05d4099871c76a76a65284, type: 3}
 --- !u!114 &4076943766628172333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,5 +506,36 @@ Transform:
   - {fileID: 1991347510805272699}
   - {fileID: 7101775409016231212}
   - {fileID: 5887083781548273460}
+  m_Father: {fileID: 683471047548211384}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8757280367703717349
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1075929346049605092}
+  m_Layer: 0
+  m_Name: HealthbarPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1075929346049605092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8757280367703717349}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 683471047548211384}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

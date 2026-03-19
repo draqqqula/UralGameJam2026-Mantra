@@ -1398,7 +1398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1770432679}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1535,6 +1535,7 @@ MonoBehaviour:
   _roomsController: {fileID: 2110506806}
   _matchManager: {fileID: 2110506805}
   _pauseHandler: {fileID: 849940187}
+  _unitCanvas: {fileID: 0}
 --- !u!4 &2110506808
 Transform:
   m_ObjectHideFlags: 0
@@ -1615,9 +1616,9 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1770432682}
   - {fileID: 98149999}
   - {fileID: 247366240}
-  - {fileID: 1770432682}
   - {fileID: 1945169052}
   - {fileID: 318979503}
   - {fileID: 1619349057267999664}

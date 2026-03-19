@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,10 +16,22 @@ public class Unit : MonoBehaviour
     [SerializeField] private bool _isUniqueUnit = false;
     [SerializeField] private int _attackCooldown;
 
-
+    [SerializeField] private Transform _healthbarPoint;
+    [SerializeField] private HealthbarView _healthbarPrefab;
+    
+    
     private void Awake()
     {
         Init();
+    }
+
+    private void Start()
+    {
+        var canvas = ServiceLocator.Instance.GetService<UnitCanvas>();
+        
+        var healthbar =  Instantiate(_healthbarPrefab, canvas.transform);
+        healthbar.transform.position = _healthbarPoint.position;
+        healthbar.Init(this);
     }
 
     public void Init()
