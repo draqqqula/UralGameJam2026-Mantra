@@ -1,3 +1,4 @@
+using R3;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,9 +14,8 @@ public class TestBattleManager : MonoBehaviour
     private Stack<(Unit, UnitAction)> _turns = new();
     private HashSet<Unit> _allUnits = new();
 
-    private Unit _currentUnit;
-
-    public Unit Current => _currentUnit;
+    private ReactiveProperty<Unit> _currentUnit = new ReactiveProperty<Unit>();
+    public ReadOnlyReactiveProperty<Unit> Current => _currentUnit;
 
     private void Awake()
     {
@@ -107,7 +107,7 @@ public class TestBattleManager : MonoBehaviour
 
     public (Unit unit, UnitAction action) CancelTurn()
     {
-        var current = _currentUnit;
+        var current = _currentUnit.Value;
 
         (Unit unit, UnitAction action) = GetPreviousTurn();
 
@@ -118,7 +118,7 @@ public class TestBattleManager : MonoBehaviour
             return (null, null);
         }
 
-        _currentUnit = unit;
+        _currentUnit.Value = unit;
         if (action != null)
         {
             action.Undo();
@@ -129,7 +129,7 @@ public class TestBattleManager : MonoBehaviour
         _unitOrder.Clear();
 
         _unitOrder.Enqueue(current);
-        _unitOrder.Enqueue(_currentUnit);
+        _unitOrder.Enqueue(_currentUnit.Value);
 
         foreach(var unitOrder in order)
         {
@@ -141,7 +141,7 @@ public class TestBattleManager : MonoBehaviour
 
     public bool UnitIsCurrent(Unit unit)
     {
-        return _currentUnit == unit;
+        return _currentUnit.Value == unit;
     }
 
     public UnitRelationship GetRelationship(Unit unitA, Unit unitB)
@@ -167,7 +167,7 @@ public class TestBattleManager : MonoBehaviour
 
     public UnitRelationship GetRelationShipToCurrent(Unit unit)
     {
-        return GetRelationship(unit, _currentUnit);
+        return GetRelationship(unit, _currentUnit.Value);
     }
 
     public void UseActionOn(Unit source, Unit target)
@@ -213,7 +213,7 @@ public class TestBattleManager : MonoBehaviour
         if (!playerUnits)
         {
             print("enemy won");
-            _currentUnit = null;
+            _currentUnit.Value = null;
 
             return;
         }
@@ -221,12 +221,17 @@ public class TestBattleManager : MonoBehaviour
         if (!enemyUnits)
         {
             print("player won");
-            _currentUnit = null;
+            _currentUnit.Value = null;
 
             return;
         }
 
-        if (!units.TryDequeue(out _currentUnit))
+        if (units.TryDequeue(out var unit))
+        {
+            _currentUnit.Value = unit;
+            return;
+        }
+        else
         {
             Setup();
             return;
@@ -235,14 +240,14 @@ public class TestBattleManager : MonoBehaviour
 
     private void DetermineTurn()
     {
-        if (IsEnemyPartyMember(_currentUnit))
+        if (IsEnemyPartyMember(_currentUnit.Value))
         {
             ExecutePlayerTurns();
 
-            var action = _currentUnit.UnitActions[Random.Range(0, _currentUnit.UnitActions.Count)];
+            var action = _currentUnit.Value.UnitActions[Random.Range(0, _currentUnit.Value.UnitActions.Count)];
             var target = _playersUnits.Members[Random.Range(0, _playersUnits.Members.Count)];
 
-            action.Plan(_currentUnit, target);
+            action.Plan(_currentUnit.Value, target);
             action.Execute();
 
             UpdateOrder();
