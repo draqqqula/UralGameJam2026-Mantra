@@ -21,13 +21,13 @@ public class UltimateAttackAction : UnitAction
         }
     }
 
-    public override void Invoke(Unit person, Unit target)
+    public override void Execute()
     {
-        _target = target;
-        _person = person;
-
-        _person.Damage.MinDamage.ApplyModifier(_ultimateModifier);
-        _person.Damage.MaxDamage.ApplyModifier(_ultimateModifier);
+        if (_ultimateModifier)
+        {
+            _person.Damage.MinDamage.ApplyModifier(_ultimateModifier);
+            _person.Damage.MaxDamage.ApplyModifier(_ultimateModifier);
+        }
 
         _damageValue = _person.Damage.DealBaseDamage();
 
@@ -36,6 +36,12 @@ public class UltimateAttackAction : UnitAction
         print($"{_person.UnitName} attacks {_target.UnitName} with {_damageValue} damage!");
 
         _currentCooldown = _attackCooldown;
+    }
+
+    public override void Plan(Unit person, Unit target)
+    {
+        _target = target;
+        _person = person;
     }
 
     public override void Undo()

@@ -11,6 +11,7 @@ public class TestBattleManager : MonoBehaviour
 
     private Queue<Unit> _unitOrder = new();
     private Stack<(Unit, UnitAction)> _turns = new();
+    private HashSet<Unit> _allUnits = new();
 
     private Unit _currentUnit;
 
@@ -34,7 +35,7 @@ public class TestBattleManager : MonoBehaviour
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.S))
         {
-            UpdateTurn();
+            UpdateOrder();
         }
 
         if (Input.GetKeyDown(KeyCode.C))
@@ -48,34 +49,42 @@ public class TestBattleManager : MonoBehaviour
     {
         //here game will load enemy and player party from PartyManager and start battle, propably
 
-        var setup = Setup();
-        if (setup) UpdateTurn();
+        Setup();
     }
 
-    private bool Setup()
+    private void Setup()
     {
-        _unitOrder.Clear();
-
         foreach (var unit in _playersUnits.Members)
         {
-            if (!unit.IsAlive) continue;
+            if (!unit.IsAlive)
+            {
+                _allUnits.Remove(unit);
+                continue;
+            }
+            _allUnits.Add(unit);
+
             _unitOrder.Enqueue(unit);
         }
 
         foreach(var unit in _enemiesUnits.Members)
         {
-            if (!unit.IsAlive) continue;
+            if (!unit.IsAlive)
+            {
+                _allUnits.Remove(unit);
+                continue;
+            }
+            _allUnits.Add(unit);
             _unitOrder.Enqueue(unit);
         }
 
-        return _unitOrder.Any();
+        UpdateOrder();
     }
 
-    public void UpdateTurn()
+    public void UpdateOrder()
     {
         UpdateModifiers(_unitOrder);
 
-        CheckBattlefield(_unitOrder);
+        CheckBattlefield(_allUnits, _unitOrder);
 
         DetermineTurn();
     }
@@ -110,7 +119,10 @@ public class TestBattleManager : MonoBehaviour
         }
 
         _currentUnit = unit;
-        if (action != null) action.Undo();
+        if (action != null)
+        {
+            action.Undo();
+        }
 
         var order = new Queue<Unit>(_unitOrder);
 
@@ -191,11 +203,12 @@ public class TestBattleManager : MonoBehaviour
         }
     }
 
-    private void CheckBattlefield(Queue<Unit> units)
+    private void CheckBattlefield(IEnumerable<Unit> unitsExists, Queue<Unit> units)
     {
-        var playerUnits = units.Any(x => IsPlayerPartyMember(x));
+        print($"left:{unitsExists.Count()}");
 
-        var enemyUnits = units.Any(x => IsEnemyPartyMember(x));
+        var playerUnits = unitsExists.Any(x => IsPlayerPartyMember(x));
+        var enemyUnits = unitsExists.Any(x => IsEnemyPartyMember(x));
 
         if (!playerUnits)
         {
@@ -224,15 +237,27 @@ public class TestBattleManager : MonoBehaviour
     {
         if (IsEnemyPartyMember(_currentUnit))
         {
+            ExecutePlayerTurns();
+
             var action = _currentUnit.UnitActions[Random.Range(0, _currentUnit.UnitActions.Count)];
             var target = _playersUnits.Members[Random.Range(0, _playersUnits.Members.Count)];
 
-            AddTurn(_currentUnit, action);
+            action.Plan(_currentUnit, target);
+            action.Execute();
 
-            action.Invoke(_currentUnit, target);
-            UpdateTurn();
-
-            return;
+            UpdateOrder();
         }
+    }
+
+    private void ExecutePlayerTurns()
+    {
+        if (!_turns.Any()) return;
+
+        foreach(var turn in _turns)
+        {
+            turn.Item2.Execute();
+        }
+
+        _turns.Clear();
     }
 }

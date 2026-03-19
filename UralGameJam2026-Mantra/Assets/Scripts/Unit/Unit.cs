@@ -34,7 +34,7 @@ public class Unit : MonoBehaviour
 
         TestBattleManager.Instance.AddTurn(this, action);
 
-        action.Invoke(this, target);
+        action.Plan(this, target);
     }
 
     public void UpdateUltimateCooldown()
@@ -47,7 +47,7 @@ public class Unit : MonoBehaviour
 
         TestBattleManager.Instance.AddTurn(this, ultimate);
 
-        TestBattleManager.Instance.UpdateTurn();
+        TestBattleManager.Instance.UpdateOrder();
     }
 
     public SerializeUnit Serialize()

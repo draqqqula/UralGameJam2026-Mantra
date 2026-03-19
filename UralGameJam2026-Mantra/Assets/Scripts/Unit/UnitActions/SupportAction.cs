@@ -9,16 +9,21 @@ public class SupportAction : UnitAction
         return true;
     }
 
-    public override void Invoke(Unit person, Unit target)
+    public override void Execute()
+    {
+        print($"{_person.UnitName} helps {_target.UnitName} with smth");
+    }
+
+    public override void Plan(Unit person, Unit target)
     {
         _person = person;
         _target = target;
 
-        print($"{_person.UnitName} helps {_target.UnitName} with smth");
+        if(_skill) _skill.Use(person, target);
     }
 
     public override void Undo()
     {
-        throw new System.NotImplementedException();
+        if (_skill) _skill.Undo();
     }
 }

@@ -22,13 +22,13 @@ public class UnitPointerDrop : MonoBehaviour, IDropHandler
             if (TestBattleManager.Instance.IsPlayerPartyMember(_unit))
             {
                 unit.Use<SupportAction>(_unit);
-                TestBattleManager.Instance.UpdateTurn();
+                TestBattleManager.Instance.UpdateOrder();
 
                 return;
             }
 
             unit.Use<AttackAction>(_unit);
-            TestBattleManager.Instance.UpdateTurn();
+            TestBattleManager.Instance.UpdateOrder();
 
         }
     }

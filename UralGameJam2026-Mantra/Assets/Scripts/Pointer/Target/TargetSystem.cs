@@ -35,6 +35,6 @@ public class TargetSystem : MonoBehaviour
     {
         var battle = TestBattleManager.Instance;
         battle.UseActionOn(battle.Current, Current.Unit);
-        battle.UpdateTurn();
+        battle.UpdateOrder();
     }
 }

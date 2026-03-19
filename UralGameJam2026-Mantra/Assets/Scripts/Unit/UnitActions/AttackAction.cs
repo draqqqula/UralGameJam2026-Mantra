@@ -9,16 +9,19 @@ public class AttackAction : UnitAction
         return true;
     }
 
-    public override void Invoke(Unit person, Unit target)
+    public override void Execute()
     {
-        //пока что просто бьет
-        _target = target;
-        _person = person;
         _damageValue = _person.Damage.DealBaseDamage();
 
         _target.Health.ApplyDamage(_damageValue);
 
         print($"{_person.UnitName} attacks {_target.UnitName} with {_damageValue} damage!");
+    }
+
+    public override void Plan(Unit person, Unit target)
+    {
+        _target = target;
+        _person = person;
     }
 
     public override void Undo()
