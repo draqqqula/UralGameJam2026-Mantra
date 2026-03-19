@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using R3;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Unit))]
 public class Targetable : MonoBehaviour
 {
+    private ReactiveProperty<bool> _targeted = new ReactiveProperty<bool>();
+
     [field: SerializeField] public Unit Unit { get; private set; }
-    public bool Targeted { get; private set; } = false;
+    public ReadOnlyReactiveProperty<bool> Targeted => _targeted;
     public bool IsTargetable
     {
         get
@@ -21,6 +24,6 @@ public class Targetable : MonoBehaviour
 
     public void SetTargeted(bool value)
     {
-        Targeted = value;
+        _targeted.Value = value;
     }
 }
