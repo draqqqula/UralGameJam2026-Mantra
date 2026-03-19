@@ -20,6 +20,10 @@ public class UnitPointer : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginD
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!TestBattleManager.Instance.UnitIsCurrent(_unit))
+        {
+            return;
+        }
         if (!_isDragging) return;
 
         var newPosition = _camera.ScreenToWorldPoint(eventData.position);
@@ -39,7 +43,6 @@ public class UnitPointer : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginD
     {
         if (!TestBattleManager.Instance.UnitIsCurrent(_unit))
         {
-            print("не твой ход");
             return;
         }
 
@@ -49,6 +52,11 @@ public class UnitPointer : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginD
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (!TestBattleManager.Instance.UnitIsCurrent(_unit))
+        {
+            return;
+        }
+
         if (!_isDragging)
         {
             _unit.UpdateUltimateCooldown();

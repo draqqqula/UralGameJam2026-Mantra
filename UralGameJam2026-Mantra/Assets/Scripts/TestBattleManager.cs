@@ -10,6 +10,7 @@ public class TestBattleManager : MonoBehaviour
     [SerializeField] private Party _enemiesUnits;
 
     private Queue<Unit> _unitOrder = new();
+    private Stack<(Unit, UnitAction)> _turns = new();
 
     private Unit _currentUnit;
 
@@ -25,7 +26,7 @@ public class TestBattleManager : MonoBehaviour
 
     private void Start()
     {
-        Setup();
+        InitializeBattle();
     }
 
     private void FixedUpdate()
@@ -35,11 +36,26 @@ public class TestBattleManager : MonoBehaviour
         {
             UpdateTurn();
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            CancelTurn();
+        }
 #endif
     }
 
-    public void Setup()
+    public void InitializeBattle()
     {
+        //here game will load enemy and player party from PartyManager and start battle, propably
+
+        var setup = Setup();
+        if (setup) UpdateTurn();
+    }
+
+    private bool Setup()
+    {
+        _unitOrder.Clear();
+
         foreach (var unit in _playersUnits.Members)
         {
             if (!unit.IsAlive) continue;
@@ -52,43 +68,63 @@ public class TestBattleManager : MonoBehaviour
             _unitOrder.Enqueue(unit);
         }
 
-        UpdateTurn();
+        return _unitOrder.Any();
     }
 
     public void UpdateTurn()
     {
-        if (!_unitOrder.TryDequeue(out _currentUnit))
+        UpdateModifiers(_unitOrder);
+
+        CheckBattlefield(_unitOrder);
+
+        DetermineTurn();
+    }
+
+    public void AddTurn(Unit unit, UnitAction action)
+    {
+        _turns.Push((unit, action));
+    }
+
+    public (Unit unit, UnitAction action) GetPreviousTurn()
+    {
+        if (!_turns.TryPeek(out var _))
         {
-            Setup();
-            return;
+            return (null, null);
         }
 
-        foreach (var unit in _unitOrder)
+        (Unit unit, UnitAction action) = _turns.Pop();
+        return (unit, action);
+    }
+
+    public (Unit unit, UnitAction action) CancelTurn()
+    {
+        var current = _currentUnit;
+
+        (Unit unit, UnitAction action) = GetPreviousTurn();
+
+        if(unit == null) return (null, null);
+
+        if (IsEnemyPartyMember(unit))
         {
-            if(!unit.IsAlive)
-            {
-                unit.gameObject.SetActive(false);
-                continue;
-            }
-
-            //modifiers need to be check in another place, but for now it here
-            unit.Damage.CritMultiplyer.CheckModifiers();
-            unit.Damage.CritChance.CheckModifiers();
-
-            unit.Damage.MaxDamage.CheckModifiers();
-            unit.Damage.MinDamage.CheckModifiers();
+            return (null, null);
         }
 
-        print($"Now {_currentUnit.UnitName} turn");
+        _currentUnit = unit;
+        if (action != null) action.Undo();
 
-        if(!_playersUnits.Members.Contains(_currentUnit))
+        var order = new Queue<Unit>(_unitOrder);
+
+        _unitOrder.Clear();
+
+        _unitOrder.Enqueue(current);
+        _unitOrder.Enqueue(_currentUnit);
+
+        foreach(var unitOrder in order)
         {
-            var action = _currentUnit.UnitActions[Random.Range(0, _currentUnit.UnitActions.Count)];
-            var target = _playersUnits.Members[Random.Range(0, _playersUnits.Members.Count)];
-            action.Invoke(_currentUnit, target);
-            UpdateTurn();
-            return;
+            _unitOrder.Enqueue(unitOrder);
         }
+
+        return (unit, action);
     }
 
     public bool UnitIsCurrent(Unit unit)
@@ -135,11 +171,68 @@ public class TestBattleManager : MonoBehaviour
 
     public bool IsPlayerPartyMember(Unit target)
     {
-        return _playersUnits.Members.Contains(target);
+        return _playersUnits.Members.Contains(target) && target != null;
     }
 
     public bool IsEnemyPartyMember(Unit target)
     {
-        return _enemiesUnits.Members.Contains(target);
+        return _enemiesUnits.Members.Contains(target) && target != null;
+    }
+
+    private void UpdateModifiers(Queue<Unit> units)
+    {
+        foreach (var unit in units)
+        {
+            unit.Damage.CritMultiplyer.CheckModifiers();
+            unit.Damage.CritChance.CheckModifiers();
+
+            unit.Damage.MaxDamage.CheckModifiers();
+            unit.Damage.MinDamage.CheckModifiers();
+        }
+    }
+
+    private void CheckBattlefield(Queue<Unit> units)
+    {
+        var playerUnits = units.Any(x => IsPlayerPartyMember(x));
+
+        var enemyUnits = units.Any(x => IsEnemyPartyMember(x));
+
+        if (!playerUnits)
+        {
+            print("enemy won");
+            _currentUnit = null;
+
+            return;
+        }
+
+        if (!enemyUnits)
+        {
+            print("player won");
+            _currentUnit = null;
+
+            return;
+        }
+
+        if (!units.TryDequeue(out _currentUnit))
+        {
+            Setup();
+            return;
+        }
+    }
+
+    private void DetermineTurn()
+    {
+        if (IsEnemyPartyMember(_currentUnit))
+        {
+            var action = _currentUnit.UnitActions[Random.Range(0, _currentUnit.UnitActions.Count)];
+            var target = _playersUnits.Members[Random.Range(0, _playersUnits.Members.Count)];
+
+            AddTurn(_currentUnit, action);
+
+            action.Invoke(_currentUnit, target);
+            UpdateTurn();
+
+            return;
+        }
     }
 }

@@ -32,6 +32,8 @@ public class Unit : MonoBehaviour
         var action = UnitActions.FirstOrDefault(x => x.GetType() == typeof(T));
         if (action == null) return;
 
+        TestBattleManager.Instance.AddTurn(this, action);
+
         action.Invoke(this, target);
     }
 
@@ -42,6 +44,8 @@ public class Unit : MonoBehaviour
 
         var ultimate = action as UltimateAttackAction;
         ultimate.DecreaseCooldown();
+
+        TestBattleManager.Instance.AddTurn(this, ultimate);
 
         TestBattleManager.Instance.UpdateTurn();
     }

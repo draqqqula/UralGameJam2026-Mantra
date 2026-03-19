@@ -12,8 +12,13 @@ public class UnitPointerDrop : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if(eventData.pointerDrag.TryGetComponent<Unit>(out var unit))
+        if (eventData.pointerDrag.TryGetComponent<Unit>(out var unit))
         {
+            if (!TestBattleManager.Instance.UnitIsCurrent(unit))
+            {
+                return;
+            }
+
             if (TestBattleManager.Instance.IsPlayerPartyMember(_unit))
             {
                 unit.Use<SupportAction>(_unit);

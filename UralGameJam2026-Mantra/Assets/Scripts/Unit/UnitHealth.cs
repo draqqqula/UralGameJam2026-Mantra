@@ -7,6 +7,8 @@ public class UnitHealth : IDisposable
     public Action OnDeath;
     public Action<float> OnTakeDamage;
     public Action<float> OnHeal;
+
+    public Action DrawHealth;
     public float MaxHealth { get; set; }
     public float MaxDefense { get; set; }
     public float CurrentHealth { get; set; }
@@ -22,6 +24,8 @@ public class UnitHealth : IDisposable
 
         OnTakeDamage += TakeDamage;
         OnHeal += Heal;
+
+        DrawHealth?.Invoke();
     }
 
     public void ApplyDamage(float damage)
@@ -50,6 +54,7 @@ public class UnitHealth : IDisposable
         {
             OnDeath?.Invoke();
         }
+        DrawHealth?.Invoke();
     }
 
     public void Dispose()
