@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using R3;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Targetable))]
@@ -14,21 +15,24 @@ public class TargetableHighlighter : MonoBehaviour
         _targetable = GetComponent<Targetable>();
     }
 
-    private void Update()
+    private void Awake()
     {
-        // inefficient, change to R3
+        _targetable.Targeted.Subscribe(HandleStateChanged).AddTo(this);
+    }
+
+    private void HandleStateChanged(bool targetable)
+    {
         _selfEffect.SetActive(false);
         _attackEffect.SetActive(false);
         _supportEffect.SetActive(false);
 
-        if (_targetable.Targeted)
+        if (targetable)
         {
             var effect = GetEffect();
 
             effect.SetActive(true);
         }
     }
-
 
     private HighlightEffect GetEffect()
     {
