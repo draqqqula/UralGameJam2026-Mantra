@@ -5,7 +5,7 @@ public class WindowsService : MonoBehaviour, IService
 {
     [field: SerializeField] private Window[] _windows;
     
-    public enum WindowType { Win, Lose, Pause, Settings }
+    public enum WindowType { Win, Lose, Pause, Settings, NextRoom }
 
     public void ActivateWindow(WindowType windowType)
     {

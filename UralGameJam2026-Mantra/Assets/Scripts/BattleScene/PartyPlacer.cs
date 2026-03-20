@@ -11,12 +11,7 @@ public class PartyPlacer : MonoBehaviour
 
     [SerializeField] private Party _partyMembers;
     [SerializeField] private Transform _startPoint;
-
-    private void Awake()
-    {
-        if(_placeInAwake) PlaceMembers();
-    }
-
+    
     private void FixedUpdate()
     {
 #if UNITY_EDITOR

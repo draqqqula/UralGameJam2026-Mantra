@@ -5,7 +5,9 @@ public class Party : MonoBehaviour
 {
     public List<Unit> Members = new();
     [SerializeField] private int _maxCount = 4;
-
+    
+    public int MaxCount => _maxCount;
+    
     public void AddMembers(List<Unit> members)
     {
         foreach(var unit  in members)
@@ -20,6 +22,15 @@ public class Party : MonoBehaviour
         {
             RemoveMember(unit);
         }
+    }
+
+    public void RemoveAllMembers()
+    {
+        foreach (var unit in Members)
+        {
+            Destroy(unit.gameObject);
+        }
+        Members.Clear();
     }
 
     public void AddMember(Unit member)

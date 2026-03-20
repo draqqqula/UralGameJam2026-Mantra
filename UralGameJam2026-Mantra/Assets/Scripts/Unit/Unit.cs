@@ -18,8 +18,9 @@ public class Unit : MonoBehaviour
 
     [SerializeField] private Transform _healthbarPoint;
     [SerializeField] private HealthbarView _healthbarPrefab;
-    
-    
+
+    public event Action OnDestroyed; 
+        
     private void Awake()
     {
         Init();
@@ -93,5 +94,10 @@ public class Unit : MonoBehaviour
         };
 
         return SerializeUnit;
+    }
+
+    public void OnDestroy()
+    {
+        OnDestroyed?.Invoke();
     }
 }

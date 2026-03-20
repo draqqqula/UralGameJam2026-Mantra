@@ -10,12 +10,17 @@ public class RoomsController : MonoBehaviour, IService
     
     public bool TryUpdateCurrentRoom()
     {
-        if (CurrentRoom + 1 < RoomsCount)
+        if (!IsLastRoom())
         {
             CurrentRoom++;
             OnRoomUpdated?.Invoke(CurrentRoom);
             return true;
         }
         return false;
+    }
+
+    public bool IsLastRoom()
+    {
+        return CurrentRoom + 1 >= RoomsCount;
     }
 }

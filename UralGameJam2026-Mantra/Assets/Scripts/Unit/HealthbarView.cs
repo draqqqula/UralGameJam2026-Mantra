@@ -23,6 +23,7 @@ public class HealthbarView : MonoBehaviour
         
         _unit.Health.OnTakeDamage += OnDamaged;
         _unit.Health.OnHeal += OnHeal;
+        _unit.OnDestroyed += Destroy;
     }
 
     private void OnDamaged(float value)
@@ -59,9 +60,15 @@ public class HealthbarView : MonoBehaviour
         Destroy(healthText.gameObject);
     }
 
+    private void Destroy()
+    {
+        Destroy(gameObject);
+    }
+
     private void OnDestroy()
     {
         _unit.Health.OnTakeDamage -= OnDamaged;
         _unit.Health.OnHeal -= OnHeal;
+        _unit.OnDestroyed -= Destroy;
     }
 }

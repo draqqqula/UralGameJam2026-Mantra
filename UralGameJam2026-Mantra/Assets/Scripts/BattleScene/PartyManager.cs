@@ -1,14 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartyManager : MonoBehaviour
+public class PartyManager : MonoBehaviour, IService
 {
     public Party PlayerParty;
     public Party EnemyParty;
 
+    [SerializeField] private PartyPlacer _enemyPartyPlacer;
+    [SerializeField] private PartyPlacer _playerPartyPlacer;
+    
+    [SerializeField] private Unit _memberPrefab;
+    
+    public void InitializePlayerParty(int count)
+    {
+        var remainingCounts = Mathf.Clamp(count - PlayerParty.Members.Count, 0, PlayerParty.MaxCount);
+        
+        List<Unit> units = new List<Unit>();
+        for (int i = 0; i < remainingCounts; i++)
+        {
+            var unit = Instantiate(_memberPrefab, PlayerParty.transform);
+            units.Add(unit);
+        }
+        InitializePlayerParty(units);
+    }
+    
     public void InitializePlayerParty(List<Unit> units)
     {
         PlayerParty.AddMembers(units);
+        _playerPartyPlacer.PlaceMembers();
     }
 
     public void AddPlayerPartyMember(Unit unit)
@@ -21,14 +40,38 @@ public class PartyManager : MonoBehaviour
         PlayerParty.RemoveMember(unit);
     }
 
+    public void RemoveAllPlayerPartyMembers()
+    {
+        PlayerParty.RemoveAllMembers();
+    }
+
+    public void InitializeEnemyParty(int count)
+    {
+        var remainingCounts = Mathf.Clamp(count - EnemyParty.Members.Count, 0, EnemyParty.MaxCount);
+        
+        List<Unit> units = new List<Unit>();
+        for (int i = 0; i < remainingCounts; i++)
+        {
+            var unit = Instantiate(_memberPrefab, EnemyParty.transform);
+            units.Add(unit);
+        }
+        InitializeEnemyParty(units);
+    }
+    
     public void InitializeEnemyParty(List<Unit> units)
     {
         EnemyParty.AddMembers(units);
+        _enemyPartyPlacer.PlaceMembers();
     }
 
     public void AddEnemyPartyMember(Unit unit)
     {
         EnemyParty.AddMember(unit);
+    }
+    
+    public void RemoveAllEnemyPartyMembers()
+    {
+        EnemyParty.RemoveAllMembers();
     }
 
     public void RemoveEnemyPartyMember(Unit unit)

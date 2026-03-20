@@ -1,9 +1,11 @@
+using System;
 using R3;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class TestBattleManager : MonoBehaviour
+public class TestBattleManager : MonoBehaviour, IService
 {
     public static TestBattleManager Instance;
 
@@ -16,21 +18,26 @@ public class TestBattleManager : MonoBehaviour
 
     private ReactiveProperty<Unit> _currentUnit = new ReactiveProperty<Unit>();
     public ReadOnlyReactiveProperty<Unit> Current => _currentUnit;
-    
+
     private MatchManager _matchManager;
+    private PartyManager _partyManager;
+    
+    public event Action OnBattleStarted;
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
-            _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
         }
     }
-
-    private void Start()
+    
+    public void Init()
     {
-        InitializeBattle();
+        _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
+        _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
+        
+        InitializeFirstBattle();
     }
 
     private void FixedUpdate()
@@ -48,10 +55,21 @@ public class TestBattleManager : MonoBehaviour
 #endif
     }
 
+    public void InitializeFirstBattle()
+    {
+        _partyManager.InitializePlayerParty(4);
+        _partyManager.InitializeEnemyParty(4);
+        
+        OnBattleStarted?.Invoke();
+        Setup();
+    }
+
     public void InitializeBattle()
     {
-        //here game will load enemy and player party from PartyManager and start battle, propably
-
+        _partyManager.RemoveAllEnemyPartyMembers();
+        _partyManager.InitializeEnemyParty(4);
+        
+        OnBattleStarted?.Invoke();
         Setup();
     }
 
@@ -226,7 +244,8 @@ public class TestBattleManager : MonoBehaviour
         {
             print("player won");
             _currentUnit.Value = null;
-
+            _matchManager.DeclareVictory();
+            
             return;
         }
 

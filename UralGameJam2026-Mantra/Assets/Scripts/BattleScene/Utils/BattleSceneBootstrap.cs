@@ -6,6 +6,9 @@ public class BattleSceneBootstrap : MonoBehaviour
     [SerializeField] private MatchManager _matchManager;
     [SerializeField] private PauseHandler _pauseHandler;
     [SerializeField] private UnitCanvas _unitCanvas;
+    
+    [SerializeField] private PartyManager _partyManager;
+    [SerializeField] private TestBattleManager _testBattleManager;
 
     private void Awake()
     {
@@ -14,7 +17,12 @@ public class BattleSceneBootstrap : MonoBehaviour
         ServiceLocator.Instance.RegisterService(_pauseHandler);
         ServiceLocator.Instance.RegisterService(_unitCanvas);
         
+        ServiceLocator.Instance.RegisterService(_testBattleManager);
+        ServiceLocator.Instance.RegisterService(_partyManager);
+        
         _matchManager.Init();
         _pauseHandler.Init();
+        
+        _testBattleManager.Init();
     }
 }
