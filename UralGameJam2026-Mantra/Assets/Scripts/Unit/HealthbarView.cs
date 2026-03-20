@@ -10,12 +10,13 @@ public class HealthbarView : MonoBehaviour
     [SerializeField] private Unit _unit;
 
     [SerializeField] private float _textDuration;
-    [SerializeField] private TextMeshProUGUI _healthChangingText;
+    
+    [SerializeField] private TextMeshProUGUI _healthTextPrefab;
+    [SerializeField] private SpawnerInSquare _spawnerInSquare;
+    
     [SerializeField] private Color _damageColor;
     [SerializeField] private Color _healColor;
     
-    private Coroutine _textCoroutine;
-
     public void Init(Unit unit)
     {
         _unit = unit;
@@ -26,13 +27,13 @@ public class HealthbarView : MonoBehaviour
 
     private void OnDamaged(float value)
     {
-        UpdateText("- " + value.ToString(), _damageColor);
+        SpawnText("- " + value.ToString(), _damageColor);
         OnHealthChanged();
     }
 
     private void OnHeal(float value)
     {
-        UpdateText("+ " + value.ToString(), _healColor);
+        SpawnText("+ " + value.ToString(), _healColor);
         OnHealthChanged();
     }
     
@@ -41,21 +42,21 @@ public class HealthbarView : MonoBehaviour
         _healthBar.fillAmount = _unit.Health.CurrentHealth / _unit.Health.MaxHealth;
     }
     
-    private void UpdateText(string text, Color color)
+    private void SpawnText(string text, Color color)
     {
-        _healthChangingText.gameObject.SetActive(true);
-        _healthChangingText.text = text;
-        _healthChangingText.color = color;
+        var healthText = _spawnerInSquare.Spawn(_healthTextPrefab);
         
-        if (_textCoroutine != null) StopCoroutine(_textCoroutine);
-        _textCoroutine = StartCoroutine(TextCoroutine());
+        healthText.gameObject.SetActive(true);
+        healthText.text = text;
+        healthText.color = color;
+        
+        StartCoroutine(TextCoroutine(healthText));
     }
 
-    private IEnumerator TextCoroutine()
+    private IEnumerator TextCoroutine(TextMeshProUGUI healthText)
     {
         yield return new WaitForSeconds(_textDuration);
-        _healthChangingText.gameObject.SetActive(false);
-        _textCoroutine = null;
+        Destroy(healthText.gameObject);
     }
 
     private void OnDestroy()
