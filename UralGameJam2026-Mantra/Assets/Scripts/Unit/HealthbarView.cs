@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,15 +52,16 @@ public class HealthbarView : MonoBehaviour
         healthText.text = text;
         healthText.color = color;
         
-        StartCoroutine(TextCoroutine(healthText));
+        healthText.transform
+            .DOLocalMoveY(healthText.transform.localPosition.y + 2, _textDuration)
+            .SetLink(healthText.gameObject);
+        
+        healthText
+            .DOFade(0f, _textDuration)
+            .SetLink(healthText.gameObject)
+            .OnComplete(() => Destroy(healthText.gameObject));
     }
-
-    private IEnumerator TextCoroutine(TextMeshProUGUI healthText)
-    {
-        yield return new WaitForSeconds(_textDuration);
-        Destroy(healthText.gameObject);
-    }
-
+    
     private void Destroy()
     {
         Destroy(gameObject);
