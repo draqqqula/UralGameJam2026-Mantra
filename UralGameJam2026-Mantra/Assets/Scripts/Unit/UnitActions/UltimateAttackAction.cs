@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
 
 public class UltimateAttackAction : UnitAction
@@ -22,14 +23,14 @@ public class UltimateAttackAction : UnitAction
         }
     }
 
-    public override async UniTask Execute()
+    public override async UniTask Execute(CancellationToken token)
     {
         if(_person == null)
         {
             _person = GetComponentInParent<Unit>();
         }
 
-        await UniTask.WaitForSeconds(Random.value);
+        await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
 
         if (_ultimateModifier)
         {
@@ -49,7 +50,7 @@ public class UltimateAttackAction : UnitAction
         _target.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
         _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _animDelay);
 
-        await UniTask.WaitForSeconds(_animDelay);
+        await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
 
     }
 

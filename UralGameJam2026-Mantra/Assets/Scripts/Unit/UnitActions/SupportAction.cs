@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
 
 public class SupportAction : UnitAction
@@ -10,15 +11,15 @@ public class SupportAction : UnitAction
         return true;
     }
 
-    public override async UniTask Execute()
+    public override async UniTask Execute(CancellationToken token)
     {
-        await UniTask.WaitForSeconds(Random.value);
+        await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
         print($"{_person.UnitName} helps {_target.UnitName} with smth");
 
         //_target.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
         _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Support, out _animDelay);
 
-        await UniTask.WaitForSeconds(_animDelay);
+        await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
     }
 
     public override void Plan(Unit person, Unit target)

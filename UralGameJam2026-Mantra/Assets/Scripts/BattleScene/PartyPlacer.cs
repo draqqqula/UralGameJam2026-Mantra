@@ -28,6 +28,8 @@ public class PartyPlacer : MonoBehaviour
         for (int i = 0; i < _partyMembers.Members.Count; i++)
         {
             var partyMember = _partyMembers.Members[i];
+            partyMember.UpdateHealthbarPosition();
+
             RotateMember(direction, ref partyMember);
             var member = partyMember.GetComponent<PartyMemberGap>();
 

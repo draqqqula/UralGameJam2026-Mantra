@@ -27,6 +27,7 @@ public class TargetSystem : MonoBehaviour
         {
             Current.SetTargeted(false);
         }
+
         Current = newTarget;
         Current.SetTargeted(true);
     }
@@ -34,6 +35,9 @@ public class TargetSystem : MonoBehaviour
     public void SubmitAction()
     {
         var battle = TestBattleManager.Instance;
+
+        if (battle.IsEnemyPartyMember(battle.Current.CurrentValue)) return;
+
         battle.UseActionOn(battle.Current.CurrentValue, Current.Unit);
         battle.UpdateOrder();
     }

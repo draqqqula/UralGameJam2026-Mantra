@@ -16,7 +16,6 @@ public class TestBattleManager : MonoBehaviour, IService
     [SerializeField] private Party _enemiesUnits;
 
     private Queue<Unit> _unitOrder = new();
-    private Stack<(Unit, UnitAction)> _turns = new();
     private HashSet<Unit> _allUnits = new();
 
     private ReactiveProperty<Unit> _currentUnit = new ReactiveProperty<Unit>();
@@ -24,6 +23,7 @@ public class TestBattleManager : MonoBehaviour, IService
 
     private MatchManager _matchManager;
     private PartyManager _partyManager;
+    private TurnManager _turnManager;
     
     public event Action OnBattleStarted;
 
@@ -39,6 +39,7 @@ public class TestBattleManager : MonoBehaviour, IService
     {
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
         _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
+        _turnManager = ServiceLocator.Instance.GetService<TurnManager>();
         
         InitializeFirstBattle();
     }
@@ -53,7 +54,7 @@ public class TestBattleManager : MonoBehaviour, IService
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            CancelTurn();
+            _turnManager.CancelTurn(ref _currentUnit, ref _unitOrder);
         }
 #endif
     }
@@ -64,7 +65,7 @@ public class TestBattleManager : MonoBehaviour, IService
         _partyManager.InitializeEnemyParty(4);
 
         _playersUnits.Members.Reverse();
-        //_enemiesUnits.Members.Reverse();
+        _enemiesUnits.Members.Reverse();
 
         OnBattleStarted?.Invoke();
 
@@ -121,65 +122,6 @@ public class TestBattleManager : MonoBehaviour, IService
         CheckBattlefield(_allUnits, _unitOrder);
 
         DetermineTurn();
-    }
-
-    public void AddTurn(Unit unit, UnitAction action)
-    {
-        _turns.Push((unit, action));
-    }
-
-    public (Unit unit, UnitAction action) GetPreviousTurn()
-    {
-        if (!_turns.TryPeek(out var _))
-        {
-            return (null, null);
-        }
-
-        (Unit unit, UnitAction action) = _turns.Pop();
-        return (unit, action);
-    }
-
-    public (Unit unit, UnitAction action) CancelTurn()
-    {
-        var current = _currentUnit.Value;
-
-        (Unit unit, UnitAction action) = GetPreviousTurn();
-
-        if(unit == null) return (null, null);
-
-        if (IsEnemyPartyMember(unit))
-        {
-            return (null, null);
-        }
-
-        _currentUnit.Value = unit;
-        if (action != null)
-        {
-            action.Undo();
-        }
-
-        var order = new Queue<Unit>(_unitOrder);
-
-        _unitOrder.Clear();
-
-        _unitOrder.Enqueue(current);
-        //_unitOrder.Enqueue(_currentUnit.Value);
-
-        foreach(var unitOrder in order)
-        {
-            _unitOrder.Enqueue(unitOrder);
-        }
-
-        return (unit, action);
-    }
-
-    public void SkipTurn()
-    {
-        if (IsEnemyPartyMember(_currentUnit.Value)) return;
-
-        AddTurn(_currentUnit.Value, null);
-
-        UpdateOrder();
     }
 
     public bool UnitIsCurrent(Unit unit)
@@ -290,24 +232,24 @@ public class TestBattleManager : MonoBehaviour, IService
         }
     }
 
-    private async UniTaskVoid DetermineTurn()
+    private async UniTask DetermineTurn()
     {
         if (IsPlayerPartyMember(_currentUnit.Value))
         {
             IsEnemyTurn = false;
         }
 
-
         if (IsEnemyPartyMember(_currentUnit.Value))
         {
             if (!_currentUnit.Value.IsAlive)
             {
+                _turnManager.Cancel();
                 UpdateOrder();
                 return;
             }
             IsEnemyTurn = true;
 
-            await ExecutePlayerTurns();
+            await _turnManager.ExecutePlayerTurns();
 
             int randomIndex = Random.Range(0, _allUnits.Count);
             var target = _allUnits.ElementAt(randomIndex);
@@ -324,7 +266,7 @@ public class TestBattleManager : MonoBehaviour, IService
             action.Plan(_currentUnit.Value, target);
             if (action.CanUse())
             {
-                await action.Execute();
+                await action.Execute(_turnManager.Token);
             }
             if (action is UltimateAttackAction ultimate) ultimate.DecreaseCooldown();
 
@@ -332,17 +274,5 @@ public class TestBattleManager : MonoBehaviour, IService
         }
     }
 
-    private async UniTask ExecutePlayerTurns()
-    {
-        if (!_turns.Any()) return;
-
-        var rightOrder = _turns.Reverse();
-
-        foreach(var turn in rightOrder)
-        {
-            await turn.Item2.Execute();
-        }
-
-        _turns.Clear();
-    }
+    
 }

@@ -19,6 +19,9 @@ public class Unit : MonoBehaviour
     [SerializeField] private Transform _healthbarPoint;
     [SerializeField] private HealthbarView _healthbarPrefab;
 
+    private Transform _healthBarTransform;
+    private TurnManager _turnManager;
+
     public event Action OnDestroyed; 
         
     private void Awake()
@@ -29,10 +32,19 @@ public class Unit : MonoBehaviour
     private void Start()
     {
         var canvas = ServiceLocator.Instance.GetService<UnitCanvas>();
+        _turnManager = ServiceLocator.Instance.GetService<TurnManager>();
         
         var healthbar =  Instantiate(_healthbarPrefab, canvas.transform);
         healthbar.transform.position = _healthbarPoint.position;
         healthbar.Init(this);
+
+        _healthBarTransform = healthbar.transform; 
+    }
+
+    public void UpdateHealthbarPosition()
+    {
+        if (!_healthBarTransform) return;
+        _healthBarTransform.position = _healthbarPoint.position;
     }
 
     public void Init()
@@ -46,7 +58,7 @@ public class Unit : MonoBehaviour
         var action = UnitActions.FirstOrDefault(x => x.GetType() == typeof(T));
         if (action == null) return;
 
-        TestBattleManager.Instance.AddTurn(this, action);
+        _turnManager.AddTurn(this, action);
 
         action.Plan(this, target);
     }
@@ -67,9 +79,7 @@ public class Unit : MonoBehaviour
         var ultimate = action as UltimateAttackAction;
         ultimate.DecreaseCooldown();
 
-        TestBattleManager.Instance.AddTurn(this, ultimate);
-
-        TestBattleManager.Instance.UpdateOrder();
+        _turnManager.AddTurn(this, ultimate);
     }
 
     public void SetName(string name)

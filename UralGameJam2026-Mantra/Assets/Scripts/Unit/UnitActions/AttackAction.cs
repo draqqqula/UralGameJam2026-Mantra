@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
 
 public class AttackAction : UnitAction
@@ -10,9 +11,9 @@ public class AttackAction : UnitAction
         return true;
     }
 
-    public override async UniTask Execute()
+    public override async UniTask Execute(CancellationToken token)
     {
-        await UniTask.WaitForSeconds(Random.value);
+        await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
 
         _damageValue = _person.Damage.DealBaseDamage();
         _target.Health.ApplyDamage(_damageValue);
@@ -22,7 +23,7 @@ public class AttackAction : UnitAction
         _target.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
         _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _animDelay);
 
-        await UniTask.WaitForSeconds(_animDelay);
+        await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
     }
 
     public override void Plan(Unit person, Unit target)
