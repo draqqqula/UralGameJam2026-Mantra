@@ -19,6 +19,10 @@ public class PartyManager : MonoBehaviour, IService
         for (int i = 0; i < remainingCounts; i++)
         {
             var unit = Instantiate(_memberPrefab, PlayerParty.transform);
+
+            var name = ServiceLocator.Instance.GetService<NameGenerator>().GenerateName();
+            unit.SetName(name);
+
             units.Add(unit);
         }
         InitializePlayerParty(units);
@@ -53,6 +57,10 @@ public class PartyManager : MonoBehaviour, IService
         for (int i = 0; i < remainingCounts; i++)
         {
             var unit = Instantiate(_memberPrefab, EnemyParty.transform);
+
+            var name = ServiceLocator.Instance.GetService<NameGenerator>().GenerateName();
+            unit.SetName(name);
+
             units.Add(unit);
         }
         InitializeEnemyParty(units);

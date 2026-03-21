@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class AttackAction : UnitAction
@@ -9,13 +10,19 @@ public class AttackAction : UnitAction
         return true;
     }
 
-    public override void Execute()
+    public override async UniTask Execute()
     {
-        _damageValue = _person.Damage.DealBaseDamage();
+        await UniTask.WaitForSeconds(Random.value);
 
+        _damageValue = _person.Damage.DealBaseDamage();
         _target.Health.ApplyDamage(_damageValue);
 
         print($"{_person.UnitName} attacks {_target.UnitName} with {_damageValue} damage!");
+
+        _target.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
+        _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _animDelay);
+
+        await UniTask.WaitForSeconds(_animDelay);
     }
 
     public override void Plan(Unit person, Unit target)

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class NameGenerator : MonoBehaviour
+public class NameGenerator : MonoBehaviour, IService
 {
     public static NameGenerator Instance;
 

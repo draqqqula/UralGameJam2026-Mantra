@@ -30,19 +30,21 @@ public class TargetableHighlighter : MonoBehaviour
         {
             var effect = GetEffect();
 
-            effect.SetActive(true);
+            if(effect) effect.SetActive(true);
         }
     }
 
     private HighlightEffect GetEffect()
     {
         var relationship = TestBattleManager.Instance.GetRelationShipToCurrent(_targetable.Unit);
+
+        if(TestBattleManager.Instance.IsEnemyTurn) return null;
+
         switch (relationship)
         {
-            case UnitRelationship.Self: return _selfEffect;
             case UnitRelationship.Enemy: return _attackEffect;
             case UnitRelationship.Friend: return _supportEffect;
+            default: return _selfEffect;
         }
-        return _selfEffect;
     }
 }

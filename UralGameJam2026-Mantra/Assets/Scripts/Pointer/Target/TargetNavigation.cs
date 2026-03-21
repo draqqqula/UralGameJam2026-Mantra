@@ -31,14 +31,22 @@ public class TargetNavigation : MonoBehaviour
     private bool TryGetOffset(Targetable current, int offset, out Targetable target)
     {
         var currentIndex = _ordered.FindIndex(it => it.Item1 == current);
-        var index = currentIndex + offset;
-        if (index < 0 || index >= _ordered.Count)
-        {
-            target = null;
-            return false;
-        }
+        var index = Mathf.Clamp(currentIndex + offset, 0, _ordered.Count - 1);
+
         target = _ordered[index].Item1;
+
+        if(!target.Unit.IsAlive)
+        {
+            int additionalOffset = offset + Sign(offset);
+            var res = TryGetOffset(current, additionalOffset, out target);
+            return res;
+        }
         return target;
+    }
+
+    private int Sign(int value)
+    {
+        return value <= 0 ? -1 : 1;
     }
 
     public void Register(Targetable item, float x)

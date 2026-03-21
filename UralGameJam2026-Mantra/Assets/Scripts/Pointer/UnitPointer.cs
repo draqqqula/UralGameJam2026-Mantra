@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UnitPointer : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerClickHandler
+public class UnitPointer : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
     private bool _isDragging = false;
     private Vector2 _defaultPosition;
@@ -48,18 +48,5 @@ public class UnitPointer : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginD
 
         _boxCollider.enabled = false;
         _isDragging = true;
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (!TestBattleManager.Instance.UnitIsCurrent(_unit))
-        {
-            return;
-        }
-
-        if (!_isDragging)
-        {
-            _unit.UpdateUltimateCooldown();
-        }
     }
 }

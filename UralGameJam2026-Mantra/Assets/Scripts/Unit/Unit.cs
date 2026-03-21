@@ -51,6 +51,14 @@ public class Unit : MonoBehaviour
         action.Plan(this, target);
     }
 
+    public UnitAction Get<T>() where T : UnitAction
+    {
+        var action = UnitActions.FirstOrDefault(x => x.GetType() == typeof(T));
+        if (action == null) return null;
+
+        return action;
+    }
+
     public void UpdateUltimateCooldown()
     {
         var action = UnitActions.FirstOrDefault(x => x.GetType() == typeof(UltimateAttackAction));
@@ -62,6 +70,13 @@ public class Unit : MonoBehaviour
         TestBattleManager.Instance.AddTurn(this, ultimate);
 
         TestBattleManager.Instance.UpdateOrder();
+    }
+
+    public void SetName(string name)
+    {
+        if (_isUniqueUnit) return;
+
+        UnitName = name;
     }
 
     public SerializeUnit Serialize()

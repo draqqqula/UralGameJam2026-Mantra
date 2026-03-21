@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class ModifableValue
 {
-    public List<ModifierEffect> Modifiers { get; private set; } = new();
+    public List<ModifierEffect> Modifiers { get; private set; }
 
     public float ModValue { get; private set; }
     private float _value;
 
     public ModifableValue(float value)
     {
+        Modifiers = new();
         ModValue = _value = value;
     }
 

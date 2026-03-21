@@ -27,7 +27,9 @@ public class PartyPlacer : MonoBehaviour
 
         for (int i = 0; i < _partyMembers.Members.Count; i++)
         {
-            var member = _partyMembers.Members[i].GetComponent<PartyMemberGap>();
+            var partyMember = _partyMembers.Members[i];
+            RotateMember(direction, ref partyMember);
+            var member = partyMember.GetComponent<PartyMemberGap>();
 
             if (i == 0)
             {
@@ -36,13 +38,21 @@ public class PartyPlacer : MonoBehaviour
                 continue;
             }
 
-            var previousMember = _partyMembers.Members[i - 1].GetComponent<PartyMemberGap>();
+            var previousMember = partyMember.GetComponent<PartyMemberGap>();
 
             var step = _gap + previousMember.MemberGap + member.MemberGap;
             var newPos = prevPoint + new Vector2(step * direction, 0);
 
             prevPoint = newPos;
             member.transform.position = newPos;
+        }
+    }
+
+    private void RotateMember(float direction, ref Unit member)
+    {
+        if(direction == -1)
+        {
+            member.transform.eulerAngles = new Vector3(0, 180, 0);
         }
     }
 }

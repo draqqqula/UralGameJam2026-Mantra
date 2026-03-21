@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class UltimateAttackAction : UnitAction
@@ -21,8 +22,15 @@ public class UltimateAttackAction : UnitAction
         }
     }
 
-    public override void Execute()
+    public override async UniTask Execute()
     {
+        if(_person == null)
+        {
+            _person = GetComponentInParent<Unit>();
+        }
+
+        await UniTask.WaitForSeconds(Random.value);
+
         if (_ultimateModifier)
         {
             _person.Damage.MinDamage.ApplyModifier(_ultimateModifier);
@@ -31,11 +39,18 @@ public class UltimateAttackAction : UnitAction
 
         _damageValue = _person.Damage.DealBaseDamage();
 
+        if (!_target) _target = TestBattleManager.Instance.GetRandomEnemy();
         _target.Health.ApplyDamage(_damageValue);
 
         print($"{_person.UnitName} attacks {_target.UnitName} with {_damageValue} damage!");
 
         _currentCooldown = _attackCooldown;
+
+        _target.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
+        _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _animDelay);
+
+        await UniTask.WaitForSeconds(_animDelay);
+
     }
 
     public override void Plan(Unit person, Unit target)

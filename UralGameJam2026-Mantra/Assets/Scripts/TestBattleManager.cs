@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Cysharp.Threading.Tasks;
 
 public class TestBattleManager : MonoBehaviour, IService
 {
     public static TestBattleManager Instance;
+
+    public bool IsEnemyTurn;
 
     [SerializeField] private Party _playersUnits;
     [SerializeField] private Party _enemiesUnits;
@@ -59,8 +62,12 @@ public class TestBattleManager : MonoBehaviour, IService
     {
         _partyManager.InitializePlayerParty(4);
         _partyManager.InitializeEnemyParty(4);
-        
+
+        _playersUnits.Members.Reverse();
+        //_enemiesUnits.Members.Reverse();
+
         OnBattleStarted?.Invoke();
+
         Setup();
     }
 
@@ -68,13 +75,19 @@ public class TestBattleManager : MonoBehaviour, IService
     {
         _partyManager.RemoveAllEnemyPartyMembers();
         _partyManager.InitializeEnemyParty(4);
-        
+
+        //_enemiesUnits.Members.Reverse();
+
         OnBattleStarted?.Invoke();
         Setup();
     }
 
     private void Setup()
     {
+        _allUnits.Clear();
+        _unitOrder.Clear();
+
+
         foreach (var unit in _playersUnits.Members)
         {
             if (!unit.IsAlive)
@@ -150,7 +163,7 @@ public class TestBattleManager : MonoBehaviour, IService
         _unitOrder.Clear();
 
         _unitOrder.Enqueue(current);
-        _unitOrder.Enqueue(_currentUnit.Value);
+        //_unitOrder.Enqueue(_currentUnit.Value);
 
         foreach(var unitOrder in order)
         {
@@ -160,9 +173,23 @@ public class TestBattleManager : MonoBehaviour, IService
         return (unit, action);
     }
 
+    public void SkipTurn()
+    {
+        if (IsEnemyPartyMember(_currentUnit.Value)) return;
+
+        AddTurn(_currentUnit.Value, null);
+
+        UpdateOrder();
+    }
+
     public bool UnitIsCurrent(Unit unit)
     {
         return _currentUnit.Value == unit;
+    }
+
+    public Unit GetRandomEnemy()
+    {
+        return _enemiesUnits.Members[Random.Range(0, _enemiesUnits.Members.Count)];
     }
 
     public UnitRelationship GetRelationship(Unit unitA, Unit unitB)
@@ -193,6 +220,8 @@ public class TestBattleManager : MonoBehaviour, IService
 
     public void UseActionOn(Unit source, Unit target)
     {
+        if (!UnitIsCurrent(source)) return;
+
         var relationship = GetRelationship(source, target);
         switch (relationship)
         {
@@ -261,29 +290,57 @@ public class TestBattleManager : MonoBehaviour, IService
         }
     }
 
-    private void DetermineTurn()
+    private async UniTaskVoid DetermineTurn()
     {
+        if (IsPlayerPartyMember(_currentUnit.Value))
+        {
+            IsEnemyTurn = false;
+        }
+
+
         if (IsEnemyPartyMember(_currentUnit.Value))
         {
-            ExecutePlayerTurns();
+            if (!_currentUnit.Value.IsAlive)
+            {
+                UpdateOrder();
+                return;
+            }
+            IsEnemyTurn = true;
 
-            var action = _currentUnit.Value.UnitActions[Random.Range(0, _currentUnit.Value.UnitActions.Count)];
-            var target = _playersUnits.Members[Random.Range(0, _playersUnits.Members.Count)];
+            await ExecutePlayerTurns();
+
+            int randomIndex = Random.Range(0, _allUnits.Count);
+            var target = _allUnits.ElementAt(randomIndex);
+
+            var relation = GetRelationShipToCurrent(target);
+
+            UnitAction action = relation switch
+            {
+                UnitRelationship.Friend => _currentUnit.Value.Get<SupportAction>(),
+                UnitRelationship.Enemy => _currentUnit.Value.Get<AttackAction>(),
+                _ => _currentUnit.Value.Get<UltimateAttackAction>(),
+            };
 
             action.Plan(_currentUnit.Value, target);
-            action.Execute();
+            if (action.CanUse())
+            {
+                await action.Execute();
+            }
+            if (action is UltimateAttackAction ultimate) ultimate.DecreaseCooldown();
 
             UpdateOrder();
         }
     }
 
-    private void ExecutePlayerTurns()
+    private async UniTask ExecutePlayerTurns()
     {
         if (!_turns.Any()) return;
 
-        foreach(var turn in _turns)
+        var rightOrder = _turns.Reverse();
+
+        foreach(var turn in rightOrder)
         {
-            turn.Item2.Execute();
+            await turn.Item2.Execute();
         }
 
         _turns.Clear();
