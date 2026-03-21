@@ -14,6 +14,9 @@ public class TestBattleManager : MonoBehaviour, IService
 
     [SerializeField] private Party _playersUnits;
     [SerializeField] private Party _enemiesUnits;
+    
+    public Party PlayersUnits => _playersUnits;
+    public Party EnemiesUnits => _enemiesUnits;
 
     private Queue<Unit> _unitOrder = new();
     private HashSet<Unit> _allUnits = new();
@@ -61,36 +64,43 @@ public class TestBattleManager : MonoBehaviour, IService
 
     public void InitializeFirstBattle()
     {
-        _partyManager.InitializePlayerParty(4);
+        Action callback = () =>
+        {
+            _enemiesUnits.Members.Reverse();
+
+            OnBattleStarted?.Invoke();
+            Setup();
+        };
+        
         _partyManager.InitializeEnemyParty(4);
-
-        _playersUnits.Members.Reverse();
-        _enemiesUnits.Members.Reverse();
-
-        OnBattleStarted?.Invoke();
-
-        Setup();
+        _partyManager.InitializePlayerParty(4, callback);
     }
 
     public void InitializeBattle()
     {
-        _partyManager.RemoveAllEnemyPartyMembers();
+        Action callback = () =>
+        {
+            _enemiesUnits.Members.Reverse();
+
+            OnBattleStarted?.Invoke();
+            Setup();
+        };
+        
+        _partyManager.PlacePlayerParty(callback);
         _partyManager.InitializeEnemyParty(4);
-
-        //_enemiesUnits.Members.Reverse();
-
-        OnBattleStarted?.Invoke();
-        Setup();
     }
 
     private void Setup()
     {
         _allUnits.Clear();
         _unitOrder.Clear();
-
-
+        
+        _currentUnit.Value = _playersUnits.Members[0];
         foreach (var unit in _playersUnits.Members)
         {
+            unit.UpdateHealthbarPosition();
+            unit.ShowHealthbars();
+            
             if (!unit.IsAlive)
             {
                 _allUnits.Remove(unit);

@@ -12,6 +12,9 @@ public class BattleSceneBootstrap : MonoBehaviour
     [SerializeField] private NameGenerator _nameGenerator;
     [SerializeField] private TurnManager _turnManager;
 
+    [SerializeField] private CameraMovementHandler _cameraMovementHandler;
+    [SerializeField] private RoomTransitionHandler _roomTransitionHandler;
+    
     private void Awake()
     {
         ServiceLocator.Instance.RegisterService(_matchManager);
@@ -23,6 +26,9 @@ public class BattleSceneBootstrap : MonoBehaviour
         ServiceLocator.Instance.RegisterService(_partyManager);
         ServiceLocator.Instance.RegisterService(_nameGenerator);
         ServiceLocator.Instance.RegisterService(_turnManager);
+        
+        ServiceLocator.Instance.RegisterService(_cameraMovementHandler);
+        ServiceLocator.Instance.RegisterService(_roomTransitionHandler);
         
         _matchManager.Init();
         _pauseHandler.Init();

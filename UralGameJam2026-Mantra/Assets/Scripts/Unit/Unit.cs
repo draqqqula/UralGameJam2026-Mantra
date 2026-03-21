@@ -47,6 +47,16 @@ public class Unit : MonoBehaviour
         _healthBarTransform.position = _healthbarPoint.position;
     }
 
+    public void HideHealthbars()
+    {
+        _healthBarTransform.gameObject.SetActive(false);
+    }
+
+    public void ShowHealthbars()
+    {
+        _healthBarTransform.gameObject.SetActive(true);
+    }
+
     public void Init()
     {
         Health.Setup();

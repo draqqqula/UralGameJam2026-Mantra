@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class PartyManager : MonoBehaviour, IService
     
     [SerializeField] private Unit _memberPrefab;
     
-    public void InitializePlayerParty(int count)
+    public void InitializePlayerParty(int count, Action callback = null)
     {
         var remainingCounts = Mathf.Clamp(count - PlayerParty.Members.Count, 0, PlayerParty.MaxCount);
         
@@ -25,13 +26,37 @@ public class PartyManager : MonoBehaviour, IService
 
             units.Add(unit);
         }
-        InitializePlayerParty(units);
+        InitializePlayerParty(units, callback);
     }
     
-    public void InitializePlayerParty(List<Unit> units)
+    public void InitializePlayerParty(List<Unit> units, Action callback = null)
     {
         PlayerParty.AddMembers(units);
-        _playerPartyPlacer.PlaceMembers();
+        PlacePlayerParty(callback);
+    }
+
+    public void PlacePlayerParty(Action callback = null)
+    {
+        ShowPlayerParty(false);
+        _playerPartyPlacer.PlaceMembersWithTransition(18, callback);
+    }
+
+    public void HidePlayerParty(bool hideHealthbars = true)
+    {
+        foreach (var unit in PlayerParty.Members)
+        {
+            unit.gameObject.SetActive(false);
+            if (hideHealthbars) unit.HideHealthbars();
+        }
+    }
+
+    public void ShowPlayerParty(bool showHealthbars = true)
+    {
+        foreach (var unit in PlayerParty.Members)
+        {
+            unit.gameObject.SetActive(true);
+            if (showHealthbars) unit.ShowHealthbars();
+        }
     }
 
     public void AddPlayerPartyMember(Unit unit)

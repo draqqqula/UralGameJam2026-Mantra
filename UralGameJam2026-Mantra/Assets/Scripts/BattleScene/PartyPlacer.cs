@@ -1,10 +1,12 @@
+using System;
+using System.Collections;
+using System.Linq;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 public class PartyPlacer : MonoBehaviour
 {
-    [SerializeField] private bool _placeInAwake = true;
-    [SerializeField] private bool _placeInUpdate = true;
-
     [SerializeField] private PlaceDirection _direction;
     [Range(0f, 2f)]
     [SerializeField] private float _gap = 1f;
@@ -12,11 +14,40 @@ public class PartyPlacer : MonoBehaviour
     [SerializeField] private Party _partyMembers;
     [SerializeField] private Transform _startPoint;
     
-    private void FixedUpdate()
+    [SerializeField] private Transform _transitionStartPoint;
+    private Coroutine _coroutine;
+    
+    public void PlaceMembersWithTransition(float unitSpeed, Action callback)
     {
-#if UNITY_EDITOR
-        if(_placeInUpdate) PlaceMembers();
-#endif
+        PlaceMembers();
+        var newPoints = _partyMembers.Members.Select(m => m.transform.position).Reverse().ToArray();
+        
+        foreach (var member in _partyMembers.Members)
+        {
+            member.transform.position = _transitionStartPoint.position;
+        }
+        
+        if (_coroutine != null) StopCoroutine(_coroutine);
+        _coroutine = StartCoroutine(MoveTransition(newPoints, unitSpeed, callback));
+    }
+
+    private IEnumerator MoveTransition(Vector3[] newPoints, float unitSpeed, Action callback = null)
+    {
+        yield return null;
+        for (int i = 0; i < _partyMembers.Members.Count; i++)
+        {
+            var member = _partyMembers.Members[i];
+            var distance = Vector2.Distance(newPoints[i], member.transform.position);
+            
+            yield return member.transform
+                .DOMove(newPoints[i], distance / unitSpeed)
+                .SetEase(Ease.Linear)
+                .SetLink(member.gameObject)
+                .WaitForCompletion();
+        }
+        
+        callback?.Invoke();
+        _coroutine = null;
     }
 
     public void PlaceMembers()
