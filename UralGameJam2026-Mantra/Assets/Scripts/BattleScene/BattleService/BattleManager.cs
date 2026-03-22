@@ -60,7 +60,7 @@ public class BattleManager : MonoBehaviour, IService
         };
 
         _partyManager.InitializeEnemyParty(4);
-        _partyManager.InitializePlayerParty(4, callback);
+        _partyManager.InitializePlayerParty(4);
     }
 
     public void InitializeBattle()
@@ -189,10 +189,8 @@ public class BattleManager : MonoBehaviour, IService
             CheckBattlefield();
         };
 
-        while (_currentPipeline != null && _currentPipeline.CanMoves())
-        {
-            await _currentPipeline.TrySetUnit(callback: callback, token: _token);
-        }
+        await _currentPipeline.TrySetUnit(callback: callback, token: _token);
+
     }
 
     public bool IsPlayerTurn()

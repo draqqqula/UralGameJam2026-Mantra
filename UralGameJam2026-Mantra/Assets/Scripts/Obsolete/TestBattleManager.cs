@@ -76,7 +76,7 @@ public class TestBattleManager : MonoBehaviour, IService
         _currentUnit.Value = _playersUnits.Members[0];
         foreach (var unit in _playersUnits.Members)
         {
-            unit.UpdateHealthbarPosition();
+            unit.UpdateUIPosition();
             unit.ShowHealthbars();
             
             if (!unit.IsAlive)
@@ -155,7 +155,7 @@ public class TestBattleManager : MonoBehaviour, IService
         var relationship = GetRelationship(source, target);
         switch (relationship)
         {
-            case UnitRelationship.Self: source.UpdateUltimateCooldown(); break;
+            case UnitRelationship.Self: source.UpdateUltimateCooldown(target); break;
             case UnitRelationship.Friend: source.Use<SupportAction>(target); break;
             case UnitRelationship.Enemy: source.Use<AttackAction>(target); break;
         }

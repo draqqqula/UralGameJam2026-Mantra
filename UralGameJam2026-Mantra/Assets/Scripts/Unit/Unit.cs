@@ -95,7 +95,7 @@ public class Unit : MonoBehaviour
         Damage.Setup();
     }
 
-    public async UniTask Use<T>(Unit target, CancellationToken token) where T : UnitAction
+    public async UniTask Use<T>(Unit target) where T : UnitAction
     {
         var action = UnitActions.FirstOrDefault(x => x.GetType() == typeof(T));
         if (action == null) return;
@@ -103,7 +103,7 @@ public class Unit : MonoBehaviour
         _turnManager.AddTurn(this, action);
 
         action.Plan(this, target);
-        await action.Execute(token);
+        await action.Execute();
     }
 
     public UnitAction Get<T>() where T : UnitAction
@@ -114,7 +114,7 @@ public class Unit : MonoBehaviour
         return action;
     }
 
-    public async UniTask UpdateUltimateCooldown(Unit target, CancellationToken token)
+    public async UniTask UpdateUltimateCooldown(Unit target)
     {
         var action = UnitActions.FirstOrDefault(x => x.GetType() == typeof(UltimateAttackAction));
         if (action == null) return;
@@ -125,7 +125,7 @@ public class Unit : MonoBehaviour
         if (ultimate.CanUse())
         {
             ultimate.Plan(this, target);
-            await ultimate.Execute(token);
+            await ultimate.Execute();
         }
     }
 

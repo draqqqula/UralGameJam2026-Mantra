@@ -61,9 +61,9 @@ public class BattleStrategy
         var relationship = GetRelationship(source, target);
         switch (relationship)
         {
-            case UnitRelationship.Self: await source.UpdateUltimateCooldown(target, token); break;
-            case UnitRelationship.Friend: await source.Use<SupportAction>(target, token); break;
-            case UnitRelationship.Enemy: await source.Use<AttackAction>(target, token); break;
+            case UnitRelationship.Self: await source.UpdateUltimateCooldown(target); break;
+            case UnitRelationship.Friend: await source.Use<SupportAction>(target); break;
+            case UnitRelationship.Enemy: await source.Use<AttackAction>(target); break;
         }
 
         _initiatorUnit.Value = null;
