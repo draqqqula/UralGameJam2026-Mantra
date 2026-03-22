@@ -20,7 +20,6 @@ public class BattleManager : MonoBehaviour, IService
     public ReadOnlyReactiveProperty<Unit> Current => _currentUnit;
 
     private MatchManager _matchManager;
-    private PartyManager _partyManager;
 
     private Turn _currentTurn;
     private BattleStrategy _currentPipeline;
@@ -31,7 +30,6 @@ public class BattleManager : MonoBehaviour, IService
     public void Init()
     {
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
-        _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
     }
 
     public void Cancel()
@@ -43,28 +41,9 @@ public class BattleManager : MonoBehaviour, IService
         _token = _tokenSource.Token;
     }
 
-    public void InitializeFirstBattle()
-    {
-        _currentTurn = Turn.Player;
-
-        _partyManager.InitializeEnemyParty(4);
-        _partyManager.InitializePlayerParty(4);
-
-        _enemyParty.Members.Reverse();
-
-        OnBattleStarted?.Invoke();
-
-        Setup();
-        DetermineTurn().Forget();
-    }
-
     public void InitializeBattle()
     {
         _currentTurn = Turn.Player;
-
-        //_partyManager.PlacePlayerParty();
-        //_partyManager.InitializeEnemyParty(4);
-
         _enemyParty.Members.Reverse();
 
         OnBattleStarted?.Invoke();
@@ -123,6 +102,7 @@ public class BattleManager : MonoBehaviour, IService
         {
             if (!unit.IsAlive) _allUnits.Remove(unit);
             unit.UpdateUIPosition();
+            unit.ShowHealthbars();
 
             _allUnits.Add(unit);
         }
@@ -131,6 +111,7 @@ public class BattleManager : MonoBehaviour, IService
         {
             if (!unit.IsAlive) _allUnits.Remove(unit);
             unit.UpdateUIPosition();
+            unit.ShowHealthbars();
 
             _allUnits.Add(unit);
         }
@@ -211,6 +192,11 @@ public class BattleManager : MonoBehaviour, IService
         if (_currentPipeline == null) return UnitRelationship.None;
 
         return _currentPipeline.GetRelationShipToCurrent(unit);
+    }
+
+    private void OnDestroy()
+    {
+        Cancel();
     }
 }
 

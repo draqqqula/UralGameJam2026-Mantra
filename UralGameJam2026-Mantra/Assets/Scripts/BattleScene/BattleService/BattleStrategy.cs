@@ -37,7 +37,6 @@ public class BattleStrategy
             return;
         }
 
-        if (!unit.UnitTurn.CanMove) return;
         if (!unit.IsAlive) return;
 
         if (_initiatorUnit.Value == null && _battleManager.IsPlayerPartyMember(unit))
