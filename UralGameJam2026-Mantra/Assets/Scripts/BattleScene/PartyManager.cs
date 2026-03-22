@@ -12,7 +12,7 @@ public class PartyManager : MonoBehaviour, IService
     
     [SerializeField] private Unit _memberPrefab;
     
-    public void InitializePlayerParty(int count, Action callback = null)
+    public void InitializePlayerParty(int count)
     {
         var remainingCounts = Mathf.Clamp(count - PlayerParty.Members.Count, 0, PlayerParty.MaxCount);
         
@@ -26,13 +26,12 @@ public class PartyManager : MonoBehaviour, IService
 
             units.Add(unit);
         }
-        InitializePlayerParty(units, callback);
+        InitializePlayerParty(units);
     }
     
-    public void InitializePlayerParty(List<Unit> units, Action callback = null)
+    public void InitializePlayerParty(List<Unit> units)
     {
         PlayerParty.AddMembers(units);
-        PlacePlayerParty(callback);
     }
 
     public void PlacePlayerParty(Action callback = null)

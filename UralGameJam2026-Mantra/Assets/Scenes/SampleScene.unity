@@ -297,9 +297,7 @@ GameObject:
   m_Component:
   - component: {fileID: 247924815}
   - component: {fileID: 247924818}
-  - component: {fileID: 247924817}
   - component: {fileID: 247924816}
-  - component: {fileID: 247924819}
   m_Layer: 0
   m_Name: BattleSceneBootstrap
   m_TagString: Untagged
@@ -334,20 +332,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9b3836bbd348e5b4292704c072c7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &247924817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 247924814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 643f19a7436046edb28243ee1f8f4068, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <CurrentRoom>k__BackingField: 0
-  <RoomsCount>k__BackingField: 10
 --- !u!114 &247924818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,7 +344,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 338663b38f5444c68684dfc2c583e16a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomsController: {fileID: 247924817}
+  _roomsController: {fileID: 1920732371}
+  _roomTransitionHandler: {fileID: 1920732370}
+  _roomInitializer: {fileID: 1920732369}
   _matchManager: {fileID: 247924816}
   _pauseHandler: {fileID: 2133373695}
   _unitCanvas: {fileID: 2024018924}
@@ -369,24 +355,7 @@ MonoBehaviour:
   _nameGenerator: {fileID: 1683864739}
   _turnManager: {fileID: 1500171582}
   _cameraMovementHandler: {fileID: 519420034}
-  _roomTransitionHandler: {fileID: 247924819}
   _environmentGenerator: {fileID: 1646339276}
---- !u!114 &247924819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 247924814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d5152bc88544dfa8e833aefc95f039e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _slideEndCameraTarget: {fileID: 1191080388}
-  _slideStartCameraTarget: {fileID: 323493942}
-  _cameraRoomTarget: {fileID: 1428967336}
-  _cameraMovementDuration: 2
 --- !u!1 &263459936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2245,6 +2214,7 @@ Transform:
   - {fileID: 2133373694}
   - {fileID: 1089007470}
   - {fileID: 1500171581}
+  - {fileID: 1920732368}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1856465943
@@ -2492,6 +2462,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896421717}
   m_CullTransparentMesh: 1
+--- !u!1 &1920732367
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1920732368}
+  - component: {fileID: 1920732371}
+  - component: {fileID: 1920732370}
+  - component: {fileID: 1920732369}
+  m_Layer: 0
+  m_Name: RoomsServices
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1920732368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920732367}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1841887393}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1920732369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920732367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c3e5e8d1d2344c0965a763d0c57f1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1920732370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920732367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d5152bc88544dfa8e833aefc95f039e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slideEndCameraTarget: {fileID: 1191080388}
+  _slideStartCameraTarget: {fileID: 323493942}
+  _cameraRoomTarget: {fileID: 1428967336}
+  _cameraMovementDuration: 2
+--- !u!114 &1920732371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920732367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 643f19a7436046edb28243ee1f8f4068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <CurrentRoom>k__BackingField: 0
+  <RoomsCount>k__BackingField: 10
 --- !u!1 &1955096577
 GameObject:
   m_ObjectHideFlags: 0
