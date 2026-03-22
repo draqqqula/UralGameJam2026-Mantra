@@ -84,6 +84,7 @@ public class PartyManager : MonoBehaviour, IService
 
             var name = ServiceLocator.Instance.GetService<NameGenerator>().GenerateName();
             unit.SetName(name);
+            unit.ShouldShowAura = false;
 
             units.Add(unit);
         }

@@ -36,14 +36,17 @@ public class TargetableHighlighter : MonoBehaviour
 
     private HighlightEffect GetEffect()
     {
-        var relationship = TestBattleManager.Instance.GetRelationShipToCurrent(_targetable.Unit);
+        var battleManager = ServiceLocator.Instance.GetService<BattleManager>();
 
-        if(TestBattleManager.Instance.IsEnemyTurn) return null;
+        var relationship = battleManager.GetRelationShipToCurrent(_targetable.Unit);
+
+        if(battleManager.IsEnemyTurn()) return null;
 
         switch (relationship)
         {
             case UnitRelationship.Enemy: return _attackEffect;
             case UnitRelationship.Friend: return _supportEffect;
+            case UnitRelationship.None: return null;
             default: return _selfEffect;
         }
     }

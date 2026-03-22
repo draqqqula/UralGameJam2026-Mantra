@@ -8,7 +8,7 @@ public abstract class UnitAction : MonoBehaviour
     protected Unit _person, _target;
 
     public abstract void Plan(Unit person, Unit target);
-    public abstract UniTask Execute(CancellationToken token);
+    public abstract UniTask Execute(CancellationToken token = default);
     public abstract void Undo();
     public abstract bool CanUse();
 }

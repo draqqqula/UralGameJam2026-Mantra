@@ -5,5 +5,6 @@ public enum UnitRelationship
 {
     Self,
     Friend,
-    Enemy
+    Enemy,
+    None
 }
