@@ -8,7 +8,7 @@ public class ActiveUnitDisplay : MonoBehaviour
 
     private void Start()
     {
-        ServiceLocator.Instance.GetService<TestBattleManager>().Current.Subscribe(HandleStateChanged).AddTo(this);
+        ServiceLocator.Instance.GetService<BattleManager>().Current.Subscribe(HandleStateChanged).AddTo(this);
         //TestBattleManager.Instance.Current.Subscribe(HandleStateChanged).AddTo(this);
     }
 

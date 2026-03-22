@@ -11,7 +11,7 @@ public class BattleSceneBootstrap : MonoBehaviour
     [SerializeField] private UnitCanvas _unitCanvas;
     
     [SerializeField] private PartyManager _partyManager;
-    [SerializeField] private TestBattleManager _testBattleManager;
+    [SerializeField] private BattleManager _battleManager;
     [SerializeField] private NameGenerator _nameGenerator;
     [SerializeField] private TurnManager _turnManager;
 
@@ -28,7 +28,7 @@ public class BattleSceneBootstrap : MonoBehaviour
         ServiceLocator.Instance.RegisterService(_roomTransitionHandler);
         ServiceLocator.Instance.RegisterService(_roomInitializer);
         
-        ServiceLocator.Instance.RegisterService(_testBattleManager);
+        ServiceLocator.Instance.RegisterService(_battleManager);
         ServiceLocator.Instance.RegisterService(_partyManager);
         ServiceLocator.Instance.RegisterService(_nameGenerator);
         ServiceLocator.Instance.RegisterService(_turnManager);
@@ -40,12 +40,12 @@ public class BattleSceneBootstrap : MonoBehaviour
         _pauseHandler.Init();
         
         _environmentGenerator.CreateRandom();
-        _testBattleManager.Init();
+        _battleManager.Init();
         
         _roomTransitionHandler.Init();
         _roomInitializer.Init();
         
         _roomInitializer.InitializeRoom();
-        _roomTransitionHandler.ActivatePlayerTransition(_testBattleManager.InitializeBattle);
+        _roomTransitionHandler.ActivatePlayerTransition(_battleManager.InitializeBattle);
     }
 }

@@ -5,7 +5,7 @@ public class PauseHandler : MonoBehaviour, IService
 {
     [SerializeField] private InputActionReference _pauseAction;
     private WindowsService _windowsService;
-    private TestBattleManager _battleManager;
+    private BattleManager _battleManager;
     private MatchManager _matchManager;
     
     private bool _pauseActivated = false;
@@ -15,7 +15,7 @@ public class PauseHandler : MonoBehaviour, IService
     {
         _windowsService = ServiceLocator.Instance.GetService<WindowsService>();
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
-        _battleManager = ServiceLocator.Instance.GetService<TestBattleManager>();
+        _battleManager = ServiceLocator.Instance.GetService<BattleManager>();
         
         _pauseAction.action.performed += OnActionPerformed;
         _matchManager.OnBattleVictory += OnBattleVictory;

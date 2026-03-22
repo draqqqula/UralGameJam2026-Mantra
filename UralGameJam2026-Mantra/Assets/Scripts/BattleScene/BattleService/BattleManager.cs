@@ -32,8 +32,6 @@ public class BattleManager : MonoBehaviour, IService
     {
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
         _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
-
-        InitializeFirstBattle();
     }
 
     public void Cancel()
@@ -49,34 +47,29 @@ public class BattleManager : MonoBehaviour, IService
     {
         _currentTurn = Turn.Player;
 
-        Action callback = () =>
-        {
-            _enemyParty.Members.Reverse();
-
-            OnBattleStarted?.Invoke();
-
-            Setup();
-            DetermineTurn().Forget();
-        };
-
         _partyManager.InitializeEnemyParty(4);
         _partyManager.InitializePlayerParty(4);
+
+        _enemyParty.Members.Reverse();
+
+        OnBattleStarted?.Invoke();
+
+        Setup();
+        DetermineTurn().Forget();
     }
 
     public void InitializeBattle()
     {
         _currentTurn = Turn.Player;
 
-        Action callback = () =>
-        {
-            _enemyParty.Members.Reverse();
+        //_partyManager.PlacePlayerParty();
+        //_partyManager.InitializeEnemyParty(4);
 
-            OnBattleStarted?.Invoke();
-            Setup();
-        };
+        _enemyParty.Members.Reverse();
 
-        _partyManager.PlacePlayerParty(callback);
-        _partyManager.InitializeEnemyParty(4);
+        OnBattleStarted?.Invoke();
+        Setup();
+        DetermineTurn().Forget();
     }
 
     public void TrySetUnit(Unit unit)

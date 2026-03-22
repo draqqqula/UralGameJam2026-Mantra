@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 13960797}
   - component: {fileID: 13960796}
   - component: {fileID: 13960799}
+  - component: {fileID: 13960800}
   m_Layer: 0
   m_Name: battletest
   m_TagString: Untagged
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 13960793}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8887dfcd811707e468f98edcea8cf135, type: 3}
   m_Name: 
@@ -223,6 +224,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _indicator: {fileID: 786242672}
+--- !u!114 &13960800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13960793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d62dc8b6bcfe73c4ba1df3cb31de6343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyParty: {fileID: 547052237}
+  _playerParty: {fileID: 996389946}
 --- !u!1 &58774397
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,7 +366,7 @@ MonoBehaviour:
   _pauseHandler: {fileID: 2133373695}
   _unitCanvas: {fileID: 2024018924}
   _partyManager: {fileID: 1089007471}
-  _testBattleManager: {fileID: 13960794}
+  _battleManager: {fileID: 13960800}
   _nameGenerator: {fileID: 1683864739}
   _turnManager: {fileID: 1500171582}
   _cameraMovementHandler: {fileID: 519420034}
