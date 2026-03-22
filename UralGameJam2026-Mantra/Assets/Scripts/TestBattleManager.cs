@@ -87,7 +87,6 @@ public class TestBattleManager : MonoBehaviour, IService
         };
         
         _partyManager.PlacePlayerParty(callback);
-        _partyManager.InitializeEnemyParty(4);
     }
 
     private void Setup()

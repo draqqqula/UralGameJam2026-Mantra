@@ -17,7 +17,9 @@ public class PartyPlacer : MonoBehaviour
     [SerializeField] private Transform _transitionStartPoint;
     private Coroutine _coroutine;
     
-    public void PlaceMembersWithTransition(float unitSpeed, Action callback)
+    [SerializeField] private AnimationCurve _movementProgressCurve;
+    
+    public void PlaceMembersWithTransition(float unitSpeed, float membersDelay, Action callback)
     {
         PlaceMembers();
         var newPoints = _partyMembers.Members.Select(m => m.transform.position).Reverse().ToArray();
@@ -28,24 +30,26 @@ public class PartyPlacer : MonoBehaviour
         }
         
         if (_coroutine != null) StopCoroutine(_coroutine);
-        _coroutine = StartCoroutine(MoveTransition(newPoints, unitSpeed, callback));
+        _coroutine = StartCoroutine(MoveTransition(newPoints, unitSpeed, membersDelay, callback));
     }
 
-    private IEnumerator MoveTransition(Vector3[] newPoints, float unitSpeed, Action callback = null)
+    private IEnumerator MoveTransition(Vector3[] newPoints, float unitSpeed, float membersDelay, Action callback = null)
     {
         yield return null;
+        Sequence sequence = DOTween.Sequence();
+        
         for (int i = 0; i < _partyMembers.Members.Count; i++)
         {
             var member = _partyMembers.Members[i];
             var distance = Vector2.Distance(newPoints[i], member.transform.position);
-            
-            yield return member.transform
+
+            sequence.Insert(i * membersDelay, member.transform
                 .DOMove(newPoints[i], distance / unitSpeed)
-                .SetEase(Ease.Linear)
-                .SetLink(member.gameObject)
-                .WaitForCompletion();
+                .SetEase(_movementProgressCurve)
+                .SetLink(member.gameObject));
         }
         
+        yield return sequence.WaitForCompletion();
         callback?.Invoke();
         _coroutine = null;
     }

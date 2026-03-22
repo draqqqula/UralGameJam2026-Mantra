@@ -385,6 +385,7 @@ MonoBehaviour:
   _slideEndCameraTarget: {fileID: 1191080388}
   _slideStartCameraTarget: {fileID: 323493942}
   _cameraRoomTarget: {fileID: 1428967336}
+  _cameraMovementDuration: 2
 --- !u!1 &263459936
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,7 +516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 323493942}
   m_Layer: 0
-  m_Name: RoomStartSlidePoint
+  m_Name: OutRoomStartPoint
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -570,6 +571,30 @@ MonoBehaviour:
   _partyMembers: {fileID: 996389946}
   _startPoint: {fileID: 1100287428}
   _transitionStartPoint: {fileID: 323493942}
+  _movementProgressCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &442763606
 Transform:
   m_ObjectHideFlags: 0
@@ -753,6 +778,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a2184a8fd55f4cf8987361448f75312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _movementProgressCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &545231132
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,6 +1530,30 @@ MonoBehaviour:
   _partyMembers: {fileID: 547052237}
   _startPoint: {fileID: 58774398}
   _transitionStartPoint: {fileID: 1191080388}
+  _movementProgressCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &1125828986
 Transform:
   m_ObjectHideFlags: 0
@@ -1507,7 +1580,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1191080388}
   m_Layer: 0
-  m_Name: RoomEndSlidePoint
+  m_Name: OutRoomEndPoint
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

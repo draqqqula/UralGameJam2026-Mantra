@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CameraMovementHandler : MonoBehaviour, IService
 {
+    [SerializeField] private AnimationCurve _movementProgressCurve;
+    
     public YieldInstruction Move(Vector2 pos, float duration)
     {
         var updatedPos = new Vector3(pos.x, pos.y, transform.position.z);

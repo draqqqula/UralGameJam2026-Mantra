@@ -8,6 +8,8 @@ public class RoomTransitionHandler : MonoBehaviour, IService
     [SerializeField] private Transform _slideStartCameraTarget;
     [SerializeField] private Transform _cameraRoomTarget;
     
+    [SerializeField] private float _cameraMovementDuration;
+    
     private CameraMovementHandler _cameraMovementHandler;
     private PartyManager _partyManager;
     private Coroutine _coroutine;
@@ -26,13 +28,14 @@ public class RoomTransitionHandler : MonoBehaviour, IService
 
     private IEnumerator TransitionRoutine(Action callback)
     {
-        yield return _cameraMovementHandler.Move(_slideEndCameraTarget.position, 2);
+        yield return _cameraMovementHandler.Move(_slideEndCameraTarget.position, _cameraMovementDuration);
         _cameraMovementHandler.Teleport(_slideStartCameraTarget.position);
         
         _partyManager.HidePlayerParty();
         _partyManager.RemoveAllEnemyPartyMembers();
+        _partyManager.InitializeEnemyParty(4);
         
-        yield return _cameraMovementHandler.Move(_cameraRoomTarget.position, 2);
+        yield return _cameraMovementHandler.Move(_cameraRoomTarget.position, _cameraMovementDuration);
         callback?.Invoke();
         _coroutine = null;
     }

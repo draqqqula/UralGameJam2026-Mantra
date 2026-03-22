@@ -38,7 +38,7 @@ public class PartyManager : MonoBehaviour, IService
     public void PlacePlayerParty(Action callback = null)
     {
         ShowPlayerParty(false);
-        _playerPartyPlacer.PlaceMembersWithTransition(18, callback);
+        _playerPartyPlacer.PlaceMembersWithTransition(18, .5f, callback);
     }
 
     public void HidePlayerParty(bool hideHealthbars = true)
