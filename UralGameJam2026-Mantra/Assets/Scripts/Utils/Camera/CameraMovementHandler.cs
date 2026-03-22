@@ -11,7 +11,7 @@ public class CameraMovementHandler : MonoBehaviour, IService
         
         return transform
             .DOMove(updatedPos, duration)
-            .SetEase(Ease.Linear)
+            .SetEase(_movementProgressCurve)
             .SetLink(gameObject)
             .OnKill(() => Teleport(updatedPos))
             .WaitForCompletion();
