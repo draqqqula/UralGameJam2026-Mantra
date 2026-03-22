@@ -12,12 +12,14 @@ public class RoomTransitionHandler : MonoBehaviour, IService
     
     private CameraMovementHandler _cameraMovementHandler;
     private PartyManager _partyManager;
+    private EnvironmentGenerator _environmentGenerator;
     private Coroutine _coroutine;
 
     private void Awake()
     {
         _cameraMovementHandler = ServiceLocator.Instance.GetService<CameraMovementHandler>();
         _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
+        _environmentGenerator = ServiceLocator.Instance.GetService<EnvironmentGenerator>();
     }
     
     public void ActivateTransition(Action callback)
@@ -34,7 +36,8 @@ public class RoomTransitionHandler : MonoBehaviour, IService
         _partyManager.HidePlayerParty();
         _partyManager.RemoveAllEnemyPartyMembers();
         _partyManager.InitializeEnemyParty(4);
-        
+        _environmentGenerator.CreateRandom();
+
         yield return _cameraMovementHandler.Move(_cameraRoomTarget.position, _cameraMovementDuration);
         callback?.Invoke();
         _coroutine = null;
