@@ -35,6 +35,10 @@ public class BattleSceneBootstrap : MonoBehaviour
         _matchManager.Init();
         _pauseHandler.Init();
         
+        _environmentGenerator.CreateRandom();
         _testBattleManager.Init();
+        
+        _roomTransitionHandler.Init();
+        _roomTransitionHandler.ActivatePlayerTransition(_testBattleManager.InitializeBattle);
     }
 }

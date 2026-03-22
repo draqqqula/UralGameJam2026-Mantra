@@ -43,8 +43,6 @@ public class TestBattleManager : MonoBehaviour, IService
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
         _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
         _turnManager = ServiceLocator.Instance.GetService<TurnManager>();
-        
-        InitializeFirstBattle();
     }
 
     private void FixedUpdate()
@@ -61,32 +59,13 @@ public class TestBattleManager : MonoBehaviour, IService
         }
 #endif
     }
-
-    public void InitializeFirstBattle()
-    {
-        Action callback = () =>
-        {
-            _enemiesUnits.Members.Reverse();
-
-            OnBattleStarted?.Invoke();
-            Setup();
-        };
-        
-        _partyManager.InitializeEnemyParty(4);
-        _partyManager.InitializePlayerParty(4, callback);
-    }
-
+    
     public void InitializeBattle()
     {
-        Action callback = () =>
-        {
-            _enemiesUnits.Members.Reverse();
+        _enemiesUnits.Members.Reverse();
 
-            OnBattleStarted?.Invoke();
-            Setup();
-        };
-        
-        _partyManager.PlacePlayerParty(callback);
+        OnBattleStarted?.Invoke();
+        Setup();
     }
 
     private void Setup()
