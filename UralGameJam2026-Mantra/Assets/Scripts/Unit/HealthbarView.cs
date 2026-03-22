@@ -15,6 +15,8 @@ public class HealthbarView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _healthTextPrefab;
     [SerializeField] private SpawnerInSquare _spawnerInSquare;
     
+    [SerializeField] private TextMeshProUGUI _healthProgressText;
+    
     [SerializeField] private Color _damageColor;
     [SerializeField] private Color _healColor;
 
@@ -27,6 +29,8 @@ public class HealthbarView : MonoBehaviour
         _unit.Health.OnTakeDamage += OnDamaged;
         _unit.Health.OnHeal += OnHeal;
         _unit.OnDestroyed += Destroy;
+        
+        _healthProgressText.text = _unit.Health.CurrentHealth + " / " + _unit.Health.MaxHealth;
     }
 
     private void OnDamaged(float value)
@@ -44,6 +48,7 @@ public class HealthbarView : MonoBehaviour
     private void OnHealthChanged()
     {
         _healthBar.fillAmount = _unit.Health.CurrentHealth / _unit.Health.MaxHealth;
+        _healthProgressText.text = Mathf.Clamp(_unit.Health.CurrentHealth, 0, _unit.Health.MaxHealth) + " / " + _unit.Health.MaxHealth;
     }
     
     private void SpawnText(string text, Color color)
