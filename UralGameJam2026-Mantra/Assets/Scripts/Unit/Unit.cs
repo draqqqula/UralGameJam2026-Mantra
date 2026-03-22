@@ -1,15 +1,21 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
     public bool IsAlive => Health.CurrentHealth > 0;
     public string UnitName;
+    public bool ShouldShowAura = true;
 
     public UnitHealth Health;
     public UnitDamage Damage;
+    public UnitTurn UnitTurn { get; private set; }
+
 
     public List<UnitAction> UnitActions = new();
 
@@ -17,9 +23,11 @@ public class Unit : MonoBehaviour
     [SerializeField] private int _attackCooldown;
 
     [SerializeField] private Transform _healthbarPoint;
+    [SerializeField] private Transform _auraPoint;
     [SerializeField] private HealthbarView _healthbarPrefab;
+    [SerializeField] private TurnAuraView _auraPrefab;
 
-    private Transform _healthBarTransform;
+    private Transform _healthBarTransform, _auraTransform;
     private TurnManager _turnManager;
 
     public event Action OnDestroyed; 
@@ -33,7 +41,18 @@ public class Unit : MonoBehaviour
     {
         var canvas = ServiceLocator.Instance.GetService<UnitCanvas>();
         _turnManager = ServiceLocator.Instance.GetService<TurnManager>();
-        
+
+        UnitTurn = GetComponent<UnitTurn>();
+
+        if (ShouldShowAura)
+        {
+            var aura = Instantiate(_auraPrefab, canvas.transform);
+            aura.transform.position = _auraPoint.position;
+            aura.Init(this, UnitTurn);
+
+            _auraTransform = aura.transform;
+        }
+
         var healthbar =  Instantiate(_healthbarPrefab, canvas.transform);
         healthbar.transform.position = _healthbarPoint.position;
         healthbar.Init(this);
@@ -41,10 +60,23 @@ public class Unit : MonoBehaviour
         _healthBarTransform = healthbar.transform; 
     }
 
-    public void UpdateHealthbarPosition()
+    public void UpdateUIPosition()
     {
         if (!_healthBarTransform) return;
         _healthBarTransform.position = _healthbarPoint.position;
+
+        if(!_auraTransform) return;
+        _auraTransform.position = _auraPoint.position;
+    }
+
+    public void HideAura()
+    {
+        _auraTransform.gameObject.SetActive(false);
+    }
+
+    public void ShowAura()
+    {
+        _auraTransform.gameObject.SetActive(true);
     }
 
     public void HideHealthbars()
@@ -63,7 +95,7 @@ public class Unit : MonoBehaviour
         Damage.Setup();
     }
 
-    public void Use<T>(Unit target) where T : UnitAction
+    public async UniTask Use<T>(Unit target, CancellationToken token) where T : UnitAction
     {
         var action = UnitActions.FirstOrDefault(x => x.GetType() == typeof(T));
         if (action == null) return;
@@ -71,6 +103,7 @@ public class Unit : MonoBehaviour
         _turnManager.AddTurn(this, action);
 
         action.Plan(this, target);
+        await action.Execute(token);
     }
 
     public UnitAction Get<T>() where T : UnitAction
@@ -81,7 +114,7 @@ public class Unit : MonoBehaviour
         return action;
     }
 
-    public void UpdateUltimateCooldown()
+    public async UniTask UpdateUltimateCooldown(Unit target, CancellationToken token)
     {
         var action = UnitActions.FirstOrDefault(x => x.GetType() == typeof(UltimateAttackAction));
         if (action == null) return;
@@ -89,7 +122,11 @@ public class Unit : MonoBehaviour
         var ultimate = action as UltimateAttackAction;
         ultimate.DecreaseCooldown();
 
-        _turnManager.AddTurn(this, ultimate);
+        if (ultimate.CanUse())
+        {
+            ultimate.Plan(this, target);
+            await ultimate.Execute(token);
+        }
     }
 
     public void SetName(string name)

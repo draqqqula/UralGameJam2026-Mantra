@@ -23,7 +23,7 @@ public class UltimateAttackAction : UnitAction
         }
     }
 
-    public override async UniTask Execute(CancellationToken token)
+    public override async UniTask Execute(CancellationToken token = default)
     {
         if(_person == null)
         {
@@ -40,7 +40,7 @@ public class UltimateAttackAction : UnitAction
 
         _damageValue = _person.Damage.DealBaseDamage();
 
-        if (!_target) _target = TestBattleManager.Instance.GetRandomEnemy();
+        if (!_target) _target = ServiceLocator.Instance.GetService<BattleManager>().GetRandomEnemy();
         _target.Health.ApplyDamage(_damageValue);
 
         print($"{_person.UnitName} attacks {_target.UnitName} with {_damageValue} damage!");

@@ -34,11 +34,10 @@ public class TargetSystem : MonoBehaviour
 
     public void SubmitAction()
     {
-        var battle = TestBattleManager.Instance;
+        var battle = ServiceLocator.Instance.GetService<BattleManager>();
 
         if (battle.IsEnemyPartyMember(battle.Current.CurrentValue)) return;
 
-        battle.UseActionOn(battle.Current.CurrentValue, Current.Unit);
-        battle.UpdateOrder();
+        battle.TrySetUnit(Current.Unit);
     }
 }
