@@ -17,6 +17,8 @@ public class HealthbarView : MonoBehaviour
     
     [SerializeField] private Color _damageColor;
     [SerializeField] private Color _healColor;
+
+    [SerializeField] private AnimationCurve _fadeCurve;
     
     public void Init(Unit unit)
     {
@@ -55,9 +57,10 @@ public class HealthbarView : MonoBehaviour
         healthText.transform
             .DOLocalMoveY(healthText.transform.localPosition.y + 2, _textDuration)
             .SetLink(healthText.gameObject);
-        
+
         healthText
             .DOFade(0f, _textDuration)
+            .SetEase(_fadeCurve)
             .SetLink(healthText.gameObject)
             .OnComplete(() => Destroy(healthText.gameObject));
     }
