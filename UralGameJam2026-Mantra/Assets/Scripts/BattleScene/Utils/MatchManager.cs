@@ -26,7 +26,9 @@ public class MatchManager : MonoBehaviour, IService
     public void DeclareNextBattle()
     {
         _roomsController.TryUpdateCurrentRoom();
-        _roomTransitionHandler.ActivateTransition(() => _testBattleManager.InitializeBattle());
+        _roomTransitionHandler.ActivateRoomTransition(
+            () => _roomTransitionHandler.ActivatePlayerTransition(
+                () => _testBattleManager.InitializeBattle()));
     }
     
     public void DeclareVictory()
