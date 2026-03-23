@@ -4,8 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class MatchManager : MonoBehaviour, IService
 {
-    private const int DialogueChanceWhenMatchWon = 80;
-    
     private MatchResultHandler _matchResultHandler;
     private WindowsService _windowsService;
     
@@ -59,7 +57,7 @@ public class MatchManager : MonoBehaviour, IService
         }
         else
         {
-            _dialoguePlayer.PlayDialogueWithChance("Victory", DialogueChanceWhenMatchWon, 2,
+            _dialoguePlayer.PlayDialogueWithChance("Victory", 2,
                 () => _windowsService.ActivateWindow(WindowsService.WindowType.NextRoom));
             
             OnBattleVictory?.Invoke();

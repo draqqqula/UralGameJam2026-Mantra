@@ -27,11 +27,12 @@ public class DialoguePlayer : MonoBehaviour, IService
         FinishDialogue();
     }
     
-    public void PlayDialogueWithChance(string groupKey, float dialogueChance, int speakerCount, Action finishCallback = null)
+    public void PlayDialogueWithChance(string groupKey, int speakerCount, Action finishCallback = null)
     {
-        var randomInt = Random.Range(1, 101);
+        var group = _dialogueGroups.FirstOrDefault(g => g.GroupKey == groupKey);
+        var randomValue = Random.Range(0, 1f);
 
-        if (randomInt <= dialogueChance)
+        if (randomValue <= group.Chance)
         {
             PlayDialogue(groupKey, speakerCount, finishCallback);
         }
@@ -86,4 +87,5 @@ public class DialogueGroup
 {
     [field: SerializeField] public string GroupKey {get; private set;}
     [field: SerializeField] public string[] Replicas {get; private set;}
+    [field: SerializeField, Range(0,1)] public float Chance {get; private set;}
 }

@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class BattleStarter : IService
 {
-    private const int DialogueChance = 80;
-    
     private DialoguePlayer _dialoguePlayer;
     private BattleManager _battleManager;
     
@@ -15,7 +13,7 @@ public class BattleStarter : IService
 
     public void StartBattleWithDialogueChance()
     {
-        _dialoguePlayer.PlayDialogueWithChance("EnterRoom", DialogueChance, 1, StartBattle);
+        _dialoguePlayer.PlayDialogueWithChance("EnterRoom",1, StartBattle);
     }
 
     public void StartBattle()
