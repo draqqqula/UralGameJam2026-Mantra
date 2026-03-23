@@ -13,13 +13,13 @@ public class UnitTurn : MonoBehaviour
 
     private void Start()
     {
-        SetMove(_canMove);
         _unit = GetComponent<Unit>();
+        SetMove(_canMove);
     }
 
     public void SetMove(bool canMove)
     {
-        _canMove = canMove;
+        _canMove = canMove && _unit.IsAlive;
 
         OnSetMove?.Invoke(_canMove);
     }

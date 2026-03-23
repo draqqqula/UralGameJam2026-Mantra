@@ -36,6 +36,6 @@ public class UnitDamage
             damage *= CritMultiplyer.ModValue;
         }
 
-        return damage;
+        return Mathf.Round(damage);
     }
 }
