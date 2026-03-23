@@ -2570,6 +2570,7 @@ MonoBehaviour:
     - "\u042F \u0433\u043E\u0442\u043E\u0432 \u043F\u0440\u0438\u043C\u043A\u043D\u0443\u0442\u044C
       \u043A \u0442\u0435\u0431\u0435!"
   _dialogueDisplay: {fileID: 875996778}
+  _continueInput: {fileID: -5616084956409532658, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!4 &1978373620
 Transform:
   m_ObjectHideFlags: 0
