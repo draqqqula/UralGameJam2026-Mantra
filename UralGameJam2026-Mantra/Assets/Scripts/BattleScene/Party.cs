@@ -45,4 +45,27 @@ public class Party : MonoBehaviour
         if (!Members.Contains(member)) return;
         Members.Remove(member);
     }
+
+    public List<Unit> GetRandomMembers(int count)
+    {
+        if (count > Members.Count)
+        {
+            Debug.LogError($"Can't get {count} members! List have only {Members.Count} members!");
+            return null;
+        }
+        
+        var result = new List<Unit>();
+        while (result.Count < count)
+        {
+            var member = GetRandomMember();
+            if (!result.Contains(member)) result.Add(member);
+        }
+        
+        return result;
+    }
+
+    public Unit GetRandomMember()
+    {
+        return Members[Random.Range(0, Members.Count)];
+    }
 }

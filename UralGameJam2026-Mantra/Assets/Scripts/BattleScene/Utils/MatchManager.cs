@@ -4,13 +4,17 @@ using UnityEngine.SceneManagement;
 
 public class MatchManager : MonoBehaviour, IService
 {
+    private const int DialogueChanceWhenMatchWon = 80;
+    
     private MatchResultHandler _matchResultHandler;
     private WindowsService _windowsService;
-    private BattleManager _battleManager;
     
     private RoomsController _roomsController;
     private RoomTransitionHandler _roomTransitionHandler;
     private RoomInitializer _roomInitializer;
+    
+    private DialoguePlayer _dialoguePlayer;
+    private BattleStarter  _battleStarter;
     
     public event Action OnBattleVictory;
     public event Action OnAllBattlesVictory;
@@ -20,11 +24,13 @@ public class MatchManager : MonoBehaviour, IService
     {
         _matchResultHandler = ServiceLocator.Instance.GetService<MatchResultHandler>();
         _windowsService = ServiceLocator.Instance.GetService<WindowsService>();
-        _battleManager = ServiceLocator.Instance.GetService<BattleManager>();
+        _battleStarter = ServiceLocator.Instance.GetService<BattleStarter>();
         
         _roomsController = ServiceLocator.Instance.GetService<RoomsController>();
         _roomTransitionHandler = ServiceLocator.Instance.GetService<RoomTransitionHandler>();
         _roomInitializer = ServiceLocator.Instance.GetService<RoomInitializer>();
+        
+        _dialoguePlayer = ServiceLocator.Instance.GetService<DialoguePlayer>();
     }
 
     public void DeclareNextBattle()
@@ -35,7 +41,7 @@ public class MatchManager : MonoBehaviour, IService
 
     private void OnReadyToStartPlayerTransition()
     {
-        _roomTransitionHandler.ActivatePlayerTransition(() => _battleManager.InitializeBattle());
+        _roomTransitionHandler.ActivatePlayerTransition(() => _battleStarter.StartBattleWithDialogueChance());
     }
 
     private void OnReadyToUpdateRoom()
@@ -53,7 +59,9 @@ public class MatchManager : MonoBehaviour, IService
         }
         else
         {
-            _windowsService.ActivateWindow(WindowsService.WindowType.NextRoom);
+            _dialoguePlayer.PlayDialogueWithChance("Victory", DialogueChanceWhenMatchWon, 2,
+                () => _windowsService.ActivateWindow(WindowsService.WindowType.NextRoom));
+            
             OnBattleVictory?.Invoke();
         }
     }
