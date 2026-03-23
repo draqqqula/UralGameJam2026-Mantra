@@ -71,11 +71,13 @@ public class Unit : MonoBehaviour
 
     public void HideAura()
     {
+        if (!_auraTransform) return;
         _auraTransform.gameObject.SetActive(false);
     }
 
     public void ShowAura()
     {
+        if (!_auraTransform) return;
         _auraTransform.gameObject.SetActive(true);
     }
 

@@ -6,7 +6,7 @@ public class MatchManager : MonoBehaviour, IService
 {
     private MatchResultHandler _matchResultHandler;
     private WindowsService _windowsService;
-    private TestBattleManager _testBattleManager;
+    private BattleManager _battleManager;
     
     private RoomsController _roomsController;
     private RoomTransitionHandler _roomTransitionHandler;
@@ -20,7 +20,7 @@ public class MatchManager : MonoBehaviour, IService
     {
         _matchResultHandler = ServiceLocator.Instance.GetService<MatchResultHandler>();
         _windowsService = ServiceLocator.Instance.GetService<WindowsService>();
-        _testBattleManager = ServiceLocator.Instance.GetService<TestBattleManager>();
+        _battleManager = ServiceLocator.Instance.GetService<BattleManager>();
         
         _roomsController = ServiceLocator.Instance.GetService<RoomsController>();
         _roomTransitionHandler = ServiceLocator.Instance.GetService<RoomTransitionHandler>();
@@ -35,7 +35,7 @@ public class MatchManager : MonoBehaviour, IService
 
     private void OnReadyToStartPlayerTransition()
     {
-        _roomTransitionHandler.ActivatePlayerTransition(() => _testBattleManager.InitializeBattle());
+        _roomTransitionHandler.ActivatePlayerTransition(() => _battleManager.InitializeBattle());
     }
 
     private void OnReadyToUpdateRoom()

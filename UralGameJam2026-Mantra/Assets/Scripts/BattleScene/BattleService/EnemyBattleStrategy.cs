@@ -14,25 +14,28 @@ public class EnemyBattleStrategy : BattleStrategy
 
     public override async UniTask TrySetUnit(Unit unit = null, Action callback = null, CancellationToken token = default)
     {
-        var canMoving = _awaiableUnits.Where(x => x.UnitTurn.CanMove);
-        var aliveUnits = _battleManager.GetAliveUnits();
-
-        var indexSource = Random.Range(0, canMoving.Count());
-        var indexTarget = Random.Range(0, aliveUnits.Count);
-
-        var target = aliveUnits.ElementAt(indexTarget);
-        var source = _awaiableUnits.ElementAt(indexSource);
-
-        _initiatorUnit.Value = source;
-        _selectedUnit.Value = target;
-
-        await UseActionOn(callback, token);
+        await DoSetUnit(callback, token);
     }
 
-    private async UniTask DoSetUnit(Unit unit = null, Action callback = null, CancellationToken token = default)
+    private async UniTask DoSetUnit(Action callback = null, CancellationToken token = default)
     {
         do
         {
+            var canMoving = _awaiableUnits.Where(x => x.UnitTurn.CanMove);
+            var aliveUnits = _battleManager.GetAliveUnits();
+
+            var indexSource = Random.Range(0, canMoving.Count());
+            var indexTarget = Random.Range(0, aliveUnits.Count);
+
+            var target = aliveUnits.ElementAt(indexTarget);
+            var source = canMoving.ElementAt(indexSource);
+
+            source.UnitTurn.SetMove(false);
+            _awaiableUnits.Remove(source);
+
+            _initiatorUnit.Value = source;
+            _selectedUnit.Value = target;
+
             await UseActionOn(callback, token);
         } while (CanMoves());
     }
@@ -52,9 +55,6 @@ public class EnemyBattleStrategy : BattleStrategy
             case UnitRelationship.Enemy: await source.Use<AttackAction>(target); break;
         }
 
-        source.UnitTurn.SetMove(false);
-        _awaiableUnits.Remove(source);
-
         _initiatorUnit.Value = null;
         _selectedUnit.Value = null;
 
@@ -64,5 +64,7 @@ public class EnemyBattleStrategy : BattleStrategy
         {
             callback?.Invoke();
         }
+
+        _battleManager.CheckParty();
     }
 }

@@ -20,7 +20,6 @@ public class BattleManager : MonoBehaviour, IService
     public ReadOnlyReactiveProperty<Unit> Current => _currentUnit;
 
     private MatchManager _matchManager;
-    private PartyManager _partyManager;
 
     private Turn _currentTurn;
     private BattleStrategy _currentPipeline;
@@ -28,12 +27,11 @@ public class BattleManager : MonoBehaviour, IService
     private CancellationTokenSource _tokenSource;
     private CancellationToken _token;
 
+    private bool _canPlayerMove = true;
+    
     public void Init()
     {
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
-        _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
-
-        InitializeFirstBattle();
     }
 
     public void Cancel()
@@ -45,79 +43,39 @@ public class BattleManager : MonoBehaviour, IService
         _token = _tokenSource.Token;
     }
 
-    public void InitializeFirstBattle()
-    {
-        _currentTurn = Turn.Player;
-
-        Action callback = () =>
-        {
-            _enemyParty.Members.Reverse();
-
-            OnBattleStarted?.Invoke();
-
-            Setup();
-            DetermineTurn().Forget();
-        };
-
-        _partyManager.InitializeEnemyParty(4);
-        _partyManager.InitializePlayerParty(4);
-    }
-
     public void InitializeBattle()
     {
         _currentTurn = Turn.Player;
+        _enemyParty.Members.Reverse();
 
-        Action callback = () =>
-        {
-            _enemyParty.Members.Reverse();
-
-            OnBattleStarted?.Invoke();
-            Setup();
-        };
-
-        _partyManager.PlacePlayerParty(callback);
-        _partyManager.InitializeEnemyParty(4);
+        OnBattleStarted?.Invoke();
+        Setup();
+        DetermineTurn().Forget();
     }
 
-    public void TrySetUnit(Unit unit)
+    public async UniTaskVoid TrySetUnit(Unit unit)
     {
-        if (_currentPipeline == null) return;
+        if (_currentPipeline == null || !_canPlayerMove || _currentPipeline is EnemyBattleStrategy) return;
 
         Action callback = () =>
         {
-            _currentTurn = _currentTurn == Turn.Player ? Turn.Bot : Turn.Player;
+            _currentTurn = ReverseTurn();
 
             Setup();
             CheckBattlefield();
         };
 
-        _currentPipeline.TrySetUnit(unit, callback, _token);
+        _canPlayerMove = false;
+
+        await _currentPipeline.TrySetUnit(unit, callback, _token);
+
+        _canPlayerMove = true;
     }
+
 
     private void CheckBattlefield()
     {
-        var units = GetAliveUnits();
-
-        var playerUnits = units.Any(x => IsPlayerPartyMember(x));
-        var enemyUnits = units.Any(x => IsEnemyPartyMember(x));
-
-        if (!playerUnits)
-        {
-            print("enemy won");
-            _currentPipeline = null;
-            _matchManager.DeclareDefeat();
-
-            return;
-        }
-
-        if (!enemyUnits)
-        {
-            print("player won");
-            _currentPipeline = null;
-            _matchManager.DeclareVictory();
-
-            return;
-        }
+        CheckParty();
 
         DetermineTurn().Forget();
     }
@@ -130,6 +88,7 @@ public class BattleManager : MonoBehaviour, IService
         {
             if (!unit.IsAlive) _allUnits.Remove(unit);
             unit.UpdateUIPosition();
+            unit.ShowHealthbars();
 
             _allUnits.Add(unit);
         }
@@ -138,6 +97,7 @@ public class BattleManager : MonoBehaviour, IService
         {
             if (!unit.IsAlive) _allUnits.Remove(unit);
             unit.UpdateUIPosition();
+            unit.ShowHealthbars();
 
             _allUnits.Add(unit);
         }
@@ -164,6 +124,13 @@ public class BattleManager : MonoBehaviour, IService
         }
     }
 
+    private Turn ReverseTurn()
+    {
+        var turn = _currentTurn == Turn.Player ? Turn.Bot : Turn.Player;
+
+        return turn;
+    }
+
     public List<Unit> GetAliveUnits()
     {
         var units = _allUnits.Where(x => x.IsAlive).ToList();
@@ -183,7 +150,7 @@ public class BattleManager : MonoBehaviour, IService
     {
         Action callback = () =>
         {
-            _currentTurn = _currentTurn == Turn.Player ? Turn.Bot : Turn.Player;
+            _currentTurn = ReverseTurn();
             _currentPipeline = null;
 
             CheckBattlefield();
@@ -191,6 +158,36 @@ public class BattleManager : MonoBehaviour, IService
 
         await _currentPipeline.TrySetUnit(callback: callback, token: _token);
 
+    }
+
+    public void CheckParty(Action callback = null)
+    {
+        var units = GetAliveUnits();
+
+        var playerUnits = units.Any(x => IsPlayerPartyMember(x));
+        var enemyUnits = units.Any(x => IsEnemyPartyMember(x));
+
+        Cancel();
+
+        if (!playerUnits)
+        {
+            _currentPipeline = null;
+            _matchManager.DeclareDefeat();
+
+            callback?.Invoke();
+
+            return;
+        }
+
+        if (!enemyUnits)
+        {
+            _currentPipeline = null;
+            _matchManager.DeclareVictory();
+
+            callback?.Invoke();
+
+            return;
+        }
     }
 
     public bool IsPlayerTurn()
@@ -218,6 +215,11 @@ public class BattleManager : MonoBehaviour, IService
         if (_currentPipeline == null) return UnitRelationship.None;
 
         return _currentPipeline.GetRelationShipToCurrent(unit);
+    }
+
+    private void OnDestroy()
+    {
+        Cancel();
     }
 }
 

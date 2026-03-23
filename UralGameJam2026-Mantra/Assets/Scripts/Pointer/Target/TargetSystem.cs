@@ -38,6 +38,6 @@ public class TargetSystem : MonoBehaviour
 
         if (battle.IsEnemyPartyMember(battle.Current.CurrentValue)) return;
 
-        battle.TrySetUnit(Current.Unit);
+        battle.TrySetUnit(Current.Unit).Forget();
     }
 }

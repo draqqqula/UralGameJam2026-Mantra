@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 public class BattleStrategy
 {
@@ -37,14 +38,15 @@ public class BattleStrategy
             return;
         }
 
-        if (!unit.UnitTurn.CanMove) return;
-        if (!unit.IsAlive) return;
-
-        if (_initiatorUnit.Value == null && _battleManager.IsPlayerPartyMember(unit))
+        if (!_initiatorUnit.Value && _battleManager.IsPlayerPartyMember(unit) && unit.UnitTurn.CanMove)
         {
             _initiatorUnit.Value = unit;
             return;
         }
+
+        if (!_initiatorUnit.Value) return;
+
+        RemoveTurn();
 
         _selectedUnit.Value = unit;
         await UseActionOn(callback, token);
@@ -54,9 +56,6 @@ public class BattleStrategy
     {
         var source = _initiatorUnit.Value;
         var target = _selectedUnit.Value;
-
-        source.UnitTurn.SetMove(false);
-        _awaiableUnits.Remove(source);
 
         var relationship = GetRelationship(source, target);
         switch (relationship)
@@ -75,6 +74,16 @@ public class BattleStrategy
         {
             callback?.Invoke();
         }
+
+        _battleManager.CheckParty();
+    }
+
+    public void RemoveTurn()
+    {
+        if (_initiatorUnit.Value == null) return;
+
+        _initiatorUnit.Value.UnitTurn.SetMove(false);
+        _awaiableUnits.Remove(_initiatorUnit.Value);
     }
 
     public UnitRelationship GetRelationship(Unit unitA, Unit unitB)
