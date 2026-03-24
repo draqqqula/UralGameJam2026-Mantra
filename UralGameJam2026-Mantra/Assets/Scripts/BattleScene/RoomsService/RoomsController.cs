@@ -23,4 +23,9 @@ public class RoomsController : MonoBehaviour, IService
     {
         return CurrentRoom + 1 >= RoomsCount;
     }
+
+    public bool IsFirstRoom()
+    {
+        return CurrentRoom == 0;
+    }
 }
