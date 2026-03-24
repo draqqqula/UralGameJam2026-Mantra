@@ -2,9 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UnitInfoView : MonoBehaviour
+public class UnitBaseInfoView : MonoBehaviour
 {
-    [SerializeField] private GameObject _viewObject, _statusesObject;
+    [SerializeField] private GameObject _viewObject;
     [SerializeField] private Image _unitImage;
     [SerializeField] private TextMeshProUGUI _healthText;
     [SerializeField] private TextMeshProUGUI _defenseText;
@@ -20,18 +20,29 @@ public class UnitInfoView : MonoBehaviour
 
     private void Start()
     {
-        _targetSystem = TargetSystem.Instance;
+        _unitImage.material = null;
 
-        _targetSystem.OnSetTarget += DrawInfo;
+        _targetSystem = TargetSystem.Instance;
+        _targetSystem.OnSetTarget += DrawBaseInfo;
     }
 
-    private void DrawInfo(Targetable target)
+    public void ShowView()
+    {
+        _viewObject.SetActive(true);
+    }
+
+    public void HideView()
+    {
+        _viewObject.SetActive(false);
+    }
+
+    private void DrawBaseInfo(Targetable target)
     {
         var unit = target.Unit;
 
         if (unit == null)
         {
-            _unitImage.material = null;
+            ResetInfo();
 
             return;
         }
@@ -40,12 +51,24 @@ public class UnitInfoView : MonoBehaviour
         _defenseText.text = unit.Health.CurrentDefense.ToString();
         _damageText.text = $"{unit.Damage.MinDamage.ModValue}-{unit.Damage.MaxDamage.ModValue}";
         _critChanceText.text = $"{unit.Damage.CritChance.ModValue * 100}%";
-        _critMultiText.text = $"{unit.Damage.CritMultiplyer.ModValue * 100}x";
+        _critMultiText.text = $"{unit.Damage.CritMultiplyer.ModValue}x";
         _nameText.text = unit.UnitName;
 
         ChangeCameraPosition(unit.RenderCameraPoint);
 
         _unitImage.material = _material;
+    }
+
+    private void ResetInfo()
+    {
+        _unitImage.material = null;
+
+        _healthText.text = $"0/0";
+        _defenseText.text = "0";
+        _damageText.text = $"0-0";
+        _critChanceText.text = $"0%";
+        _critMultiText.text = $"0x";
+        _nameText.text = string.Empty;
     }
 
     private void ChangeCameraPosition(Transform point)
@@ -55,6 +78,6 @@ public class UnitInfoView : MonoBehaviour
 
     private void OnDestroy()
     {
-        _targetSystem.OnSetTarget -= DrawInfo;
+        _targetSystem.OnSetTarget -= DrawBaseInfo;
     }
 }

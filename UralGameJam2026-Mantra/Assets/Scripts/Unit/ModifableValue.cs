@@ -16,7 +16,10 @@ public class ModifableValue
 
     public void ApplyModifier(Modifier modifier)
     {
-        var effect = new ModifierEffect(modifier.ModifierTurns, modifier.Multiplyer);
+        var effect = new ModifierEffect(modifier.ModifierTurns, 
+            modifier.Multiplyer, 
+            modifier.ModifierName, 
+            modifier.ModifierDescription);
         Modifiers.Add(effect);
 
         ModValue = _value;
@@ -42,10 +45,13 @@ public class ModifierEffect
 {
     public int Turn;
     public readonly float Multiplyer;
+    public readonly string Name, Description;
 
-    public ModifierEffect(int turn, float multiplyer)
+    public ModifierEffect(int turn, float multiplyer, string name, string description)
     {
         Turn = turn;
         Multiplyer = multiplyer;
+        Name = name;
+        Description = description;
     }
 }

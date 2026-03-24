@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class UnitAction : MonoBehaviour
 {
+    public string ActionName;
+    public string ActionDescription;
     protected float _animDelay;
     protected Unit _person, _target;
 
