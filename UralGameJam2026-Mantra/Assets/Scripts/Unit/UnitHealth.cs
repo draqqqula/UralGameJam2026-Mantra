@@ -9,6 +9,9 @@ public class UnitHealth : IDisposable
     public Action<float> OnTakeDamage;
     public Action<float> OnHeal;
 
+    public Action<float> OnChangeMaxHealth;
+    public Action<float> OnChangeCurrentHealth;
+
     public Action DrawHealth;
     public float MaxHealth { get; set; }
     public float MaxDefense { get; set; }
@@ -31,8 +34,8 @@ public class UnitHealth : IDisposable
 
     public void ApplyDamage(float damage)
     {
-        var defensePercent = Mathf.Clamp01(CurrentDefense / damage);
-        var calcDamage = damage * defensePercent;
+        var defensePercent = damage / CurrentDefense;
+        var calcDamage = damage / defensePercent;
 
         OnTakeDamage?.Invoke(calcDamage);
     }

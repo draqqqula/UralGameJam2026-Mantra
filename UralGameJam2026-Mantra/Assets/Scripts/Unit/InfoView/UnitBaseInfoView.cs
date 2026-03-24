@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UnitBaseInfoView : MonoBehaviour
+public class UnitBaseInfoView : MonoBehaviour, IService
 {
     [SerializeField] private GameObject _viewObject;
     [SerializeField] private Image _unitImage;
@@ -17,6 +17,11 @@ public class UnitBaseInfoView : MonoBehaviour
     [SerializeField] private Material _material;
 
     private TargetSystem _targetSystem;
+    private Unit _unit;
+
+    private (float, float) _damage;
+    private (float, float) _health;
+    private (float, float ) _crit;
 
     private void Start()
     {
@@ -38,28 +43,28 @@ public class UnitBaseInfoView : MonoBehaviour
 
     private void DrawBaseInfo(Targetable target)
     {
-        var unit = target.Unit;
+        UpdateUnit(ref _unit, target.Unit);
 
-        if (unit == null)
+        if (_unit == null)
         {
             ResetInfo();
 
             return;
         }
 
-        _healthText.text = $"{unit.Health.CurrentHealth}/{unit.Health.MaxHealth}";
-        _defenseText.text = unit.Health.CurrentDefense.ToString();
-        _damageText.text = $"{unit.Damage.MinDamage.ModValue}-{unit.Damage.MaxDamage.ModValue}";
-        _critChanceText.text = $"{unit.Damage.CritChance.ModValue * 100}%";
-        _critMultiText.text = $"{unit.Damage.CritMultiplyer.ModValue}x";
-        _nameText.text = unit.UnitName;
+        _healthText.text = $"{_unit.Health.CurrentHealth}/{_unit.Health.MaxHealth}";
+        _defenseText.text = _unit.Health.CurrentDefense.ToString();
+        _damageText.text = $"{_unit.Damage.MinDamage.ModValue}-{_unit.Damage.MaxDamage.ModValue}";
+        _critChanceText.text = $"{_unit.Damage.CritChance.ModValue * 100}%";
+        _critMultiText.text = $"{_unit.Damage.CritMultiplyer.ModValue}x";
+        _nameText.text = _unit.UnitName;
 
-        ChangeCameraPosition(unit.RenderCameraPoint);
+        ChangeCameraPosition(_unit.RenderCameraPoint);
 
         _unitImage.material = _material;
     }
 
-    private void ResetInfo()
+    public void ResetInfo()
     {
         _unitImage.material = null;
 
@@ -74,6 +79,57 @@ public class UnitBaseInfoView : MonoBehaviour
     private void ChangeCameraPosition(Transform point)
     {
         _renderTextureCamera.transform.localPosition = point.position;
+    }
+
+    private void UpdateUnit(ref Unit previous, Unit current)
+    {
+        if(previous != null)
+        {
+            previous.Damage.MinDamage.OnUpdateValue -= UpdateMinDamageInfo;
+            previous.Damage.MaxDamage.OnUpdateValue -= UpdateMaxDamageInfo;
+            previous.Damage.CritMultiplyer.OnUpdateValue -= UpdateCritMultiInfo;
+            previous.Damage.CritChance.OnUpdateValue -= UpdateCritChanceInfo;
+            previous.Health.OnChangeMaxHealth -= UpdateMaxHealth;
+            previous.Health.OnChangeCurrentHealth -= UpdateCurrentHealth;
+        }
+
+        previous = current;
+
+        previous.Damage.MinDamage.OnUpdateValue += UpdateMinDamageInfo;
+        previous.Damage.MaxDamage.OnUpdateValue += UpdateMaxDamageInfo;
+        previous.Damage.CritMultiplyer.OnUpdateValue += UpdateCritMultiInfo;
+        previous.Damage.CritChance.OnUpdateValue += UpdateCritChanceInfo;
+        previous.Health.OnChangeMaxHealth += UpdateMaxHealth;
+        previous.Health.OnChangeCurrentHealth += UpdateCurrentHealth;
+    }
+
+    private void UpdateMaxHealth(float value)
+    {
+        _health.Item1 = value;
+    }
+    private void UpdateCurrentHealth(float value)
+    {
+        _health.Item2 = value;
+    }
+
+    private void UpdateCritMultiInfo(float value)
+    {
+        _crit.Item2 = value;
+    }
+
+    private void UpdateCritChanceInfo(float value)
+    {
+        _crit.Item1 = value;
+    }
+
+    private void UpdateMaxDamageInfo(float value)
+    {
+        _damage.Item2 = value;
+    }
+
+    private void UpdateMinDamageInfo(float value)
+    {
+        _damage.Item1 = value;
     }
 
     private void OnDestroy()

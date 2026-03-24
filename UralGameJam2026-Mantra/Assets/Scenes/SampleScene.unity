@@ -973,6 +973,7 @@ MonoBehaviour:
   _battleManager: {fileID: 13960800}
   _nameGenerator: {fileID: 1683864739}
   _turnManager: {fileID: 1500171582}
+  _unitBaseInfoView: {fileID: 1469638964}
   _cameraMovementHandler: {fileID: 519420034}
   _environmentGenerator: {fileID: 1646339276}
 --- !u!1 &248877424

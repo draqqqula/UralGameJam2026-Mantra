@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ModifableValue
 {
+    public Action<float> OnUpdateValue;
     public List<ModifierEffect> Modifiers { get; private set; }
 
     public float ModValue { get; private set; }
@@ -28,6 +30,8 @@ public class ModifableValue
         {
             ModValue *= mod.Multiplyer;
         }
+
+        OnUpdateValue?.Invoke(ModValue);
     }
 
     public void CheckModifiers()
