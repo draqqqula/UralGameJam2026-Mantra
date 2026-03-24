@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    public Transform RenderCameraPoint;
     public bool IsAlive => Health.CurrentHealth > 0;
     public string UnitName;
     public bool ShouldShowAura = true;
