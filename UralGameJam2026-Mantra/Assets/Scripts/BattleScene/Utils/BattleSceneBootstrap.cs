@@ -15,6 +15,7 @@ public class BattleSceneBootstrap : MonoBehaviour
     [SerializeField] private NameGenerator _nameGenerator;
     [SerializeField] private TurnManager _turnManager;
     [SerializeField] private UnitBaseInfoView _unitBaseInfoView;
+    [SerializeField] private StatRandomizer _statRandomizer;
 
     [SerializeField] private CameraMovementHandler _cameraMovementHandler;
     [SerializeField] private EnvironmentGenerator _environmentGenerator;
@@ -38,6 +39,7 @@ public class BattleSceneBootstrap : MonoBehaviour
         ServiceLocator.Instance.RegisterService(_nameGenerator);
         ServiceLocator.Instance.RegisterService(_turnManager);
         ServiceLocator.Instance.RegisterService(_unitBaseInfoView);
+        ServiceLocator.Instance.RegisterService(_statRandomizer);
         
         ServiceLocator.Instance.RegisterService(_cameraMovementHandler);
         ServiceLocator.Instance.RegisterService(_environmentGenerator);

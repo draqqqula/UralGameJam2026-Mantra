@@ -21,7 +21,7 @@ public class UnitBaseInfoView : MonoBehaviour, IService
 
     private (float, float) _damage;
     private (float, float) _health;
-    private (float, float ) _crit;
+    private (float, float) _crit;
 
     private void Start()
     {
@@ -52,11 +52,20 @@ public class UnitBaseInfoView : MonoBehaviour, IService
             return;
         }
 
-        _healthText.text = $"{_unit.Health.CurrentHealth}/{_unit.Health.MaxHealth}";
+        _damage.Item1 = _unit.Damage.MinDamage.ModValue;
+        _damage.Item2 = _unit.Damage.MaxDamage.ModValue;
+
+        _health.Item1 = _unit.Health.MaxHealth;
+        _health.Item2 = _unit.Health.CurrentHealth;
+
+        _crit.Item1 = _unit.Damage.CritChance.ModValue;
+        _crit.Item2 = _unit.Damage.CritMultiplyer.ModValue;
+
+        _healthText.text = $"{_health.Item2}/{_health.Item1}";
         _defenseText.text = _unit.Health.CurrentDefense.ToString();
-        _damageText.text = $"{_unit.Damage.MinDamage.ModValue}-{_unit.Damage.MaxDamage.ModValue}";
-        _critChanceText.text = $"{_unit.Damage.CritChance.ModValue * 100}%";
-        _critMultiText.text = $"{_unit.Damage.CritMultiplyer.ModValue}x";
+        _damageText.text = $"{_damage.Item1}-{_damage.Item2}";
+        _critChanceText.text = $"{_crit.Item1 * 100}%";
+        _critMultiText.text = $"{_crit.Item2}x";
         _nameText.text = _unit.UnitName;
 
         ChangeCameraPosition(_unit.RenderCameraPoint);
@@ -106,25 +115,35 @@ public class UnitBaseInfoView : MonoBehaviour, IService
     private void UpdateMaxHealth(float value)
     {
         _health.Item1 = value;
+
+        _healthText.text = $"{_health.Item2}/{_health.Item1}";
     }
     private void UpdateCurrentHealth(float value)
     {
         _health.Item2 = value;
+
+        _healthText.text = $"{_health.Item2}/{_health.Item1}";
     }
 
     private void UpdateCritMultiInfo(float value)
     {
         _crit.Item2 = value;
+
+        _critMultiText.text = $"{_crit.Item2 * 100}%";
     }
 
     private void UpdateCritChanceInfo(float value)
     {
         _crit.Item1 = value;
+
+        _critMultiText.text = $"{_crit.Item1}x";
     }
 
     private void UpdateMaxDamageInfo(float value)
     {
         _damage.Item2 = value;
+
+        _damageText.text = $"{_damage.Item1}-{_damage.Item2}";
     }
 
     private void UpdateMinDamageInfo(float value)
