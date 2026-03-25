@@ -85,7 +85,23 @@ public class PartyPlacer : MonoBehaviour
         }
     }
 
-    private void RotateMember(float direction, ref Unit member)
+    public void PlaceInParty(Unit unit)
+    {
+        var lastUnit = _partyMembers.Members[_partyMembers.Members.Count - 1];
+        var direction = _direction == PlaceDirection.Right ? 1f : -1f;
+        Vector2 prevPoint = lastUnit.transform.position;
+     
+        var member = unit.GetComponent<PartyMemberGap>();
+        var lastMember = lastUnit.GetComponent<PartyMemberGap>();
+
+        var step = _gap + lastMember.MemberGap + member.MemberGap;
+        var newPos = prevPoint + new Vector2(step * direction, 0);
+        
+        member.transform.SetParent(_partyMembers.transform);
+        member.transform.position = newPos;
+    }
+
+    public void RotateMember(float direction, ref Unit member)
     {
         if(direction == -1)
         {

@@ -26,8 +26,8 @@ public class UnitHealth : IDisposable
         MaxHealth = CurrentHealth = MaxDefaultDefense;
         MaxDefense = CurrentDefense = MaxDefaultHealth;
 
-        OnTakeDamage += TakeDamage;
-        OnHeal += Heal;
+        //OnTakeDamage += TakeDamage;
+        //OnHeal += Heal;
 
         DrawHealth?.Invoke();
     }
@@ -36,12 +36,14 @@ public class UnitHealth : IDisposable
     {
         var defensePercent = damage / CurrentDefense;
         var calcDamage = damage / defensePercent;
+        TakeDamage(calcDamage);
 
         OnTakeDamage?.Invoke(calcDamage);
     }
 
     public void ApplyHeal(float heal)
     {
+        Heal(heal);
         OnHeal?.Invoke(heal);
     }
 
@@ -52,7 +54,7 @@ public class UnitHealth : IDisposable
 
     private void TakeDamage(float damage)
     {
-        CurrentHealth -= damage;
+        CurrentHealth = Mathf.Clamp(CurrentHealth - damage, 0, MaxHealth);
         
         if(CurrentHealth <= 0)
         {

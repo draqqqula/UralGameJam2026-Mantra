@@ -63,6 +63,7 @@ public class BattleManager : MonoBehaviour, IService
 
         _unitInfo.ShowView();
         _enemyParty.Members.Reverse();
+        _matchManager.CurrentMatchState = MatchManager.State.Battle;
 
         OnBattleStarted?.Invoke();
         Setup();

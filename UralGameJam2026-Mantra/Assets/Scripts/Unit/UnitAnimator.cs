@@ -1,9 +1,11 @@
+using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(Unit))]
 public class UnitAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     private Unit _unit;
 
     private void Awake()
@@ -34,6 +36,11 @@ public class UnitAnimator : MonoBehaviour
     public void PlayDown()
     {
         Play(UnitAnimation.Down, out var _);
+    }
+
+    public Tween PlayFadeOutAnimation(float duration, AnimationCurve curve)
+    {
+        return _spriteRenderer.DOFade(0, duration).SetEase(curve);
     }
 
     private void OnDestroy()

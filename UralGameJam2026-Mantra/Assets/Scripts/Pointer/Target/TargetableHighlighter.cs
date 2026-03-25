@@ -37,11 +37,13 @@ public class TargetableHighlighter : MonoBehaviour
     private HighlightEffect GetEffect()
     {
         var battleManager = ServiceLocator.Instance.GetService<BattleManager>();
+        var matchManager = ServiceLocator.Instance.GetService<MatchManager>();
 
         var relationship = battleManager.GetRelationShipToCurrent(_targetable.Unit);
 
         if(battleManager.IsEnemyTurn()) return null;
-
+        if (matchManager.CurrentMatchState == MatchManager.State.Recrouting) return _selfEffect;
+        
         switch (relationship)
         {
             case UnitRelationship.Enemy: return _attackEffect;
