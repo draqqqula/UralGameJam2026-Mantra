@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ModifableValue
 {
+    public Action<float> OnUpdateValue;
     public List<ModifierEffect> Modifiers { get; private set; }
 
     public float ModValue { get; private set; }
@@ -16,7 +18,10 @@ public class ModifableValue
 
     public void ApplyModifier(Modifier modifier)
     {
-        var effect = new ModifierEffect(modifier.ModifierTurns, modifier.Multiplyer);
+        var effect = new ModifierEffect(modifier.ModifierTurns, 
+            modifier.Multiplyer, 
+            modifier.ModifierName, 
+            modifier.ModifierDescription);
         Modifiers.Add(effect);
 
         ModValue = _value;
@@ -25,6 +30,8 @@ public class ModifableValue
         {
             ModValue *= mod.Multiplyer;
         }
+
+        OnUpdateValue?.Invoke(ModValue);
     }
 
     public void CheckModifiers()
@@ -42,10 +49,13 @@ public class ModifierEffect
 {
     public int Turn;
     public readonly float Multiplyer;
+    public readonly string Name, Description;
 
-    public ModifierEffect(int turn, float multiplyer)
+    public ModifierEffect(int turn, float multiplyer, string name, string description)
     {
         Turn = turn;
         Multiplyer = multiplyer;
+        Name = name;
+        Description = description;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,6 +8,7 @@ public class TargetSystem : MonoBehaviour
     public static TargetSystem Instance;
 
     public Targetable Current { get; private set; }
+    public event Action<Targetable> OnSetTarget;
 
     private void Awake()
     {
@@ -30,6 +32,7 @@ public class TargetSystem : MonoBehaviour
 
         Current = newTarget;
         Current.SetTargeted(true);
+        OnSetTarget?.Invoke(Current);
     }
 
     public void SubmitAction()

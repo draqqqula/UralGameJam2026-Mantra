@@ -22,6 +22,7 @@ public class BattleManager : MonoBehaviour, IService
 
     private MatchManager _matchManager;
     private RoomsController _roomController;
+    private UnitBaseInfoView _unitInfo;
 
     private Turn _currentTurn = Turn.None;
     private BattleStrategy _currentPipeline;
@@ -35,6 +36,7 @@ public class BattleManager : MonoBehaviour, IService
     {
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
         _roomController = ServiceLocator.Instance.GetService<RoomsController>();
+        _unitInfo = ServiceLocator.Instance.GetService<UnitBaseInfoView>();
     }
 
     public void Cancel()
@@ -62,6 +64,7 @@ public class BattleManager : MonoBehaviour, IService
             SetPlayerTurn();
         }
 
+        _unitInfo.ShowView();
         _enemyParty.Members.Reverse();
 
         OnBattleStarted?.Invoke();
@@ -193,6 +196,9 @@ public class BattleManager : MonoBehaviour, IService
         {
             _currentPipeline = null;
             _matchManager.DeclareDefeat();
+
+            _unitInfo.HideView();
+            _unitInfo.ResetInfo();
 
             SetNoneTurn();
 

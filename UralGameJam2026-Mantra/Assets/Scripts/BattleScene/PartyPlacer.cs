@@ -89,6 +89,11 @@ public class PartyPlacer : MonoBehaviour
     {
         if(direction == -1)
         {
+            var updateRenderPoint = member.RenderCameraPoint.position;
+            updateRenderPoint.z = -updateRenderPoint.z;
+
+            member.RenderCameraPoint.position = updateRenderPoint;
+
             member.transform.eulerAngles = new Vector3(0, 180, 0);
         }
     }
