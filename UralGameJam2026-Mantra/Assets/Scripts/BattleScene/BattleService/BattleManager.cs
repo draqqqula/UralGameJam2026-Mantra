@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using TMPro;
 
 public class BattleManager : MonoBehaviour, IService
 {
@@ -20,8 +21,9 @@ public class BattleManager : MonoBehaviour, IService
     public ReadOnlyReactiveProperty<Unit> Current => _currentUnit;
 
     private MatchManager _matchManager;
+    private RoomsController _roomController;
 
-    private Turn _currentTurn;
+    private Turn _currentTurn = Turn.None;
     private BattleStrategy _currentPipeline;
 
     private CancellationTokenSource _tokenSource;
@@ -32,6 +34,7 @@ public class BattleManager : MonoBehaviour, IService
     public void Init()
     {
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
+        _roomController = ServiceLocator.Instance.GetService<RoomsController>();
     }
 
     public void Cancel()
@@ -43,9 +46,22 @@ public class BattleManager : MonoBehaviour, IService
         _token = _tokenSource.Token;
     }
 
+    public void SetPlayerTurn() => _currentTurn = Turn.Player;
+    public void SetEnemyTurn()
+    {
+        _currentTurn = Turn.Bot;
+        Setup();
+        DetermineTurn().Forget();
+    }
+    public void SetNoneTurn() => _currentTurn = Turn.None;
+
     public void InitializeBattle()
     {
-        _currentTurn = Turn.Player;
+        if (_roomController.IsFirstRoom())
+        {
+            SetPlayerTurn();
+        }
+
         _enemyParty.Members.Reverse();
 
         OnBattleStarted?.Invoke();
@@ -55,7 +71,7 @@ public class BattleManager : MonoBehaviour, IService
 
     public async UniTaskVoid TrySetUnit(Unit unit)
     {
-        if (_currentPipeline == null || !_canPlayerMove || _currentPipeline is EnemyBattleStrategy) return;
+        if (IsNoneTurn() || _currentPipeline == null || !_canPlayerMove || _currentPipeline is EnemyBattleStrategy) return;
 
         Action callback = () =>
         {
@@ -105,6 +121,8 @@ public class BattleManager : MonoBehaviour, IService
 
     private async UniTaskVoid DetermineTurn()
     {
+        if (IsNoneTurn()) return;
+
         if(IsPlayerTurn())
         {
             var alive = _playerParty.Members.Where(x => x.IsAlive).ToList();
@@ -148,6 +166,8 @@ public class BattleManager : MonoBehaviour, IService
 
     private async UniTask DoBotMove()
     {
+        if (IsNoneTurn()) return;
+
         Action callback = () =>
         {
             _currentTurn = ReverseTurn();
@@ -174,6 +194,8 @@ public class BattleManager : MonoBehaviour, IService
             _currentPipeline = null;
             _matchManager.DeclareDefeat();
 
+            SetNoneTurn();
+
             callback?.Invoke();
 
             return;
@@ -183,6 +205,8 @@ public class BattleManager : MonoBehaviour, IService
         {
             _currentPipeline = null;
             _matchManager.DeclareVictory();
+
+            SetNoneTurn();
 
             callback?.Invoke();
 
@@ -198,6 +222,11 @@ public class BattleManager : MonoBehaviour, IService
     public bool IsEnemyTurn()
     {
         return _currentTurn == Turn.Bot;
+    }
+
+    public bool IsNoneTurn()
+    {
+        return _currentTurn == Turn.None;
     }
 
     public bool IsPlayerPartyMember(Unit target)

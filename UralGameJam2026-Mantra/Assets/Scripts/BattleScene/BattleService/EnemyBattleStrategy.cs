@@ -10,6 +10,10 @@ public class EnemyBattleStrategy : BattleStrategy
 {
     public EnemyBattleStrategy(HashSet<Unit> units, BattleManager battleManager) : base(units, battleManager)
     {
+        foreach(Unit unit in units)
+        {
+            unit.UnitTurn.SetMove(true);
+        }
     }
 
     public override async UniTask TrySetUnit(Unit unit = null, Action callback = null, CancellationToken token = default)
