@@ -4,15 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class MatchManager : MonoBehaviour, IService
 {
+    [field:SerializeField] public State CurrentMatchState {get; set;}
+    
+    public enum State { Transiting, Battle, Recrouting }
+        
     private MatchResultHandler _matchResultHandler;
-    private WindowsService _windowsService;
-    
     private RoomsController _roomsController;
-    private RoomTransitionHandler _roomTransitionHandler;
-    private RoomInitializer _roomInitializer;
-    
     private DialoguePlayer _dialoguePlayer;
-    private BattleStarter  _battleStarter;
+    private NextRoomActivator _nextRoomActivator;
     
     public event Action OnBattleVictory;
     public event Action OnAllBattlesVictory;
@@ -21,30 +20,9 @@ public class MatchManager : MonoBehaviour, IService
     public void Init()
     {
         _matchResultHandler = ServiceLocator.Instance.GetService<MatchResultHandler>();
-        _windowsService = ServiceLocator.Instance.GetService<WindowsService>();
-        _battleStarter = ServiceLocator.Instance.GetService<BattleStarter>();
-        
         _roomsController = ServiceLocator.Instance.GetService<RoomsController>();
-        _roomTransitionHandler = ServiceLocator.Instance.GetService<RoomTransitionHandler>();
-        _roomInitializer = ServiceLocator.Instance.GetService<RoomInitializer>();
-        
         _dialoguePlayer = ServiceLocator.Instance.GetService<DialoguePlayer>();
-    }
-
-    public void DeclareNextBattle()
-    {
-        _roomsController.TryUpdateCurrentRoom();
-        _roomTransitionHandler.ActivateRoomTransition(OnReadyToUpdateRoom, OnReadyToStartPlayerTransition);
-    }
-
-    private void OnReadyToStartPlayerTransition()
-    {
-        _roomTransitionHandler.ActivatePlayerTransition(() => _battleStarter.StartBattleWithDialogueChance());
-    }
-
-    private void OnReadyToUpdateRoom()
-    {
-        _roomInitializer.UpdateRoom();
+        _nextRoomActivator = ServiceLocator.Instance.GetService<NextRoomActivator>();
     }
     
     public void DeclareVictory()
@@ -57,9 +35,8 @@ public class MatchManager : MonoBehaviour, IService
         }
         else
         {
-            _dialoguePlayer.PlayDialogueWithChance("Victory", 2,
-                () => _windowsService.ActivateWindow(WindowsService.WindowType.NextRoom));
-            
+            _dialoguePlayer.PlayDialogueWithChance("Victory", 2, () => CurrentMatchState = State.Recrouting);
+            _nextRoomActivator.ActivateNextRoomUI();
             OnBattleVictory?.Invoke();
         }
     }

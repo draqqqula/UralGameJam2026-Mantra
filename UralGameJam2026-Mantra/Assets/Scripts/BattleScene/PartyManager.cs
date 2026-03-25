@@ -10,6 +10,8 @@ public class PartyManager : MonoBehaviour, IService
     [SerializeField] private PartyPlacer _enemyPartyPlacer;
     [SerializeField] private PartyPlacer _playerPartyPlacer;
     
+    public PartyPlacer PlayerPartyPlacer => _playerPartyPlacer;
+    
     [SerializeField] private Unit _memberPrefab;
     
     public void InitializePlayerParty(int count)
@@ -23,6 +25,8 @@ public class PartyManager : MonoBehaviour, IService
 
             var name = ServiceLocator.Instance.GetService<NameGenerator>().GenerateName();
             unit.SetName(name);
+
+            ServiceLocator.Instance.GetService<StatRandomizer>().InitUnit(unit);
 
             units.Add(unit);
         }
@@ -86,6 +90,8 @@ public class PartyManager : MonoBehaviour, IService
             unit.SetName(name);
             unit.ShouldShowAura = false;
 
+            ServiceLocator.Instance.GetService<StatRandomizer>().InitUnit(unit);
+
             units.Add(unit);
         }
         InitializeEnemyParty(units);
@@ -110,5 +116,15 @@ public class PartyManager : MonoBehaviour, IService
     public void RemoveEnemyPartyMember(Unit unit)
     {
         EnemyParty.RemoveMember(unit);
+    }
+    
+    public bool IsOnEnemyParty(Unit unit)
+    {
+        return EnemyParty.Members.Contains(unit);
+    }
+
+    public bool IsOnPlayerParty(Unit unit)
+    {
+        return PlayerParty.Members.Contains(unit);
     }
 }

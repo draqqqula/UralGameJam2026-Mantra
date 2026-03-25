@@ -23,25 +23,32 @@ public class UnitHealth : IDisposable
 
     public void Setup()
     {
-        MaxHealth = CurrentHealth = MaxDefaultDefense;
-        MaxDefense = CurrentDefense = MaxDefaultHealth;
+        SetupValue();
 
-        OnTakeDamage += TakeDamage;
-        OnHeal += Heal;
+        //OnTakeDamage += TakeDamage;
+        //OnHeal += Heal;
 
         DrawHealth?.Invoke();
     }
 
+    public void SetupValue()
+    {
+        MaxHealth = CurrentHealth = MaxDefaultDefense;
+        MaxDefense = CurrentDefense = MaxDefaultHealth;
+    }
+
     public void ApplyDamage(float damage)
     {
-        var defensePercent = damage / CurrentDefense;
-        var calcDamage = damage / defensePercent;
+        var defensePercent = 1 - Mathf.Clamp01(damage / CurrentDefense);
+        var calcDamage = Mathf.Round(damage * defensePercent);
+        TakeDamage(calcDamage);
 
         OnTakeDamage?.Invoke(calcDamage);
     }
 
     public void ApplyHeal(float heal)
     {
+        Heal(heal);
         OnHeal?.Invoke(heal);
     }
 
@@ -52,7 +59,7 @@ public class UnitHealth : IDisposable
 
     private void TakeDamage(float damage)
     {
-        CurrentHealth -= damage;
+        CurrentHealth = Mathf.Clamp(CurrentHealth - damage, 0, MaxHealth);
         
         if(CurrentHealth <= 0)
         {

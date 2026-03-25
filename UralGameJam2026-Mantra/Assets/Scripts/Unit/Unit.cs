@@ -33,10 +33,6 @@ public class Unit : MonoBehaviour
 
     public event Action OnDestroyed; 
         
-    private void Awake()
-    {
-        Init();
-    }
 
     private void Start()
     {

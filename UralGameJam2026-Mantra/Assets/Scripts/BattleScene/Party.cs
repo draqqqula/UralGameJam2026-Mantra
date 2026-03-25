@@ -40,10 +40,28 @@ public class Party : MonoBehaviour
         Members.Add(member);
     }
 
+    public void InsertMember(int index, Unit member)
+    {
+        if(Members.Count == _maxCount) return;
+        if(Members.Contains(member)) Members.Remove(member);
+        Members.Insert(index, member);
+    }
+
     public void RemoveMember(Unit member)
     {
         if (!Members.Contains(member)) return;
         Members.Remove(member);
+    }
+
+    public int IndexOfMember(Unit member)
+    {
+        return Members.IndexOf(member);
+    }
+
+    public void DestroyMember(Unit member)
+    {
+        RemoveMember(member);
+        Destroy(member.gameObject);
     }
 
     public List<Unit> GetRandomMembers(int count)

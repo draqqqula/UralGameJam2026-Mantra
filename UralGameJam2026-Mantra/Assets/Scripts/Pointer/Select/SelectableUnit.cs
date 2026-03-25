@@ -20,7 +20,7 @@ public class SelectableUnit : MonoBehaviour
         var currentUnit = battle.GetCurrentUnit();
 
         var isInitiator = _unit == currentUnit;
-        var isTargeted =  TargetSystem.Instance.Current.Unit == _unit;
+        var isTargeted = TargetSystem.Instance.Current != null && TargetSystem.Instance.Current.Unit == _unit;
         var noneSelected = currentUnit == null;
         var canMove = _turn.CanMove;
 

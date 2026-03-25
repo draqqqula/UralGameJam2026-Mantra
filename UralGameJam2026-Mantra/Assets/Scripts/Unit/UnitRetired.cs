@@ -11,4 +11,9 @@ public class UnitRetired : MonoBehaviour
 
         _unit.Health.OnDeath += () => _highlightEffect.SetActive(true);
     }
+
+    public void Resurrect()
+    {
+        _highlightEffect.SetActive(false);
+    }
 }
