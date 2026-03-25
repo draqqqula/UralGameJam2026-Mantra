@@ -59,10 +59,7 @@ public class BattleManager : MonoBehaviour, IService
 
     public void InitializeBattle()
     {
-        if (_roomController.IsFirstRoom())
-        {
-            SetPlayerTurn();
-        }
+        SetPlayerTurn();
 
         _unitInfo.ShowView();
         _enemyParty.Members.Reverse();
