@@ -26,8 +26,16 @@ public class TargetableHighlighter : MonoBehaviour
         _attackEffect.SetActive(false);
         _supportEffect.SetActive(false);
 
+
         if (targetable)
         {
+            var battle = ServiceLocator.Instance.GetService<BattleManager>();
+            if (battle != null && battle.IsSelecting())
+            {
+                _selfEffect.SetActive(true);
+                return;
+            }
+
             var effect = GetEffect();
 
             if(effect) effect.SetActive(true);

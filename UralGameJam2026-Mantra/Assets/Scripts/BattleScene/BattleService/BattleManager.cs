@@ -249,6 +249,18 @@ public class BattleManager : MonoBehaviour, IService
         return _currentPipeline.GetRelationShipToCurrent(unit);
     }
 
+    public Unit GetCurrentUnit()
+    {
+        if (_currentPipeline == null) return null;
+
+        return _currentPipeline.InitiatorUnit.CurrentValue;
+    }
+
+    public bool IsSelecting()
+    {
+        return GetCurrentUnit() == null;
+    }
+
     private void OnDestroy()
     {
         Cancel();

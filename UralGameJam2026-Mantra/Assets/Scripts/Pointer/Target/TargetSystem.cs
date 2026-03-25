@@ -25,6 +25,11 @@ public class TargetSystem : MonoBehaviour
             return;
         }
 
+        if (CheckSelectingCondition(newTarget))
+        {
+            return;
+        }
+
         if (Current != null)
         {
             Current.SetTargeted(false);
@@ -33,6 +38,19 @@ public class TargetSystem : MonoBehaviour
         Current = newTarget;
         Current.SetTargeted(true);
         OnSetTarget?.Invoke(Current);
+    }
+
+    private bool CheckSelectingCondition(Targetable newTarget)
+    {
+        var battle = ServiceLocator.Instance.GetService<BattleManager>();
+        var selecting = battle.IsSelecting();
+        if (selecting)
+        {
+            var partyMember = battle.IsPlayerPartyMember(newTarget.Unit);
+            var canMove = newTarget.Unit.UnitTurn.CanMove;
+            return !(partyMember && canMove);
+        }
+        return false;
     }
 
     public void SubmitAction()
