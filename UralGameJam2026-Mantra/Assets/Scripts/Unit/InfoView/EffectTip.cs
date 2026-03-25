@@ -25,6 +25,8 @@ public class EffectTip : MonoBehaviour
 
     public void Show(string message)
     {
+        if (string.IsNullOrEmpty(message)) return;
+
         _tipObject.SetActive(true);
         _effectTipText.text = message;
     }
