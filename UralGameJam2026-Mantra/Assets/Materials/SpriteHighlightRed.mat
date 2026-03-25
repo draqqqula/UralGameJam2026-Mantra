@@ -43,7 +43,7 @@ Material:
     m_Floats:
     - _AlphaThreshold: 0.06
     - _EnableExternalAlpha: 0
-    - _OutlineRadius: 42.840424
+    - _OutlineRadius: 48.24934
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

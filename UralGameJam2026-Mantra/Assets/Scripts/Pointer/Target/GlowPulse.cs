@@ -3,11 +3,17 @@ using UnityEngine;
 
 public class GlowPulse : MonoBehaviour
 {
-    [SerializeField] private Material _material;
+    [SerializeField] private string _materialName;
     [SerializeField] private AnimationCurve _curve;
     [SerializeField] private float _defaultValue;
     [SerializeField] private float _amplitude;
     [SerializeField] private float _speed = 1f;
+    private Material _material;
+
+    void Start()
+    {
+        _material = MaterialRepository.Instance.MaterialByKey[_materialName];
+    }
 
     void Update()
     {
