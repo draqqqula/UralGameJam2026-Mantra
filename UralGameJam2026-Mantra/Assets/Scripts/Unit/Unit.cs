@@ -41,15 +41,6 @@ public class Unit : MonoBehaviour
 
         UnitTurn = GetComponent<UnitTurn>();
 
-        if (ShouldShowAura)
-        {
-            var aura = Instantiate(_auraPrefab, canvas.transform);
-            aura.transform.position = _auraPoint.position;
-            aura.Init(this, UnitTurn);
-
-            _auraTransform = aura.transform;
-        }
-
         var healthbar =  Instantiate(_healthbarPrefab, canvas.transform);
         healthbar.transform.position = _healthbarPoint.position;
         healthbar.Init(this);
