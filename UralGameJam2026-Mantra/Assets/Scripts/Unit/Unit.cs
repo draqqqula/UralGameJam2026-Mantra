@@ -2,8 +2,6 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -11,7 +9,7 @@ public class Unit : MonoBehaviour
     public Transform RenderCameraPoint;
     public bool IsAlive => Health.CurrentHealth > 0;
     public string UnitName;
-    public bool ShouldShowAura = true;
+    public bool ShouldCreateAura = true;
 
     public UnitHealth Health;
     public UnitDamage Damage;
@@ -41,13 +39,9 @@ public class Unit : MonoBehaviour
 
         UnitTurn = GetComponent<UnitTurn>();
 
-        if (ShouldShowAura)
+        if (ShouldCreateAura)
         {
-            var aura = Instantiate(_auraPrefab, canvas.transform);
-            aura.transform.position = _auraPoint.position;
-            aura.Init(this, UnitTurn);
-
-            _auraTransform = aura.transform;
+            InstantiateAura();
         }
 
         var healthbar =  Instantiate(_healthbarPrefab, canvas.transform);
@@ -55,6 +49,30 @@ public class Unit : MonoBehaviour
         healthbar.Init(this);
 
         _healthBarTransform = healthbar.transform; 
+    }
+    
+    public void InstantiateAura()
+    {
+        if (_auraTransform) return;
+ 
+        var canvas = ServiceLocator.Instance.GetService<UnitCanvas>();
+
+        var aura = Instantiate(_auraPrefab, canvas.transform);
+        aura.transform.position = _auraPoint.position;
+        aura.Init(this, UnitTurn);
+
+        _auraTransform = aura.transform;
+    }
+
+    public void UpdateRenderCameraPoint()
+    {
+        if(transform.eulerAngles.y == 180)
+        {
+            var point = RenderCameraPoint.transform.position;
+            point.z = -point.z;
+
+            RenderCameraPoint.transform.position = point;
+        }
     }
 
     public void UpdateUIPosition()
@@ -169,6 +187,10 @@ public class Unit : MonoBehaviour
 
     public void OnDestroy()
     {
+        if (_auraTransform)
+        {
+            Destroy(_auraTransform.gameObject);
+        }
         OnDestroyed?.Invoke();
     }
 }

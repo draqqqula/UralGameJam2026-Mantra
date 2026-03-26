@@ -216,8 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f27809bade9a6ee4898211fbefaf3af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActionName: 
-  ActionDescription: 
+  ActionInfo: {fileID: 11400000, guid: f044fb8fa45eafd46bc97b7f6c872b48, type: 2}
   _attackCooldown: 5
   _ultimateModifier: {fileID: 11400000, guid: d3f68514b6869f442bf78fe31d2c1018, type: 2}
 --- !u!1 &7318136119364406056
@@ -264,8 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444607536dc9f0748a647891b05aac59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActionName: 
-  ActionDescription: 
+  ActionInfo: {fileID: 11400000, guid: 0b89c9971441fed49a4d66153df708bd, type: 2}
 --- !u!1 &7318213688681915289
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,8 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba65882d20e5c5438a90f1fefbbf88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActionName: 
-  ActionDescription: 
+  ActionInfo: {fileID: 11400000, guid: c86a305096340fa42bbeefde85e1049e, type: 2}
   _skill: {fileID: 0}
 --- !u!1 &7637924686098206839
 GameObject:
@@ -492,7 +489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RenderCameraPoint: {fileID: 3491138236797506658}
   UnitName: "\u0410\u0431\u043E\u0431\u0430"
-  ShouldShowAura: 1
+  ShouldCreateAura: 1
   Health:
     MaxDefaultHealth: 25
     MaxDefaultDefense: 10

@@ -68,7 +68,7 @@ public class TargetSystem : MonoBehaviour
 
         if (_matchManager.CurrentMatchState == MatchManager.State.Battle)
         {
-            if (battle.IsEnemyPartyMember(battle.Current.CurrentValue)) return;
+            //if (battle.IsEnemyPartyMember(battle.Current.CurrentValue)) return;
             battle.TrySetUnit(Current.Unit).Forget();
         }
         else if (_matchManager.CurrentMatchState == MatchManager.State.Recrouting)
