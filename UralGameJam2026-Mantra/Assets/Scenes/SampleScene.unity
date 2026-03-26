@@ -3771,7 +3771,8 @@ MonoBehaviour:
   EnemyParty: {fileID: 547052237}
   _enemyPartyPlacer: {fileID: 1125828985}
   _playerPartyPlacer: {fileID: 442763605}
-  _memberPrefab: {fileID: 3462002425916617404, guid: d19417cee793bb74fb51d4341d095d29, type: 3}
+  _memberPrefabs:
+  - {fileID: 3462002425916617404, guid: d19417cee793bb74fb51d4341d095d29, type: 3}
 --- !u!1 &1100287427
 GameObject:
   m_ObjectHideFlags: 0
@@ -6398,7 +6399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentRoom>k__BackingField: 0
-  <RoomsCount>k__BackingField: 10
+  <RoomsCount>k__BackingField: 5
 --- !u!1 &1937920946
 GameObject:
   m_ObjectHideFlags: 0

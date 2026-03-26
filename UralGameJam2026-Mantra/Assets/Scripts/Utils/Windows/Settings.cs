@@ -27,8 +27,8 @@ public class Settings : MonoBehaviour, IService
 
     public void Init()
     {
-        _soundsSlider.value = PlayerPrefs.GetFloat("SoundsVolume", .7f);
-        _musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", .7f);
+        _soundsSlider.value = SaveService.SaveData.SoundsSetting;
+        _musicSlider.value = SaveService.SaveData.MusicSetting;
         
         _soundsSlider.onValueChanged.AddListener(OnSoundsSliderChanged);
         _musicSlider.onValueChanged.AddListener(OnMusicSliderChanged);
@@ -39,7 +39,7 @@ public class Settings : MonoBehaviour, IService
         _previousSoundsVolume = _soundsSlider.value;
         _previousMusicVolume = _musicSlider.value;
 
-        _dropdown.value = PlayerPrefs.GetInt("Screen", 0);
+        _dropdown.value = SaveService.SaveData.ScreenSetting;
         _dropdown.onValueChanged.AddListener(OnScreenDropdownChanged);
         
         if (_dropdown.value == 0) Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
@@ -61,9 +61,11 @@ public class Settings : MonoBehaviour, IService
     public void Save()
     {
         ServiceLocator.Instance.GetService<PauseHandler>()?.StopPause();
-        PlayerPrefs.SetFloat("SoundsVolume", _soundsSlider.value);
-        PlayerPrefs.SetFloat("MusicVolume", _musicSlider.value);
-        PlayerPrefs.SetInt("Screen", _dropdown.value);
+        SaveService.SaveData.SoundsSetting = _soundsSlider.value;
+        SaveService.SaveData.MusicSetting = _musicSlider.value;
+        SaveService.SaveData.ScreenSetting = _dropdown.value;
+        
+        SaveService.Save();
     }
 
     private void OnSoundsSliderChanged(float value)

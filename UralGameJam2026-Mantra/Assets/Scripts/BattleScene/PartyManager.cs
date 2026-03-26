@@ -13,7 +13,7 @@ public class PartyManager : MonoBehaviour, IService
     
     public PartyPlacer PlayerPartyPlacer => _playerPartyPlacer;
     
-    [SerializeField] private Unit _memberPrefab;
+    [SerializeField] private List<Unit> _memberPrefabs;
     
     public void InitializePlayerParty(int count)
     {
@@ -22,14 +22,9 @@ public class PartyManager : MonoBehaviour, IService
         List<Unit> units = new List<Unit>();
         for (int i = 0; i < remainingCounts; i++)
         {
-            var unit = Instantiate(_memberPrefab, PlayerParty.transform);
+            var unit = SpawnRandomUnit(_memberPrefabs[0], PlayerParty.transform);
             if (i == 0) unit.IsMainHero = true;
-
-            var name = ServiceLocator.Instance.GetService<NameGenerator>().GenerateName();
-            unit.SetName(name);
-
-            ServiceLocator.Instance.GetService<StatRandomizer>().InitUnit(unit);
-
+            
             units.Add(unit);
         }
         InitializePlayerParty(units);
@@ -116,17 +111,43 @@ public class PartyManager : MonoBehaviour, IService
         List<Unit> units = new List<Unit>();
         for (int i = 0; i < remainingCounts; i++)
         {
-            var unit = Instantiate(_memberPrefab, EnemyParty.transform);
-
-            var name = ServiceLocator.Instance.GetService<NameGenerator>().GenerateName();
-            unit.SetName(name);
+            var unit = SpawnRandomUnit(_memberPrefabs[0], EnemyParty.transform);
             unit.ShouldShowAura = false;
-
-            ServiceLocator.Instance.GetService<StatRandomizer>().InitUnit(unit);
-
             units.Add(unit);
         }
         InitializeEnemyParty(units);
+    }
+
+    public void InitializeEnemyParty(List<SerializeUnit> unitsData)
+    {
+        var units = new List<Unit>();
+        foreach (var data in unitsData)
+        {
+            var prefab = _memberPrefabs.FirstOrDefault(m => m.UnitType == data.Type);
+            var unit = SpawnUnit(prefab, data);
+            unit.ShouldShowAura = false;
+            units.Add(unit);
+        }
+        InitializeEnemyParty(units);
+    }
+
+    private Unit SpawnRandomUnit(Unit prefab, Transform parent)
+    {
+        var unit = Instantiate(prefab, parent);
+
+        var name = ServiceLocator.Instance.GetService<NameGenerator>().GenerateName();
+        unit.SetName(name);
+
+        ServiceLocator.Instance.GetService<StatRandomizer>().InitUnit(unit);
+        return unit;
+    }
+    
+    private Unit SpawnUnit(Unit prefab, SerializeUnit unitData)
+    {
+        var unit = Instantiate(prefab, EnemyParty.transform);
+        unit.Deserialize(unitData);
+        
+        return unit;
     }
     
     public void InitializeEnemyParty(List<Unit> units)

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,6 +34,14 @@ public class MatchManager : MonoBehaviour, IService
     {
         if (_roomsController.IsLastRoom())
         {
+            var playerParty = _partyManager.PlayerParty.Members
+                .Where(m => !m.IsMainHero)
+                .Select(m => m.Serialize())
+                .ToList();
+            
+            SaveService.SaveData.PreviousPlayerParty = playerParty;
+            SaveService.Save();
+            
             _matchResultHandler.MatchResult = MatchResultHandler.Result.Victory;
             CustomSceneManager.LoadVictoryOutroScene();
             OnAllBattlesVictory?.Invoke();

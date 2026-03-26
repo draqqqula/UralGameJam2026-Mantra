@@ -5,7 +5,7 @@ using UnityEngine;
 public class ModifableValue
 {
     public Action<float> OnUpdateValue;
-    public List<ModifierEffect> Modifiers { get; private set; }
+    public List<ModifierEffect> Modifiers { get; set; }
 
     public float ModValue { get; private set; }
     private float _value;

@@ -12,6 +12,7 @@ public class Unit : MonoBehaviour
     public bool IsAlive => Health.CurrentHealth > 0;
     public string UnitName;
     public bool ShouldShowAura = true;
+    [field: SerializeField] public UnitType UnitType { get; private set; }
     [field: SerializeField] public bool IsMainHero { get; set; }
 
     public UnitHealth Health;
@@ -132,8 +133,8 @@ public class Unit : MonoBehaviour
         var SerializeUnit = new SerializeUnit
         {
             Name = UnitName,
-
-            Health = Health.CurrentHealth,
+            Type = UnitType,
+            
             MaxHealth = Health.MaxHealth,
             MaxDefaultHealth = Health.MaxDefaultHealth,
 
@@ -159,6 +160,34 @@ public class Unit : MonoBehaviour
         return SerializeUnit;
     }
 
+    public void Deserialize(SerializeUnit serializeUnit)
+    {
+        SetName(serializeUnit.Name);
+        Health.CurrentHealth = serializeUnit.MaxHealth;
+        Health.MaxHealth = serializeUnit.MaxHealth;
+        Health.MaxDefaultHealth = serializeUnit.MaxDefaultHealth;
+
+        Health.CurrentDefense = serializeUnit.Defense;
+        Health.MaxDefense = serializeUnit.MaxDefense;
+        Health.MaxDefaultDefense = serializeUnit.MaxDefaultDefense;
+
+        _attackCooldown = serializeUnit.UltimateAttackCooldown;
+        
+        Damage.MinDefaultDamage = serializeUnit.MinDefaultDamage;
+        Damage.MaxDefaultDamage = serializeUnit.MaxDefaultDamage;
+
+        Damage.DefaultCritChance = serializeUnit.DefaultCritChance;
+        Damage.DefaultCritMultiplyer = serializeUnit.DefaultCritMultiplyer;
+        
+        Damage.Setup();
+
+        Damage.MinDamage.Modifiers = new(serializeUnit.ModifierEffectsMinDamage);
+        Damage.MaxDamage.Modifiers = new(serializeUnit.ModifierEffectsMaxDamage);
+
+        Damage.CritChance.Modifiers = new(serializeUnit.ModifierEffectsCritChance);
+        Damage.CritMultiplyer.Modifiers = new(serializeUnit.ModifierEffectsCritMultiplyer);
+    }
+
     public void Resurrect()
     {
         Health.ApplyHealToMax(); 
@@ -177,3 +206,5 @@ public class Unit : MonoBehaviour
         OnDestroyed?.Invoke();
     }
 }
+
+public enum UnitType {Warrior, Range}

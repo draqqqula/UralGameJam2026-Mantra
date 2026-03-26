@@ -68,7 +68,7 @@ public class Party : MonoBehaviour
     {
         if (count > Members.Count)
         {
-            Debug.LogError($"Can't get {count} members! List have only {Members.Count} members!");
+            Debug.LogWarning($"Can't get {count} members! List have only {Members.Count} members!");
             return null;
         }
         
