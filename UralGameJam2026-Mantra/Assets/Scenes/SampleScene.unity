@@ -5522,7 +5522,61 @@ MonoBehaviour:
   EnemyParty: {fileID: 547052237}
   _enemyPartyPlacer: {fileID: 1125828985}
   _playerPartyPlacer: {fileID: 442763605}
-  _memberPrefab: {fileID: 3462002425916617404, guid: d19417cee793bb74fb51d4341d095d29, type: 3}
+  _unitSelector:
+    _pool:
+    - {fileID: 11400000, guid: 655db555fe8466a45a9d607d26114a31, type: 2}
+    - {fileID: 11400000, guid: 1aef05f599aae3f4d9d5948afed197d8, type: 2}
+    _curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0.75982314
+        outSlope: 0.75982314
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 2.8449216
+        value: 3.1616373
+        inSlope: 1.4368562
+        outSlope: 1.4368562
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.25077268
+      - serializedVersion: 3
+        time: 5
+        value: 5
+        inSlope: 0.25985205
+        outSlope: 0.25985205
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 8
+        value: 4
+        inSlope: -0.9166667
+        outSlope: -0.9166667
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 10
+        value: 1
+        inSlope: -1.5
+        outSlope: -1.5
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
 --- !u!1 &1100287427
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,9 @@ public class PartyManager : MonoBehaviour, IService
     
     public PartyPlacer PlayerPartyPlacer => _playerPartyPlacer;
     
-    [SerializeField] private Unit _memberPrefab;
+    //[SerializeField] private Unit _memberPrefab;
+
+    [SerializeField] private UnitSelector _unitSelector;
     
     public void InitializePlayerParty(int count)
     {
@@ -21,7 +23,8 @@ public class PartyManager : MonoBehaviour, IService
         List<Unit> units = new List<Unit>();
         for (int i = 0; i < remainingCounts; i++)
         {
-            var unit = Instantiate(_memberPrefab, PlayerParty.transform);
+            var prefab = _unitSelector.RandomSelect();
+            var unit = Instantiate(prefab, PlayerParty.transform);
 
             var name = ServiceLocator.Instance.GetService<NameGenerator>().GenerateName();
             unit.SetName(name);
@@ -84,7 +87,8 @@ public class PartyManager : MonoBehaviour, IService
         List<Unit> units = new List<Unit>();
         for (int i = 0; i < remainingCounts; i++)
         {
-            var unit = Instantiate(_memberPrefab, EnemyParty.transform);
+            var prefab = _unitSelector.RandomSelect();
+            var unit = Instantiate(prefab, EnemyParty.transform);
 
             var name = ServiceLocator.Instance.GetService<NameGenerator>().GenerateName();
             unit.SetName(name);

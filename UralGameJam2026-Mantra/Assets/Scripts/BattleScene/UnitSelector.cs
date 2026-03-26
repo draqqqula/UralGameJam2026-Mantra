@@ -1,0 +1,32 @@
+using System;
+using System.Linq;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+[Serializable]
+public class UnitSelector
+{
+    [SerializeField] private UnitCost[] _pool;
+    [SerializeField] private AnimationCurve _curve;
+
+    public Unit RandomSelect()
+    {
+        var orderedPool = _pool.OrderBy(x => x.Cost).ToList();
+        var currentRoom = ServiceLocator.Instance.GetService<RoomsController>().CurrentRoom;
+        var sumOfCosts = _pool.Sum(x => x.Cost);
+
+        var random = Random.Range(0, sumOfCosts);
+
+        var cost = 0f;
+        foreach (var unit in orderedPool)
+        {
+            cost += unit.Cost + _curve.Evaluate(currentRoom) * 10;
+            if(random <= cost)
+            {
+                return unit.Prefab;
+            }
+        }
+
+        return orderedPool[0].Prefab;
+    }
+}
