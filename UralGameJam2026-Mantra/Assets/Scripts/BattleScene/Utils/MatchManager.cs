@@ -6,12 +6,14 @@ public class MatchManager : MonoBehaviour, IService
 {
     [field:SerializeField] public State CurrentMatchState {get; set;}
     
-    public enum State { Transiting, Battle, Recrouting }
+    public enum State { Transiting, Battle, Recrouting, Waiting }
         
     private MatchResultHandler _matchResultHandler;
     private RoomsController _roomsController;
     private DialoguePlayer _dialoguePlayer;
     private NextRoomActivator _nextRoomActivator;
+    
+    private PartyManager _partyManager;
     
     public event Action OnBattleVictory;
     public event Action OnAllBattlesVictory;
@@ -23,6 +25,8 @@ public class MatchManager : MonoBehaviour, IService
         _roomsController = ServiceLocator.Instance.GetService<RoomsController>();
         _dialoguePlayer = ServiceLocator.Instance.GetService<DialoguePlayer>();
         _nextRoomActivator = ServiceLocator.Instance.GetService<NextRoomActivator>();
+        
+        _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
     }
     
     public void DeclareVictory()
@@ -35,10 +39,22 @@ public class MatchManager : MonoBehaviour, IService
         }
         else
         {
-            _dialoguePlayer.PlayDialogueWithChance("Victory", 2, () => CurrentMatchState = State.Recrouting);
-            _nextRoomActivator.ActivateNextRoomUI();
+            CurrentMatchState = State.Waiting;
+            
+            var mainHero = _partyManager.GetMainHero();
+            if (!mainHero.IsAlive) mainHero.Resurrect();
+                
+            TargetSystem.Instance.TrySetTarget(null);
+            _dialoguePlayer.PlayDialogueWithChance("Victory", 2, OnReadyToRecruiting);
             OnBattleVictory?.Invoke();
         }
+    }
+
+    private void OnReadyToRecruiting()
+    {
+        CurrentMatchState = State.Recrouting;
+        _nextRoomActivator.ActivateNextRoomUI();
+        _partyManager.HidePlayerPartyAuras();
     }
 
     public void DeclareDefeat()

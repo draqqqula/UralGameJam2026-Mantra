@@ -12,6 +12,7 @@ public class Unit : MonoBehaviour
     public bool IsAlive => Health.CurrentHealth > 0;
     public string UnitName;
     public bool ShouldShowAura = true;
+    [field: SerializeField] public bool IsMainHero { get; set; }
 
     public UnitHealth Health;
     public UnitDamage Damage;
@@ -156,6 +157,19 @@ public class Unit : MonoBehaviour
         };
 
         return SerializeUnit;
+    }
+
+    public void Resurrect()
+    {
+        Health.ApplyHealToMax(); 
+        GetComponent<UnitAnimator>()?.Play(UnitAnimation.Idle, out _);
+        GetComponent<UnitRetired>()?.Resurrect();
+    }
+
+    [ContextMenu("KillUnit")]
+    private void KillUnit()
+    {
+        Health.ApplyFatalDamage();
     }
 
     public void OnDestroy()

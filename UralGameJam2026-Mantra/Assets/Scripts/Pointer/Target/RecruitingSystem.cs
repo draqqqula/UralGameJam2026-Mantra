@@ -14,6 +14,9 @@ public class RecruitingSystem : MonoBehaviour, IService
     [SerializeField] private AnimationCurve _fadeOutCurve;
     [SerializeField] private AnimationCurve _moveCurve;
     
+    [SerializeField] private float _fadeOutDuration = 1;
+    [SerializeField] private float _moveSpeed = 5;
+    
     private List<RecruitingAnimation> _animations = new List<RecruitingAnimation>();
     
     private void Awake()
@@ -49,10 +52,7 @@ public class RecruitingSystem : MonoBehaviour, IService
     
     public void RecruitUnit(Unit unit)
     {
-        _partyManager.EnemyParty.RemoveMember(unit);
-        unit.Health.ApplyHeal(unit.Health.MaxHealth);
-        unit.GetComponent<UnitAnimator>()?.Play(UnitAnimation.Idle, out _);
-        unit.GetComponent<UnitRetired>()?.Resurrect();
+        OnBeforeRecruit(unit);
         
         Action onAnimationFinished = () =>
         {
@@ -63,18 +63,14 @@ public class RecruitingSystem : MonoBehaviour, IService
             unit.UpdateUIPosition();
         };
         
-
         var animation = new RecruitingAnimation(_partyManager.PlayerPartyPlacer);
-        animation.Play(unit, 5, _moveCurve, onAnimationFinished);
+        animation.Play(unit, _moveSpeed, _moveCurve, onAnimationFinished);
         _animations.Add(animation);
     }
 
     public void RecruitUnitWithReplacement(Unit oldUnit, Unit newUnit)
     {
-        _partyManager.EnemyParty.RemoveMember(newUnit);
-        newUnit.Health.ApplyHeal(newUnit.Health.MaxHealth);
-        newUnit.GetComponent<UnitAnimator>()?.Play(UnitAnimation.Idle, out _);
-        newUnit.GetComponent<UnitRetired>()?.Resurrect();
+        OnBeforeRecruit(newUnit);
         
         Action onAnimationFinished = () =>
         {
@@ -88,13 +84,19 @@ public class RecruitingSystem : MonoBehaviour, IService
         };
         
         var animation = new RecruitingAnimation(_partyManager.PlayerPartyPlacer);
-        animation.PlayWithReplacement(oldUnit, newUnit, 5,1, _fadeOutCurve, _moveCurve, onAnimationFinished);
+        animation.PlayWithReplacement(oldUnit, newUnit, _moveSpeed, _fadeOutDuration, _fadeOutCurve, _moveCurve, onAnimationFinished);
         _animations.Add(animation);
         
         IsChoosingPlayerUnitToSwitch = false;
         _chosenEnemyUnit = null;
     }
 
+    private void OnBeforeRecruit(Unit newUnit)
+    {
+        _partyManager.EnemyParty.RemoveMember(newUnit);
+        newUnit.Resurrect();
+    }
+    
     public void KillAllAnimations()
     {
         foreach (var animation in _animations)

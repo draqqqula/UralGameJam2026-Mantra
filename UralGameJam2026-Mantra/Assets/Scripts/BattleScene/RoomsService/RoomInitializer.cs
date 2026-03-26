@@ -15,14 +15,18 @@ public class RoomInitializer : MonoBehaviour, IService
     {
         _partyManager.InitializePlayerParty(4);
         _partyManager.InitializeEnemyParty(4);
+        
         _environmentGenerator.CreateRandom();
     }
 
     public void UpdateRoom()
     {
+        _partyManager.DestroyDeathPartyMembers();
         _partyManager.HidePlayerParty();
+        
         _partyManager.RemoveAllEnemyPartyMembers();
         _partyManager.InitializeEnemyParty(4);
+        
         _environmentGenerator.CreateRandom();
     }
 }

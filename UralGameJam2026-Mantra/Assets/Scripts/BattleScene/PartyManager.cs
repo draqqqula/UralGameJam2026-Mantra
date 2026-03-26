@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PartyManager : MonoBehaviour, IService
@@ -22,6 +23,7 @@ public class PartyManager : MonoBehaviour, IService
         for (int i = 0; i < remainingCounts; i++)
         {
             var unit = Instantiate(_memberPrefab, PlayerParty.transform);
+            if (i == 0) unit.IsMainHero = true;
 
             var name = ServiceLocator.Instance.GetService<NameGenerator>().GenerateName();
             unit.SetName(name);
@@ -44,6 +46,11 @@ public class PartyManager : MonoBehaviour, IService
         _playerPartyPlacer.PlaceMembersWithTransition(18, .5f, callback);
     }
 
+    public Unit GetMainHero()
+    {
+        return PlayerParty.Members.FirstOrDefault(m => m.IsMainHero);
+    }
+
     public void HidePlayerParty(bool hideHealthbars = true)
     {
         foreach (var unit in PlayerParty.Members)
@@ -62,6 +69,22 @@ public class PartyManager : MonoBehaviour, IService
         }
     }
 
+    public void HidePlayerPartyAuras()
+    {
+        foreach (var unit in PlayerParty.Members)
+        {
+            unit.HideAura();
+        }
+    }
+
+    public void ShowPlayerPartyAuras()
+    {
+        foreach (var unit in PlayerParty.Members)
+        {
+            unit.ShowAura();
+        }
+    }
+
     public void AddPlayerPartyMember(Unit unit)
     {
         PlayerParty.AddMember(unit);
@@ -70,6 +93,15 @@ public class PartyManager : MonoBehaviour, IService
     public void RemovePlayerPartyMember(Unit unit)
     {
         PlayerParty.RemoveMember(unit);
+    }
+
+    public void DestroyDeathPartyMembers()
+    {
+        var deathPartyMembers = PlayerParty.Members.Where(m => !m.IsAlive && !m.IsMainHero).ToList();
+        foreach (var deathPartyMember in deathPartyMembers)
+        {
+            PlayerParty.DestroyMember(deathPartyMember);
+        }
     }
 
     public void RemoveAllPlayerPartyMembers()

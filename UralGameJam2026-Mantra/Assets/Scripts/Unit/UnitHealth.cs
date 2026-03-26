@@ -52,6 +52,20 @@ public class UnitHealth : IDisposable
         OnHeal?.Invoke(heal);
     }
 
+    public void ApplyHealToMax()
+    {
+        var heal = MaxHealth - CurrentHealth;
+        Heal(heal);
+        OnHeal?.Invoke(heal);
+    }
+
+    public void ApplyFatalDamage()
+    {
+        var damage = CurrentHealth;
+        TakeDamage(damage);
+        OnTakeDamage?.Invoke(damage);
+    }
+
     private void Heal(float heal)
     {
         CurrentHealth = Mathf.Min(CurrentHealth + heal, MaxHealth);
