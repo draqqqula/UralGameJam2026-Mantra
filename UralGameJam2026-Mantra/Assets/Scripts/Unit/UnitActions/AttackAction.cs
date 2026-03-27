@@ -13,6 +13,9 @@ public class AttackAction : UnitAction
 
     public override async UniTask Execute(CancellationToken token)
     {
+        var audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        audioManager.PlaySound(_person.UnitType + "Attack");
+        
         await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
 
         _damageValue = _person.Damage.DealBaseDamage();

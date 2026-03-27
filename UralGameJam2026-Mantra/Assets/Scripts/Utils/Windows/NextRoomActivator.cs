@@ -13,6 +13,7 @@ public class NextRoomActivator : MonoBehaviour, IService
     private RecruitingSystem _recruitingSystem;
     private BattleStarter _battleStarter;
     private MatchManager _matchManager;
+    private AudioManager _audioManager;
     
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class NextRoomActivator : MonoBehaviour, IService
         _recruitingSystem = ServiceLocator.Instance.GetService<RecruitingSystem>();
         _battleStarter = ServiceLocator.Instance.GetService<BattleStarter>();
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
+        _audioManager = ServiceLocator.Instance.GetService<AudioManager>();
         
         _nextRoomButton = _nextRoomUI.GetComponentInChildren<Button>();
         _nextRoomButton.onClick.AddListener(NextRoom);
@@ -45,6 +47,7 @@ public class NextRoomActivator : MonoBehaviour, IService
         _matchManager.CurrentMatchState = MatchManager.State.Transiting;
         _roomsController.TryUpdateCurrentRoom();
         _roomTransitionHandler.ActivateRoomTransition(OnReadyToUpdateRoom, OnReadyToStartPlayerTransition);
+        _audioManager.PlaySound("NextRoom");
     }
 
     private void OnReadyToStartPlayerTransition()

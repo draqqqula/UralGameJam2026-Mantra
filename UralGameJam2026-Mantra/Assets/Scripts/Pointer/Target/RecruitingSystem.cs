@@ -7,6 +7,7 @@ using UnityEngine;
 public class RecruitingSystem : MonoBehaviour, IService
 {
     private PartyManager _partyManager;
+    private AudioManager _audioManager;
     
     public bool IsChoosingPlayerUnitToSwitch {get; private set;}
     private Unit _chosenEnemyUnit;
@@ -22,6 +23,7 @@ public class RecruitingSystem : MonoBehaviour, IService
     private void Awake()
     {
         _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
+        _audioManager = ServiceLocator.Instance.GetService<AudioManager>();
     }
 
     public void ChooseUnit(Unit unit)
@@ -87,6 +89,8 @@ public class RecruitingSystem : MonoBehaviour, IService
         
         var animation = new RecruitingAnimation(_partyManager.PlayerPartyPlacer);
         animation.PlayWithReplacement(oldUnit, newUnit, _moveSpeed, _fadeOutDuration, _fadeOutCurve, _moveCurve, onAnimationFinished);
+        _audioManager.PlaySound("Recruiting");
+        
         _animations.Add(animation);
         
         IsChoosingPlayerUnitToSwitch = false;

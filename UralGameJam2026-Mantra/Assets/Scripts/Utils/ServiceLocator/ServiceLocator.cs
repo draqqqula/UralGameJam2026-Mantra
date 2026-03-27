@@ -10,6 +10,7 @@ public class ServiceLocator : MonoBehaviour
     [SerializeField] private WindowsService _windowsService;
     [SerializeField] private MatchResultHandler _matchResultHandler;
     [SerializeField] private Settings _settings;
+    [SerializeField] private AudioManager _audioManager;
     
     private Dictionary<Type, IService> _services = new Dictionary<Type, IService>();
 
@@ -31,6 +32,7 @@ public class ServiceLocator : MonoBehaviour
         RegisterService(_windowsService);
         RegisterService(_matchResultHandler);
         RegisterService(_settings);
+        RegisterService(_audioManager);
     }
 
     public void RegisterService(IService service)

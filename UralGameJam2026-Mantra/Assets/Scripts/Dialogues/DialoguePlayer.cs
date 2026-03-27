@@ -11,6 +11,7 @@ public class DialoguePlayer : MonoBehaviour, IService
     [SerializeField] private DialogueDisplay _dialogueDisplay;
     [SerializeField] private InputActionReference _continueInput;
     private PartyManager _partyManager;
+    private AudioManager _audioManager;
         
     private bool _isActive = false;
         
@@ -19,6 +20,7 @@ public class DialoguePlayer : MonoBehaviour, IService
     public void Init()
     {
         _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
+        _audioManager = ServiceLocator.Instance.GetService<AudioManager>();
         _continueInput.action.performed += OnContinuePerformed;
     }
     
@@ -55,6 +57,7 @@ public class DialoguePlayer : MonoBehaviour, IService
             return;
         }
         
+        _audioManager.PlaySound("Dialogue");
         _dialogueDisplay.ShowDialogue(replica, members);
         
         _finishCallback = finishCallback;
