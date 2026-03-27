@@ -13,6 +13,8 @@ public class AttackAction : UnitAction
 
     public override async UniTask Execute(CancellationToken token)
     {
+        var cached = ActionHelper.DisableTargetSystem();
+
         await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
 
         var audioManager = ServiceLocator.Instance.GetService<AudioManager>();
@@ -28,6 +30,8 @@ public class AttackAction : UnitAction
         _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _animDelay);
         
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
+
+        ActionHelper.EnableTargetSystem(cached);
     }
 
     public override void Plan(Unit person, Unit target)
