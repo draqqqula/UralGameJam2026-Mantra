@@ -13,6 +13,9 @@ public class AttackAction : UnitAction
 
     public override async UniTask Execute(CancellationToken token)
     {
+        var match = ServiceLocator.Instance.GetService<MatchManager>();
+        var cached = match.CurrentMatchState;
+        match.CurrentMatchState = MatchManager.State.Waiting;
         await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
 
         _damageValue = _person.Damage.DealBaseDamage();
@@ -24,6 +27,7 @@ public class AttackAction : UnitAction
         _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _animDelay);
 
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
+        match.CurrentMatchState = cached;
     }
 
     public override void Plan(Unit person, Unit target)
