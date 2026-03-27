@@ -163,8 +163,8 @@ public class Unit : MonoBehaviour
         var SerializeUnit = new SerializeUnit
         {
             Name = UnitName,
-
-            Health = Health.CurrentHealth,
+            Type = UnitType,
+            
             MaxHealth = Health.MaxHealth,
             MaxDefaultHealth = Health.MaxDefaultHealth,
 
@@ -241,4 +241,4 @@ public class Unit : MonoBehaviour
     }
 }
 
-public enum UnitType {Warrior, Range}
+public enum UnitType {Warrior, Range, Spearman, Mage}

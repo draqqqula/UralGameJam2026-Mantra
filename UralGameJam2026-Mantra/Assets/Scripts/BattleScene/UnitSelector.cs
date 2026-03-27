@@ -29,4 +29,9 @@ public class UnitSelector
 
         return orderedPool[0].Prefab;
     }
+
+    public Unit SelectUnit(UnitType unitType)
+    {
+        return _pool.FirstOrDefault(x => x.UnitType == unitType)?.Prefab;
+    }
 }
