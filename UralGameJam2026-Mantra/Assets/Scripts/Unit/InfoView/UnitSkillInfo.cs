@@ -8,30 +8,6 @@ public class UnitSkillInfo : MonoBehaviour
 
     [SerializeField] private ActionEffectInfo _prefab;
 
-    private TargetSystem _targetSystem;
-
-    private Unit _unit;
-
-    private void Start()
-    {
-        _targetSystem = TargetSystem.Instance;
-        _targetSystem.OnSetTarget += Show;
-    }
-
-    private void Show(Targetable target)
-    {
-        Hide();
-
-        _unit = target.Unit;
-
-        if (_unit == null)
-        {
-            return;
-        }
-
-        ShowSkill();
-    }
-
     private void Hide()
     {
         foreach (Transform child in _actionFieldObject.transform)
@@ -43,9 +19,11 @@ public class UnitSkillInfo : MonoBehaviour
         }
     }
 
-    private void ShowSkill()
+    public void ShowSkill(Unit unit)
     {
-        foreach(var action in _unit.UnitActions)
+        Hide();
+
+        foreach (var action in unit.UnitActions)
         {
             var instantiate = Instantiate(_prefab, _actionFieldObject.transform);
             instantiate.SetValue(action);
@@ -56,7 +34,6 @@ public class UnitSkillInfo : MonoBehaviour
 
     private void OnDestroy()
     {
-        _targetSystem.OnSetTarget -= Show;
         Hide();
     }
 }

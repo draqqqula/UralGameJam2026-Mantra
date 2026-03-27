@@ -47,7 +47,14 @@ public class DialoguePlayer : MonoBehaviour, IService
         if (_isActive) return;
         
         var replica = GetReplica(groupKey);
-        var members = _partyManager.EnemyParty.GetRandomMembers(speakerCount).Select(u => u.transform);
+        var members = _partyManager.EnemyParty.GetRandomMembers(speakerCount)?.Select(u => u.transform);
+        
+        if (members == null || !members.Any())
+        {
+            finishCallback?.Invoke();
+            return;
+        }
+        
         _dialogueDisplay.ShowDialogue(replica, members);
         
         _finishCallback = finishCallback;

@@ -33,8 +33,8 @@ public class UnitHealth : IDisposable
 
     public void SetupValue()
     {
-        MaxHealth = CurrentHealth = MaxDefaultDefense;
-        MaxDefense = CurrentDefense = MaxDefaultHealth;
+        MaxHealth = CurrentHealth = MaxDefaultHealth;
+        MaxDefense = CurrentDefense = MaxDefaultDefense;
     }
 
     public void ApplyDamage(float damage)
@@ -50,6 +50,20 @@ public class UnitHealth : IDisposable
     {
         Heal(heal);
         OnHeal?.Invoke(heal);
+    }
+
+    public void ApplyHealToMax()
+    {
+        var heal = MaxHealth - CurrentHealth;
+        Heal(heal);
+        OnHeal?.Invoke(heal);
+    }
+
+    public void ApplyFatalDamage()
+    {
+        var damage = CurrentHealth;
+        TakeDamage(damage);
+        OnTakeDamage?.Invoke(damage);
     }
 
     private void Heal(float heal)

@@ -17,6 +17,7 @@ public class MenuBootstrap : MonoBehaviour
         _exitButton.onClick.AddListener(OnExitButton);
         
         _windowService = ServiceLocator.Instance.GetService<WindowsService>();
+        SaveService.Load();
     }
 
     private void Start()

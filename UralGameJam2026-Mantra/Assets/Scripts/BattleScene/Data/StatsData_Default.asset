@@ -23,4 +23,4 @@ MonoBehaviour:
   MinCritMulti: 1.25
   MaxCritMulti: 1.75
   MinDefense: 10
-  MaxDefense: 60
+  MaxDefense: 25

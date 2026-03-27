@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-using static Unity.VisualScripting.Member;
 
 public class BattleStrategy
 {
@@ -45,6 +44,8 @@ public class BattleStrategy
         }
 
         if (!_initiatorUnit.Value) return;
+
+        if (_battleManager.IsEnemyPartyMember(unit) && !unit.IsAlive) return;
 
         RemoveTurn();
 

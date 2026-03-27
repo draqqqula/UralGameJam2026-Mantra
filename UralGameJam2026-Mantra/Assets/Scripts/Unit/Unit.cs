@@ -11,7 +11,10 @@ public class Unit : MonoBehaviour
     public Transform RenderCameraPoint;
     public bool IsAlive => Health.CurrentHealth > 0;
     public string UnitName;
-    public bool ShouldShowAura = true;
+    public bool ShouldCreateAura = true;
+
+    [field: SerializeField] public UnitType UnitType { get; private set; }
+    [field: SerializeField] public bool IsMainHero { get; set; }
 
     public UnitHealth Health;
     public UnitDamage Damage;
@@ -41,11 +44,40 @@ public class Unit : MonoBehaviour
 
         UnitTurn = GetComponent<UnitTurn>();
 
+        if (ShouldCreateAura)
+        {
+            InstantiateAura();
+        }
+
         var healthbar =  Instantiate(_healthbarPrefab, canvas.transform);
         healthbar.transform.position = _healthbarPoint.position;
         healthbar.Init(this);
 
         _healthBarTransform = healthbar.transform; 
+    }
+    
+    public void InstantiateAura()
+    {
+        if (_auraTransform) return;
+ 
+        var canvas = ServiceLocator.Instance.GetService<UnitCanvas>();
+
+        var aura = Instantiate(_auraPrefab, canvas.transform);
+        aura.transform.position = _auraPoint.position;
+        aura.Init(this, UnitTurn);
+
+        _auraTransform = aura.transform;
+    }
+
+    public void UpdateRenderCameraPoint()
+    {
+        if(transform.eulerAngles.y == 180)
+        {
+            var point = RenderCameraPoint.transform.position;
+            point.z = -point.z;
+
+            RenderCameraPoint.transform.position = point;
+        }
     }
 
     public void UpdateUIPosition()
@@ -131,8 +163,8 @@ public class Unit : MonoBehaviour
         var SerializeUnit = new SerializeUnit
         {
             Name = UnitName,
-
-            Health = Health.CurrentHealth,
+            Type = UnitType,
+            
             MaxHealth = Health.MaxHealth,
             MaxDefaultHealth = Health.MaxDefaultHealth,
 
@@ -158,8 +190,55 @@ public class Unit : MonoBehaviour
         return SerializeUnit;
     }
 
+    public void Deserialize(SerializeUnit serializeUnit)
+    {
+        SetName(serializeUnit.Name);
+        Health.CurrentHealth = serializeUnit.MaxHealth;
+        Health.MaxHealth = serializeUnit.MaxHealth;
+        Health.MaxDefaultHealth = serializeUnit.MaxDefaultHealth;
+
+        Health.CurrentDefense = serializeUnit.Defense;
+        Health.MaxDefense = serializeUnit.MaxDefense;
+        Health.MaxDefaultDefense = serializeUnit.MaxDefaultDefense;
+
+        _attackCooldown = serializeUnit.UltimateAttackCooldown;
+        
+        Damage.MinDefaultDamage = serializeUnit.MinDefaultDamage;
+        Damage.MaxDefaultDamage = serializeUnit.MaxDefaultDamage;
+
+        Damage.DefaultCritChance = serializeUnit.DefaultCritChance;
+        Damage.DefaultCritMultiplyer = serializeUnit.DefaultCritMultiplyer;
+        
+        Damage.Setup();
+
+        Damage.MinDamage.Modifiers = new(serializeUnit.ModifierEffectsMinDamage);
+        Damage.MaxDamage.Modifiers = new(serializeUnit.ModifierEffectsMaxDamage);
+
+        Damage.CritChance.Modifiers = new(serializeUnit.ModifierEffectsCritChance);
+        Damage.CritMultiplyer.Modifiers = new(serializeUnit.ModifierEffectsCritMultiplyer);
+    }
+
+    public void Resurrect()
+    {
+        Health.ApplyHealToMax(); 
+        GetComponent<UnitAnimator>()?.Play(UnitAnimation.Idle, out _);
+        GetComponent<UnitRetired>()?.Resurrect();
+    }
+
+    [ContextMenu("KillUnit")]
+    private void KillUnit()
+    {
+        Health.ApplyFatalDamage();
+    }
+
     public void OnDestroy()
     {
+        if (_auraTransform)
+        {
+            Destroy(_auraTransform.gameObject);
+        }
         OnDestroyed?.Invoke();
     }
 }
+
+public enum UnitType {Warrior, Range, Spearman, Mage}

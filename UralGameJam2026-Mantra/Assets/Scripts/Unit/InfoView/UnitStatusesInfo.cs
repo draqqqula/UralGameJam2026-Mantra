@@ -9,26 +9,13 @@ public class UnitStatusesInfo : MonoBehaviour
 
     [SerializeField] private ModifierEffectInfo _prefab;
 
-    private TargetSystem _targetSystem;
-
     private Unit _unit;
 
-    private void Start()
-    {
-        _targetSystem = TargetSystem.Instance;
-        _targetSystem.OnSetTarget += Show;
-    }
-
-    private void Show(Targetable target)
+    public void Show(Unit unit)
     {
         Hide();
 
-        _unit = target.Unit;
-
-        if (_unit == null)
-        {
-            return;
-        }
+        _unit = unit;
 
         AddAttackSprite();
         AddCritChanceSprite();
@@ -92,7 +79,6 @@ public class UnitStatusesInfo : MonoBehaviour
 
     private void OnDestroy()
     {
-        _targetSystem.OnSetTarget -= Show;
         Hide();
     }
 }

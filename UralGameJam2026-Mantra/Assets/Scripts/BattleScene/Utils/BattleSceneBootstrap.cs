@@ -14,7 +14,7 @@ public class BattleSceneBootstrap : MonoBehaviour
     [SerializeField] private BattleManager _battleManager;
     [SerializeField] private NameGenerator _nameGenerator;
     [SerializeField] private TurnManager _turnManager;
-    [SerializeField] private UnitBaseInfoView _unitBaseInfoView;
+    [SerializeField] private InfoViewController _infoViewController;
     [SerializeField] private StatRandomizer _statRandomizer;
 
     [SerializeField] private CameraMovementHandler _cameraMovementHandler;
@@ -26,6 +26,8 @@ public class BattleSceneBootstrap : MonoBehaviour
     
     private void Awake()
     {
+        SaveService.Load();
+        
         ServiceLocator.Instance.RegisterService(_matchManager);
         ServiceLocator.Instance.RegisterService(_pauseHandler);
         ServiceLocator.Instance.RegisterService(_unitCanvas);
@@ -38,7 +40,7 @@ public class BattleSceneBootstrap : MonoBehaviour
         ServiceLocator.Instance.RegisterService(_partyManager);
         ServiceLocator.Instance.RegisterService(_nameGenerator);
         ServiceLocator.Instance.RegisterService(_turnManager);
-        ServiceLocator.Instance.RegisterService(_unitBaseInfoView);
+        ServiceLocator.Instance.RegisterService(_infoViewController);
         ServiceLocator.Instance.RegisterService(_statRandomizer);
         
         ServiceLocator.Instance.RegisterService(_cameraMovementHandler);
@@ -55,6 +57,7 @@ public class BattleSceneBootstrap : MonoBehaviour
         _pauseHandler.Init();
         _battleManager.Init();
         
+        _roomsController.Init();
         _roomTransitionHandler.Init();
         _roomInitializer.Init();
         _dialoguePlayer.Init();

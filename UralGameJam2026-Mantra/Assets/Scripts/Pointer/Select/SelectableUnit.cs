@@ -24,7 +24,7 @@ public class SelectableUnit : MonoBehaviour
         var noneSelected = currentUnit == null;
         var canMove = _turn.CanMove;
 
-        if (canMove && _unit.ShouldShowAura)
+        if (canMove && _unit.ShouldCreateAura)
         {
             if (isInitiator)
             {
