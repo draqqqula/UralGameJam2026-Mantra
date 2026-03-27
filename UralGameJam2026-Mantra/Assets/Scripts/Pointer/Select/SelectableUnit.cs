@@ -7,6 +7,8 @@ public class SelectableUnit : MonoBehaviour
     private ReactiveProperty<SelectState> _state = new ReactiveProperty<SelectState>(SelectState.Unavailable);
     [SerializeField] private Unit _unit;
     [SerializeField] private UnitTurn _turn;
+    [SerializeField] private Targetable _targetable;
+
     public ReadOnlyReactiveProperty<SelectState> State => _state;
 
     private void Update()
@@ -22,9 +24,9 @@ public class SelectableUnit : MonoBehaviour
         var isInitiator = _unit == currentUnit;
         var isTargeted = TargetSystem.Instance.Current != null && TargetSystem.Instance.Current.Unit == _unit;
         var noneSelected = currentUnit == null;
-        var canMove = _turn.CanMove;
+        var canSelect = TargetSystem.Instance.IsTargetable(_targetable);
 
-        if (canMove && _unit.ShouldCreateAura)
+        if (canSelect)
         {
             if (isInitiator)
             {

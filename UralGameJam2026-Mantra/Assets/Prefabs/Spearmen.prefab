@@ -623,6 +623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unit: {fileID: 3462002425916617404}
   _turn: {fileID: 5369966021156880858}
+  _targetable: {fileID: 7624932100761901221}
 --- !u!1 &8327885249390361778
 GameObject:
   m_ObjectHideFlags: 0

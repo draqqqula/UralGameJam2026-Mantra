@@ -25,6 +25,22 @@ public class TargetSystem : MonoBehaviour
         }
     }
 
+
+    public bool IsTargetable(Targetable newTarget)
+    {
+        if (_matchManager.CurrentMatchState == MatchManager.State.Recrouting)
+        {
+            if (newTarget.Unit.IsMainHero || !IsGoodRecruitingTarget(newTarget)) return false;
+            else return true;
+        }
+        else if (_matchManager.CurrentMatchState == MatchManager.State.Battle)
+        {
+            if (!newTarget.IsTargetable || CheckSelectingCondition(newTarget)) return false;
+            else return true;
+        }
+        else return false;
+    }
+
     public void TrySetTarget(Targetable newTarget)
     {
         if (newTarget == null)
@@ -34,15 +50,10 @@ public class TargetSystem : MonoBehaviour
             return;
         }
         
-        if (_matchManager.CurrentMatchState == MatchManager.State.Recrouting)
+        if (!IsTargetable(newTarget))
         {
-            if (newTarget.Unit.IsMainHero || !IsGoodRecruitingTarget(newTarget)) return;
+            return;
         }
-        else if (_matchManager.CurrentMatchState == MatchManager.State.Battle)
-        {
-            if (!newTarget.IsTargetable || CheckSelectingCondition(newTarget)) return;
-        }
-        else return;
 
         if (Current != null)
         {

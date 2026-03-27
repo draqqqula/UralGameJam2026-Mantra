@@ -25,7 +25,9 @@ public class UltimateAttackAction : UnitAction
 
     public override async UniTask Execute(CancellationToken token = default)
     {
-        if(_person == null)
+        var cached = ActionHelper.DisableTargetSystem();
+
+        if (_person == null)
         {
             _person = GetComponentInParent<Unit>();
         }
@@ -52,6 +54,7 @@ public class UltimateAttackAction : UnitAction
 
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
 
+        ActionHelper.EnableTargetSystem(cached);
     }
 
     public override void Plan(Unit person, Unit target)

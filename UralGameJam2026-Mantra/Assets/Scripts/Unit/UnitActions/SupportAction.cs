@@ -13,6 +13,8 @@ public class SupportAction : UnitAction
 
     public override async UniTask Execute(CancellationToken token)
     {
+        var cached = ActionHelper.DisableTargetSystem();
+
         await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
         print($"{_person.UnitName} helps {_target.UnitName} with smth");
 
@@ -20,6 +22,7 @@ public class SupportAction : UnitAction
         _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Support, out _animDelay);
 
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
+        ActionHelper.EnableTargetSystem(cached);
     }
 
     public override void Plan(Unit person, Unit target)
