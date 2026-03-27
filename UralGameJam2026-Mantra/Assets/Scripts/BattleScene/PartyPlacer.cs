@@ -22,7 +22,7 @@ public class PartyPlacer : MonoBehaviour
     public void PlaceMembersWithTransition(float unitSpeed, float membersDelay, Action callback)
     {
         PlaceMembers();
-        var newPoints = _partyMembers.Members.Select(m => m.transform.position).Reverse().ToArray();
+        var newPoints = _partyMembers.Members.Select(m => m.transform.position).ToArray();
         
         foreach (var member in _partyMembers.Members)
         {
@@ -103,7 +103,7 @@ public class PartyPlacer : MonoBehaviour
 
     public void RotateMember(float direction, ref Unit member)
     {
-        if(direction == -1)
+        if(direction == 1)
         {
             var updateRenderPoint = member.RenderCameraPoint.position;
             updateRenderPoint.z = -updateRenderPoint.z;

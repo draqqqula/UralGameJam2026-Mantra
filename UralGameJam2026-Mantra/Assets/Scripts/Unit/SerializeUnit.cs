@@ -4,8 +4,8 @@ using System.Collections.Generic;
 public class SerializeUnit
 {
     public string Name;
-
-    public float Health;
+    public UnitType Type;
+    
     public float MaxHealth;
     public float MaxDefaultHealth;
 

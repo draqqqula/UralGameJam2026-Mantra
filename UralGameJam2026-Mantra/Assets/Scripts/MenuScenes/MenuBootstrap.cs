@@ -6,15 +6,18 @@ public class MenuBootstrap : MonoBehaviour
 {
     [SerializeField] private Button _startNewGameButton;
     [SerializeField] private Button _settingsButton;
-    
+    [SerializeField] private Button _exitButton;
+
     private WindowsService _windowService;
 
     private void Awake()
     {
         _startNewGameButton.onClick.AddListener(OnNewGameButton);
         _settingsButton.onClick.AddListener(OnSettingsButton);
+        _exitButton.onClick.AddListener(OnExitButton);
         
         _windowService = ServiceLocator.Instance.GetService<WindowsService>();
+        SaveService.Load();
     }
 
     private void Start()
@@ -31,6 +34,11 @@ public class MenuBootstrap : MonoBehaviour
     private void OnSettingsButton()
     {
         _windowService.ActivateWindow(WindowsService.WindowType.Settings);
+    }
+
+    private void OnExitButton()
+    {
+        Application.Quit();
     }
 
     private void OnDestroy()

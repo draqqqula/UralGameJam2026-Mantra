@@ -36,12 +36,13 @@ public class TargetSystem : MonoBehaviour
         
         if (_matchManager.CurrentMatchState == MatchManager.State.Recrouting)
         {
-            if (!IsGoodRecruitingTarget(newTarget)) return;
+            if (newTarget.Unit.IsMainHero || !IsGoodRecruitingTarget(newTarget)) return;
         }
-        else if (!newTarget.IsTargetable)
+        else if (_matchManager.CurrentMatchState == MatchManager.State.Battle)
         {
-            return;
+            if (!newTarget.IsTargetable || CheckSelectingCondition(newTarget)) return;
         }
+        else return;
 
         if (Current != null)
         {
@@ -51,6 +52,19 @@ public class TargetSystem : MonoBehaviour
         Current = newTarget;
         Current.SetTargeted(true);
         OnSetTarget?.Invoke(Current);
+    }
+
+    private bool CheckSelectingCondition(Targetable newTarget)
+    {
+        var battle = ServiceLocator.Instance.GetService<BattleManager>();
+        var selecting = battle.IsSelecting();
+        if (selecting)
+        {
+            var partyMember = battle.IsPlayerPartyMember(newTarget.Unit);
+            var canMove = newTarget.Unit.UnitTurn.CanMove;
+            return !(partyMember && canMove);
+        }
+        return false;
     }
 
     private bool IsGoodRecruitingTarget(Targetable target)

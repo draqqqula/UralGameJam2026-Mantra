@@ -5,4 +5,5 @@ public class UnitCost : ScriptableObject
 {
     public float Cost;
     public Unit Prefab;
+    public UnitType UnitType;
 }

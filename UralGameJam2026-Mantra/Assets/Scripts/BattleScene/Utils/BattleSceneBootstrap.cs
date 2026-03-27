@@ -26,6 +26,8 @@ public class BattleSceneBootstrap : MonoBehaviour
     
     private void Awake()
     {
+        SaveService.Load();
+        
         ServiceLocator.Instance.RegisterService(_matchManager);
         ServiceLocator.Instance.RegisterService(_pauseHandler);
         ServiceLocator.Instance.RegisterService(_unitCanvas);
@@ -55,6 +57,7 @@ public class BattleSceneBootstrap : MonoBehaviour
         _pauseHandler.Init();
         _battleManager.Init();
         
+        _roomsController.Init();
         _roomTransitionHandler.Init();
         _roomInitializer.Init();
         _dialoguePlayer.Init();
