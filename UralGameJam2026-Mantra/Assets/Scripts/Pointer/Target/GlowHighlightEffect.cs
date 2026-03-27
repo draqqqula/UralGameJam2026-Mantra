@@ -6,11 +6,14 @@ public class GlowHighlightEffect : HighlightEffect
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private string _outlineMaterialName;
     [SerializeField] private Material _defaultMaterial;
+    private Material _defaultMaterialInstance;
+    
     private Material _outlineMaterial;
 
     private void Start()
     {
         _outlineMaterial = MaterialRepository.Instance.MaterialByKey[_outlineMaterialName];
+        _defaultMaterialInstance = new Material(_defaultMaterial);
     }
 
     public override void SetActive(bool value)
@@ -19,6 +22,7 @@ public class GlowHighlightEffect : HighlightEffect
         {
             return;
         }
-        _sprite.material = value ? _outlineMaterial : _defaultMaterial;
+
+        _sprite.material = value ? _outlineMaterial : _defaultMaterialInstance;
     }
 }
