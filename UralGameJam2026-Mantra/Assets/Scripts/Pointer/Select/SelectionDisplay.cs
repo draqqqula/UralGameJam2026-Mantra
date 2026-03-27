@@ -9,6 +9,11 @@ public class SelectionDisplay : MonoBehaviour
     [SerializeField] private SelectableUnit _selectable;
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Unit _unit;
+    [SerializeField] private Color _red;
+    [SerializeField] private Color _blue;
+    [SerializeField] private Color _yellow;
+    [SerializeField] private Sprite _selected;
+    [SerializeField] private Sprite _default;
     private Tween _cached;
 
     private void Start()
@@ -22,7 +27,7 @@ public class SelectionDisplay : MonoBehaviour
         _cached?.Kill();
 
         var isFriend = ServiceLocator.Instance.GetService<BattleManager>().IsPlayerPartyMember(_unit);
-        var defaultColor = isFriend ? Color.blue : Color.red;
+        var defaultColor = isFriend ? _blue : _red;
 
         if (state == SelectState.Unavailable)
         {
@@ -34,7 +39,7 @@ public class SelectionDisplay : MonoBehaviour
         }
         else if (state == SelectState.Hover)
         {
-            _cached = _sprite.DOColor(Color.yellow, 0.4f).SetLink(gameObject);
+            _cached = _sprite.DOColor(_yellow, 0.4f).SetLink(gameObject);
         }
         else if (state == SelectState.Selected)
         {
