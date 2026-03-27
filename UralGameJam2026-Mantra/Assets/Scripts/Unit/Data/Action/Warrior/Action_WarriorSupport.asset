@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4419189f760c43944beeb5d917db3245, type: 3}
-  m_Name: Action_Defense
+  m_Name: Action_WarriorSupport
   m_EditorClassIdentifier: 
   ActionName: "\u0411\u0440\u0430\u0442 \u043F\u043E \u043E\u0440\u0443\u0436\u0438\u044E"
   ActionDescription: "\u0415\u0441\u043B\u0438 \u043F\u043E \u0432\u0430\u0448\u0435\u043C\u0443

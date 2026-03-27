@@ -13,7 +13,9 @@ public class PartyManager : MonoBehaviour, IService
     
     public PartyPlacer PlayerPartyPlacer => _playerPartyPlacer;
     
-    [SerializeField] private List<Unit> _memberPrefabs;
+    //[SerializeField] private Unit _memberPrefab;
+
+    [SerializeField] private UnitSelector _unitSelector;
     
     public void InitializePlayerParty(int count)
     {
@@ -22,7 +24,8 @@ public class PartyManager : MonoBehaviour, IService
         List<Unit> units = new List<Unit>();
         for (int i = 0; i < remainingCounts; i++)
         {
-            var unit = SpawnRandomUnit(_memberPrefabs[0], PlayerParty.transform);
+            var prefab = _unitSelector.RandomSelect();
+            var unit = SpawnRandomUnit(prefab, PlayerParty.transform);
             if (i == 0) unit.IsMainHero = true;
             
             units.Add(unit);
@@ -111,8 +114,9 @@ public class PartyManager : MonoBehaviour, IService
         List<Unit> units = new List<Unit>();
         for (int i = 0; i < remainingCounts; i++)
         {
-            var unit = SpawnRandomUnit(_memberPrefabs[0], EnemyParty.transform);
-            unit.ShouldСreateAura = false;
+            var prefab = _unitSelector.RandomSelect();
+            var unit = SpawnRandomUnit(prefab, EnemyParty.transform);
+            unit.ShouldCreateAura = false;
             units.Add(unit);
         }
         InitializeEnemyParty(units);
@@ -123,9 +127,9 @@ public class PartyManager : MonoBehaviour, IService
         var units = new List<Unit>();
         foreach (var data in unitsData)
         {
-            var prefab = _memberPrefabs.FirstOrDefault(m => m.UnitType == data.Type);
+            var prefab = _unitSelector.RandomSelect();
             var unit = SpawnUnit(prefab, data);
-            unit.ShouldShowAura = false;
+            unit.ShouldCreateAura = false;
             units.Add(unit);
         }
         InitializeEnemyParty(units);
