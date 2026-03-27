@@ -436,7 +436,7 @@ MonoBehaviour:
   RenderCameraPoint: {fileID: 3491138236797506658}
   UnitName: "\u0410\u0431\u043E\u0431\u0430"
   ShouldCreateAura: 1
-  <UnitType>k__BackingField: 0
+  <UnitType>k__BackingField: 2
   <IsMainHero>k__BackingField: 0
   Health:
     MaxDefaultHealth: 25
@@ -791,3 +791,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _selectable: {fileID: 7537519339574146553}
   _sprite: {fileID: 4245760975678258105}
+  _unit: {fileID: 0}

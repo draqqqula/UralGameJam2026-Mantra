@@ -244,6 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _selectable: {fileID: 4847278503727186900}
   _sprite: {fileID: 5893571317642237766}
+  _unit: {fileID: 0}
 --- !u!1 &5962334736050855788
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,7 +539,7 @@ MonoBehaviour:
   RenderCameraPoint: {fileID: 3491138236797506658}
   UnitName: "\u0410\u0431\u043E\u0431\u0430"
   ShouldCreateAura: 1
-  <UnitType>k__BackingField: 0
+  <UnitType>k__BackingField: 3
   <IsMainHero>k__BackingField: 0
   Health:
     MaxDefaultHealth: 25
