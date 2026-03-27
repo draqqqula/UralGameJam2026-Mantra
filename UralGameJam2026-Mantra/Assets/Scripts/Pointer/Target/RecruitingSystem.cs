@@ -66,7 +66,7 @@ public class RecruitingSystem : MonoBehaviour, IService
             unit.UpdateUIPosition();
         };
         
-        var animation = new RecruitingAnimation(_partyManager.PlayerPartyPlacer);
+        var animation = new RecruitingAnimation(_partyManager.PlayerPartyPlacer, _audioManager);
         animation.Play(unit, _moveSpeed, _moveCurve, onAnimationFinished);
         _animations.Add(animation);
     }
@@ -87,7 +87,7 @@ public class RecruitingSystem : MonoBehaviour, IService
             newUnit.UpdateUIPosition();
         };
         
-        var animation = new RecruitingAnimation(_partyManager.PlayerPartyPlacer);
+        var animation = new RecruitingAnimation(_partyManager.PlayerPartyPlacer, _audioManager);
         animation.PlayWithReplacement(oldUnit, newUnit, _moveSpeed, _fadeOutDuration, _fadeOutCurve, _moveCurve, onAnimationFinished);
         _audioManager.PlaySound("Recruiting");
         
@@ -123,9 +123,12 @@ public class RecruitingAnimation
     private Sequence _animationSequence;
     private PartyPlacer _playerPartyPlacer;
     
-    public RecruitingAnimation(PartyPlacer playerPartyPlacer)
+    private AudioManager _audioManager;
+    
+    public RecruitingAnimation(PartyPlacer playerPartyPlacer, AudioManager audioManager)
     {
         _playerPartyPlacer = playerPartyPlacer;
+        _audioManager = audioManager;
     }
     
     public void PlayWithReplacement(Unit oldUnit, Unit newUnit, float moveSpeed, float fadeOutDuration,
@@ -161,7 +164,10 @@ public class RecruitingAnimation
     private Tween PlayMovePart(Unit newUnit, Vector2 playerUnitPos, float moveSpeed, AnimationCurve moveCurve)
     {
         var distance = Vector2.Distance(playerUnitPos, newUnit.transform.position);
-        return newUnit.transform.DOMove(playerUnitPos, distance / moveSpeed).SetEase(moveCurve);
+        return newUnit.transform
+            .DOMove(playerUnitPos, distance / moveSpeed)
+            .SetEase(moveCurve)
+            .OnComplete(() => _audioManager.PlaySound("Step"));
     }
 
     public void Kill()

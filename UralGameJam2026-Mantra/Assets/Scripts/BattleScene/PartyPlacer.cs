@@ -35,6 +35,7 @@ public class PartyPlacer : MonoBehaviour
 
     private IEnumerator MoveTransition(Vector3[] newPoints, float unitSpeed, float membersDelay, Action callback = null)
     {
+        var audioManager = ServiceLocator.Instance.GetService<AudioManager>();
         yield return null;
         Sequence sequence = DOTween.Sequence();
         
@@ -44,9 +45,10 @@ public class PartyPlacer : MonoBehaviour
             var distance = Vector2.Distance(newPoints[i], member.transform.position);
 
             sequence.Insert(i * membersDelay, member.transform
-                .DOMove(newPoints[i], distance / unitSpeed)
-                .SetEase(_movementProgressCurve)
-                .SetLink(member.gameObject));
+                    .DOMove(newPoints[i], distance / unitSpeed)
+                    .SetEase(_movementProgressCurve)
+                    .SetLink(member.gameObject)
+                    .OnComplete(() => audioManager.PlaySound("Step")));
         }
         
         yield return sequence.WaitForCompletion();

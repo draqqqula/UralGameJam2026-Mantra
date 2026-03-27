@@ -68,8 +68,6 @@ public class UnitHealth : IDisposable
 
     private void Heal(float heal)
     {
-        var audioManager = ServiceLocator.Instance.GetService<AudioManager>();
-        audioManager.PlaySound("Heal");
         CurrentHealth = Mathf.Min(CurrentHealth + heal, MaxHealth);
     }
 
