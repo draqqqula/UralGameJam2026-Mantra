@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 2
   m_Sprite: {fileID: 2141188580037841102, guid: 76615ffce7516fa47aec878c571927d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -593,7 +593,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RenderCameraPoint: {fileID: 3491138236797506658}
   UnitName: "\u0410\u0431\u043E\u0431\u0430"
-  ShouldShowAura: 1
+  ShouldCreateAura: 1
+  <UnitType>k__BackingField: 0
+  <IsMainHero>k__BackingField: 0
   Health:
     MaxDefaultHealth: 25
     MaxDefaultDefense: 10

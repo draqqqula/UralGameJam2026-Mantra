@@ -44,10 +44,10 @@ public class Unit : MonoBehaviour
 
         UnitTurn = GetComponent<UnitTurn>();
 
-        if (ShouldCreateAura)
-        {
-            InstantiateAura();
-        }
+        //if (ShouldCreateAura)
+        //{
+        //    InstantiateAura();
+        //}
 
         var healthbar =  Instantiate(_healthbarPrefab, canvas.transform);
         healthbar.transform.position = _healthbarPoint.position;
