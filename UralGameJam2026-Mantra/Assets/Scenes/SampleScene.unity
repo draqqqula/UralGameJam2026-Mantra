@@ -5526,6 +5526,8 @@ MonoBehaviour:
     _pool:
     - {fileID: 11400000, guid: 655db555fe8466a45a9d607d26114a31, type: 2}
     - {fileID: 11400000, guid: 1aef05f599aae3f4d9d5948afed197d8, type: 2}
+    - {fileID: 11400000, guid: cd8722fea579a0d449f1708d821f0fc3, type: 2}
+    - {fileID: 11400000, guid: 98f491becdfc08a4c9c78e3d4150cb92, type: 2}
     _curve:
       serializedVersion: 2
       m_Curve:
