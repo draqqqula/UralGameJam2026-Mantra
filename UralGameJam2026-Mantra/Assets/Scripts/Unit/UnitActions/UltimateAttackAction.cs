@@ -5,8 +5,12 @@ using UnityEngine;
 public class UltimateAttackAction : UnitAction
 {
     [SerializeField] private int _attackCooldown;
-
     private int _currentCooldown;
+
+    private void Awake()
+    {
+        _currentCooldown = _attackCooldown;
+    }
 
     public override bool CanUse()
     {

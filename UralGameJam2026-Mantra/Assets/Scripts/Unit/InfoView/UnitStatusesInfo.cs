@@ -46,7 +46,10 @@ public class UnitStatusesInfo : MonoBehaviour
             setStats.AddRange(_unit.Damage.MinDamage.Modifiers);
         }
 
-        var distinct = setStats.Distinct().ToList();
+        var distinct = setStats
+            .GroupBy(x => x.Name)
+            .Select(x => x.First())
+            .ToList();
         if (!distinct.Any()) return;
 
         var instantiate = Instantiate(_prefab, _statusFieldObject.transform);

@@ -205,7 +205,7 @@ public class Unit : MonoBehaviour
         Health.MaxHealth = serializeUnit.MaxHealth;
         Health.MaxDefaultHealth = serializeUnit.MaxDefaultHealth;
 
-        Health.CurrentDefense = serializeUnit.Defense;
+        Health.CurrentDefense = new(serializeUnit.Defense);
         Health.MaxDefense = serializeUnit.MaxDefense;
         Health.MaxDefaultDefense = serializeUnit.MaxDefaultDefense;
 

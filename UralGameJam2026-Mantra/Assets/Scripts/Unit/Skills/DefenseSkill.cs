@@ -8,10 +8,8 @@ public class DefenseSkill : Skill
 
     public override void Use(params Unit[] units)
     {
-        var battleManager = ServiceLocator.Instance.GetService<BattleManager>();
-
         units[0].GetComponent<UnitAnimator>().Play(UnitAnimation.Support, out _animDelay);
-        units[0].Health.CurrentDefense.ApplyModifier(_defense);
+        units[1].Health.CurrentDefense.ApplyModifier(_defense);
     }
 
     public override float UseDelay()

@@ -24,6 +24,6 @@ public class ThornSkill : Skill
 
     private void ApplyThorn(Unit enemy)
     {
-        //enemy.Health.ApplyDirectDamage(_thornDamage);
+        enemy.Health.ApplyDirectDamage(_thornDamage);
     }
 }

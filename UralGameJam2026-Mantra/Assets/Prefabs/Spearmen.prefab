@@ -218,8 +218,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionInfo: {fileID: 11400000, guid: 3bdbef6720053af4395a4e6fc272c935, type: 2}
+  _skill: {fileID: 11400000, guid: a7ae4166ae97a2c40915005e62c55ff7, type: 2}
   _attackCooldown: 5
-  _ultimateModifier: {fileID: 11400000, guid: d3f68514b6869f442bf78fe31d2c1018, type: 2}
 --- !u!1 &7318136119364406056
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionInfo: {fileID: 11400000, guid: 13fd9c3547e73134995f3bbd960bf151, type: 2}
+  _skill: {fileID: 0}
 --- !u!1 &7318213688681915289
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionInfo: {fileID: 11400000, guid: be2eb541c7d245f41b8c5b2d8c17d651, type: 2}
-  _skill: {fileID: 0}
+  _skill: {fileID: 11400000, guid: db325960c075b254bbf11aae48752c57, type: 2}
 --- !u!1 &7637924686098206839
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,6 +457,9 @@ MonoBehaviour:
   _auraPoint: {fileID: 7386312218925282164}
   _healthbarPrefab: {fileID: 2338016816414332837, guid: 69b39b346f05d4099871c76a76a65284, type: 3}
   _auraPrefab: {fileID: 9210947660843906074, guid: 37f77c80bc034c64b8e87dd119e4343b, type: 3}
+  OnTakeDamageRespond:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7624932100761901221
 MonoBehaviour:
   m_ObjectHideFlags: 0

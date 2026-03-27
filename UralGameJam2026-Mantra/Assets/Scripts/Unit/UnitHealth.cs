@@ -41,7 +41,7 @@ public class UnitHealth : IDisposable
 
     public void ApplyDamage(float damage)
     {
-        var defensePercent = Mathf.Min((100 - CurrentDefense.ModValue) * .01f, 0);
+        var defensePercent = Mathf.Max((100 - CurrentDefense.ModValue) * .01f, 0);
         var calcDamage = Mathf.Round(damage * defensePercent);
         TakeDamage(calcDamage);
 
@@ -52,6 +52,12 @@ public class UnitHealth : IDisposable
     {
         Heal(heal);
         OnHeal?.Invoke(heal);
+    }
+
+    public void ApplyDirectDamage(float directDamage)
+    {
+        TakeDamage(directDamage);
+        OnTakeDamage?.Invoke(directDamage);
     }
 
     public void ApplyHealToMax()

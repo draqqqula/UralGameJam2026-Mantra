@@ -8,7 +8,6 @@ public class HealSkill : Skill
     public override void Use(params Unit[] units)
     {
         units[0].GetComponent<UnitAnimator>().Play(UnitAnimation.Support, out var source);
-        units[0].Health.ApplyHeal(_healValue);
 
         units[1].GetComponent<UnitAnimator>().Play(UnitAnimation.Idle, out var target);
         units[1].Health.ApplyHeal(_healValue);

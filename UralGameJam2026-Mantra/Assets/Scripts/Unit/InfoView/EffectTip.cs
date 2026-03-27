@@ -39,10 +39,9 @@ public class EffectTip : MonoBehaviour
 
     public void Move(Vector3 pos)
     {
-        var mousePosition = _camera.WorldToScreenPoint(pos);
+        var mousePosition = _camera.WorldToViewportPoint(pos).normalized;
 
         var pivot = _tipTransform.pivot;
-
         if (mousePosition.x + _inaccuracy > 1f)
         {
             pivot.x = 1;
@@ -53,11 +52,11 @@ public class EffectTip : MonoBehaviour
         }
         if(mousePosition.y + _inaccuracy > 1f)
         {
-            pivot.y = 0;
+            pivot.y = 1;
         }
         if(mousePosition.y - _inaccuracy < 0f)
         {
-            pivot.y = 1;
+            pivot.y = 0;
         }
 
         _tipTransform.pivot = pivot;

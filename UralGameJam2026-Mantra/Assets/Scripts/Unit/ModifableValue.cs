@@ -58,4 +58,11 @@ public class ModifierEffect
         Name = name;
         Description = description;
     }
+
+    public override bool Equals(object obj)
+    {
+        if(obj is not ModifierEffect casted) return false;
+
+        return Name == casted.Name;
+    }
 }

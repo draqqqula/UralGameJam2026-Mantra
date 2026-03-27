@@ -95,6 +95,18 @@ public class BattleManager : MonoBehaviour, IService
         DetermineTurn().Forget();
     }
 
+    private void UpdateModifiers(List<Unit> units)
+    {
+        foreach (var unit in units)
+        {
+            unit.Damage.CritMultiplyer.CheckModifiers();
+            unit.Damage.CritChance.CheckModifiers();
+
+            unit.Damage.MaxDamage.CheckModifiers();
+            unit.Damage.MinDamage.CheckModifiers();
+        }
+    }
+
     private void Setup()
     {
         _allUnits.Clear();
@@ -121,6 +133,8 @@ public class BattleManager : MonoBehaviour, IService
     private async UniTaskVoid DetermineTurn()
     {
         if (IsNoneTurn()) return;
+
+        UpdateModifiers(_allUnits.ToList());
 
         if(IsPlayerTurn())
         {

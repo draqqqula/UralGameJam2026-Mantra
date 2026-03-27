@@ -61,7 +61,7 @@ public class UnitBaseInfoView : MonoBehaviour, IService
         _crit.Item2 = _unit.Damage.CritMultiplyer.ModValue;
 
         _healthText.text = $"{_health.Item2}/{_health.Item1}";
-        _defenseText.text = _unit.Health.CurrentDefense.ToString();
+        _defenseText.text = _unit.Health.CurrentDefense.ModValue.ToString();
         _damageText.text = $"{_damage.Item1}-{_damage.Item2}";
         _critChanceText.text = $"{_crit.Item1 * 100}%";
         _critMultiText.text = $"{_crit.Item2}x";
