@@ -449,6 +449,7 @@ GameObject:
   - component: {fileID: 6677950821919910066}
   - component: {fileID: 4382238133075706615}
   - component: {fileID: 6619478998449051965}
+  - component: {fileID: 6803631277887843375}
   m_Layer: 0
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -582,6 +583,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3525851f95d64bb5991dd8092736e9f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6803631277887843375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6846144180187853942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d50fe50b8fe4ccfa32b849e957f66b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6953341594913960324
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,6 +644,7 @@ GameObject:
   - component: {fileID: 5854372089700745977}
   - component: {fileID: 7418676111260771990}
   - component: {fileID: 1205869963588674201}
+  - component: {fileID: 797027454163442742}
   m_Layer: 0
   m_Name: MenuButton
   m_TagString: Untagged
@@ -762,6 +776,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9adf85319e1408ba28eb79f6b781b03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &797027454163442742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8319657602775981594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d50fe50b8fe4ccfa32b849e957f66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8408104071210730782

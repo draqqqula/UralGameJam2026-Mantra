@@ -10,6 +10,8 @@ public class TargetSystem : MonoBehaviour
     private MatchManager _matchManager;
     private PartyManager _partyManager;
     private RecruitingSystem _recruitingSystem;
+    
+    private AudioManager _audioManager;
 
     public Targetable Current { get; private set; }
     public event Action<Targetable> OnSetTarget;
@@ -22,6 +24,7 @@ public class TargetSystem : MonoBehaviour
             _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
             _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
             _recruitingSystem = ServiceLocator.Instance.GetService<RecruitingSystem>();
+            _audioManager = ServiceLocator.Instance.GetService<AudioManager>();
         }
     }
 
@@ -93,11 +96,16 @@ public class TargetSystem : MonoBehaviour
 
         if (_matchManager.CurrentMatchState == MatchManager.State.Battle)
         {
+            if (_partyManager.IsOnPlayerParty(Current.Unit))
+            {
+                _audioManager.PlaySound("ChoosingUnit");
+            }
             //if (battle.IsEnemyPartyMember(battle.Current.CurrentValue)) return;
             battle.TrySetUnit(Current.Unit).Forget();
         }
         else if (_matchManager.CurrentMatchState == MatchManager.State.Recrouting)
         {
+            _audioManager.PlaySound("ChoosingUnit");
             recruitingSystem.ChooseUnit(Current.Unit);
         }
     }

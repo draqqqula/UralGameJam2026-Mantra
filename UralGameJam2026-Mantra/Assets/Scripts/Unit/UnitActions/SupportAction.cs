@@ -15,6 +15,9 @@ public class SupportAction : UnitAction
     {
         var cached = ActionHelper.DisableTargetSystem();
 
+        var audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        audioManager.PlaySound(_person.UnitType + "Support");
+        
         await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
         print($"{_person.UnitName} helps {_target.UnitName} with smth");
 

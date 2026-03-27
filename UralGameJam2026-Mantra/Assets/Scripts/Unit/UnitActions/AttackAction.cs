@@ -17,6 +17,10 @@ public class AttackAction : UnitAction
 
         await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
 
+        var audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        audioManager.PlaySound(_person.UnitType + "Attack");
+        await UniTask.Yield();
+        
         _damageValue = _person.Damage.DealBaseDamage();
         _target.Health.ApplyDamage(_damageValue);
 
@@ -24,7 +28,7 @@ public class AttackAction : UnitAction
 
         _target.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
         _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _animDelay);
-
+        
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
 
         ActionHelper.EnableTargetSystem(cached);

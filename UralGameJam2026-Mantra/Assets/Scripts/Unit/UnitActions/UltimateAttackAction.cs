@@ -32,6 +32,8 @@ public class UltimateAttackAction : UnitAction
             _person = GetComponentInParent<Unit>();
         }
 
+        var audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        audioManager.PlaySound("Ulta");
         await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
 
         if (_ultimateModifier)
