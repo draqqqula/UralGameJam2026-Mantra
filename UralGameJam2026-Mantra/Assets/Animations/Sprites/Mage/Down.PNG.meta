@@ -116,10 +116,10 @@ TextureImporter:
       name: IMG_1079_0
       rect:
         serializedVersion: 2
-        x: 681
-        y: 137
-        width: 608
-        height: 1148
+        x: 0
+        y: 0
+        width: 2048
+        height: 2048
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

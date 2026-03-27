@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionInfo: {fileID: 11400000, guid: 13dc1c51fddc4124eaced85eb08d5c2a, type: 2}
-  _skill: {fileID: 0}
+  _skill: {fileID: 11400000, guid: 2dd37c1769964514e8c8b64db3219ddd, type: 2}
 --- !u!1 &7318213688681915289
 GameObject:
   m_ObjectHideFlags: 0

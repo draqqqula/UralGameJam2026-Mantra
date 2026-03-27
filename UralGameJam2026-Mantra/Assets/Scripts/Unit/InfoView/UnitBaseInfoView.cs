@@ -51,8 +51,8 @@ public class UnitBaseInfoView : MonoBehaviour, IService
             return;
         }
 
-        _damage.Item1 = _unit.Damage.MinDamage.ModValue;
-        _damage.Item2 = _unit.Damage.MaxDamage.ModValue;
+        _damage.Item1 = Mathf.Round(_unit.Damage.MinDamage.ModValue);
+        _damage.Item2 = Mathf.Round(_unit.Damage.MaxDamage.ModValue);
 
         _health.Item1 = _unit.Health.MaxHealth;
         _health.Item2 = _unit.Health.CurrentHealth;
@@ -61,7 +61,7 @@ public class UnitBaseInfoView : MonoBehaviour, IService
         _crit.Item2 = _unit.Damage.CritMultiplyer.ModValue;
 
         _healthText.text = $"{_health.Item2}/{_health.Item1}";
-        _defenseText.text = _unit.Health.CurrentDefense.ModValue.ToString();
+        _defenseText.text = Mathf.Round(_unit.Health.CurrentDefense.ModValue).ToString();
         _damageText.text = $"{_damage.Item1}-{_damage.Item2}";
         _critChanceText.text = $"{_crit.Item1 * 100}%";
         _critMultiText.text = $"{_crit.Item2}x";
@@ -94,7 +94,7 @@ public class UnitBaseInfoView : MonoBehaviour, IService
 
     private void ChangeCameraPosition(Transform point)
     {
-        _renderTextureCamera.transform.localPosition = point.position;
+        _renderTextureCamera.transform.localPosition = new Vector3(point.position.x, point.position.y, _renderTextureCamera.transform.localPosition.z);
     }
 
     private void UpdateUnit(ref Unit previous, Unit current)

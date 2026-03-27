@@ -119,10 +119,10 @@ TextureImporter:
       name: IMG_1065_0
       rect:
         serializedVersion: 2
-        x: 351
-        y: 150
-        width: 1190
-        height: 1819
+        x: 0
+        y: 0
+        width: 2048
+        height: 2048
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,28 +133,6 @@ TextureImporter:
       bones: []
       spriteID: d9dc33541a0add460800000000000000
       internalID: 7268141988157050269
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IMG_1065_1
-      rect:
-        serializedVersion: 2
-        x: 1450
-        y: 145
-        width: 8
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 57bfe2e0677926f10800000000000000
-      internalID: 2261536496193305461
       vertices: []
       indices: 
       edges: []

@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnitStatusesInfo : MonoBehaviour
 {
     [SerializeField] private GameObject _statusFieldObject;
-    [SerializeField] private Sprite _attackSprite, _critMultiSprite, _critChanceSprite;
+    [SerializeField] private Sprite _attackSprite, _critMultiSprite, _critChanceSprite, _defenseSprite;
 
     [SerializeField] private ModifierEffectInfo _prefab;
 
@@ -18,6 +18,7 @@ public class UnitStatusesInfo : MonoBehaviour
         _unit = unit;
 
         AddAttackSprite();
+        AddDefenseSprite();
         AddCritChanceSprite();
         AddCritMultiSprite();
     }
@@ -55,6 +56,22 @@ public class UnitStatusesInfo : MonoBehaviour
         var instantiate = Instantiate(_prefab, _statusFieldObject.transform);
         instantiate.SetSprite(_attackSprite);
         instantiate.SetValue(distinct);
+    }
+
+    private void AddDefenseSprite()
+    {
+        var setStats = new List<ModifierEffect>();
+
+        if (!_unit.Health.CurrentDefense.Modifiers.Any())
+        {
+            return;
+        }
+
+        setStats.AddRange(_unit.Health.CurrentDefense.Modifiers);
+
+        var instantiate = Instantiate(_prefab, _statusFieldObject.transform);
+        instantiate.SetSprite(_defenseSprite);
+        instantiate.SetValue(setStats);
     }
 
     private void AddCritChanceSprite()

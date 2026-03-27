@@ -1063,7 +1063,7 @@ Transform:
   m_GameObject: {fileID: 169270592}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1485,7 +1485,7 @@ Transform:
   m_GameObject: {fileID: 274446924}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4106,7 +4106,7 @@ MonoBehaviour:
   _tipObject: {fileID: 2026634513}
   _effectTipText: {fileID: 2034607764}
   _tipTransform: {fileID: 2026634514}
-  _inaccuracy: 0.2
+  _inaccuracy: 0.7
 --- !u!225 &871108706
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5461,6 +5461,7 @@ MonoBehaviour:
   _attackSprite: {fileID: 15498587377638789, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
   _critMultiSprite: {fileID: 1560072642305071498, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
   _critChanceSprite: {fileID: -2847854109469819822, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
+  _defenseSprite: {fileID: -979862251279617105, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
   _prefab: {fileID: 685583068959965781, guid: 0616cc458778b924088524c4cf4205ce, type: 3}
 --- !u!114 &1070835498
 MonoBehaviour:
@@ -8064,6 +8065,7 @@ MonoBehaviour:
   _attackSprite: {fileID: 15498587377638789, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
   _critMultiSprite: {fileID: 1560072642305071498, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
   _critChanceSprite: {fileID: -2847854109469819822, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
+  _defenseSprite: {fileID: -979862251279617105, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
   _prefab: {fileID: 685583068959965781, guid: 0616cc458778b924088524c4cf4205ce, type: 3}
 --- !u!1 &1554544696
 GameObject:
