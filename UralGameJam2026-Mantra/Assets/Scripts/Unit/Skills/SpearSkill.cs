@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Spear", menuName = "Unit/Skills/Inspiration")]
+[CreateAssetMenu(fileName = "Spear", menuName = "Unit/Skills/Spear")]
 public class SpearSkill : Skill
 {
     //"Spear!" => "Over here!" =>  "Take THIS!" => "death sfx" - joking
@@ -20,7 +20,7 @@ public class SpearSkill : Skill
 
         foreach(var unit in enemies)
         {
-            if(unit.Health.CurrentDefense <= damage)
+            if(unit.Health.CurrentDefense.ModValue <= damage)
             {
                 //theres should be kill unit method
                 //continue;

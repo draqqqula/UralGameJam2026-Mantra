@@ -20,6 +20,7 @@ public class SerializeUnit
 
     public List<ModifierEffect> ModifierEffectsCritChance = new();
     public List<ModifierEffect> ModifierEffectsCritMultiplyer = new();
+    public List<ModifierEffect> ModifierEffectsDefense = new();
 
     public float MinDefaultDamage;
     public float MaxDefaultDamage;

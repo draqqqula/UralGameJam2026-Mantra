@@ -11,12 +11,15 @@ public class SupportAction : UnitAction
 
     public override async UniTask Execute(CancellationToken token)
     {
-        await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
         print($"{_person.UnitName} helps {_target.UnitName} with smth");
 
-        if (_skill) _skill.Use(_person, _target);
+        if (_skill)
+        {
+            _skill.Use(_person, _target);
+            await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
 
-        _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Support, out _animDelay);
+            _animDelay = _skill.UseDelay();
+        }
 
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
     }

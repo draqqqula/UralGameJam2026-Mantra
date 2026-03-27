@@ -16,7 +16,7 @@ public class UnitHealth : IDisposable
     public float MaxHealth { get; set; }
     public float MaxDefense { get; set; }
     public float CurrentHealth { get; set; }
-    public float CurrentDefense { get; set; }
+    public ModifableValue CurrentDefense { get; set; }
 
     public float MaxDefaultHealth;
     public float MaxDefaultDefense;
@@ -33,13 +33,15 @@ public class UnitHealth : IDisposable
 
     public void SetupValue()
     {
+        CurrentDefense = new(MaxDefaultDefense);
+
         MaxHealth = CurrentHealth = MaxDefaultHealth;
-        MaxDefense = CurrentDefense = MaxDefaultDefense;
+        MaxDefense = MaxDefaultDefense;
     }
 
     public void ApplyDamage(float damage)
     {
-        var defensePercent = 1 - Mathf.Clamp01(damage / CurrentDefense);
+        var defensePercent = Mathf.Min((100 - CurrentDefense.ModValue) * .01f, 0);
         var calcDamage = Mathf.Round(damage * defensePercent);
         TakeDamage(calcDamage);
 

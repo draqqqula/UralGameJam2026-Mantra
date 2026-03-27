@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Unit : MonoBehaviour
 {
@@ -29,7 +30,8 @@ public class Unit : MonoBehaviour
     private Transform _healthBarTransform, _auraTransform;
     private TurnManager _turnManager;
 
-    public event Action OnDestroyed; 
+    public event Action OnDestroyed;
+    public UnityEvent<Unit> OnTakeDamageRespond;
         
 
     private void Start()
@@ -51,6 +53,11 @@ public class Unit : MonoBehaviour
         _healthBarTransform = healthbar.transform; 
     }
     
+    public void ResetDamageRespond()
+    {
+        OnTakeDamageRespond.RemoveAllListeners();
+    }
+
     public void InstantiateAura()
     {
         if (_auraTransform) return;
@@ -163,7 +170,7 @@ public class Unit : MonoBehaviour
             MaxHealth = Health.MaxHealth,
             MaxDefaultHealth = Health.MaxDefaultHealth,
 
-            Defense = Health.CurrentDefense,
+            Defense = Health.CurrentDefense.ModValue,
             MaxDefense = Health.MaxDefense,
             MaxDefaultDefense = Health.MaxDefaultDefense,
 
@@ -174,6 +181,7 @@ public class Unit : MonoBehaviour
 
             ModifierEffectsCritChance = new(Damage.CritChance.Modifiers),
             ModifierEffectsCritMultiplyer = new(Damage.CritMultiplyer.Modifiers),
+            ModifierEffectsDefense = new(Health.CurrentDefense.Modifiers),
 
             MinDefaultDamage = Damage.MinDefaultDamage,
             MaxDefaultDamage = Damage.MaxDefaultDamage,
