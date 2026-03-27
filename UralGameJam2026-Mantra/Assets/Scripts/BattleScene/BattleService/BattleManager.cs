@@ -148,6 +148,51 @@ public class BattleManager : MonoBehaviour, IService
         return turn;
     }
 
+    public List<Unit> GetFriends(Unit source)
+    {
+        var units = new List<Unit>();
+        if (IsPlayerTurn())
+        {
+            units = _playerParty.Members;
+        }
+        if (IsEnemyTurn())
+        {
+            units = _enemyParty.Members;
+        }
+
+        return units;
+    }
+
+    public List<Unit> GetAliveFriendUnits(Unit source)
+    {
+        var units = new List<Unit>();
+        if (IsPlayerTurn())
+        {
+            units = _playerParty.Members.Where(x => x.IsAlive).ToList();
+        }
+        if(IsEnemyTurn())
+        {
+            units = _enemyParty.Members.Where(x => x.IsAlive).ToList();
+        }
+
+        return units;
+    }
+
+    public List<Unit> GetAliveEnemyUnits(Unit source)
+    {
+        var units = new List<Unit>();
+        if (IsPlayerTurn())
+        {
+            units = _enemyParty.Members.Where(x => x.IsAlive).ToList();
+        }
+        if (IsEnemyTurn())
+        {
+            units = _playerParty.Members.Where(x => x.IsAlive).ToList();
+        }
+
+        return units;
+    }
+
     public List<Unit> GetAliveUnits()
     {
         var units = _allUnits.Where(x => x.IsAlive).ToList();

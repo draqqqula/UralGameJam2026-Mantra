@@ -31,9 +31,4 @@ public class AttackAction : UnitAction
         _target = target;
         _person = person;
     }
-
-    public override void Undo()
-    {
-        
-    }
 }

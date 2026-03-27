@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SupportAction : UnitAction
 {
-    [SerializeField] private Skill _skill;
-
     public override bool CanUse()
     {
         return true;
@@ -16,7 +14,8 @@ public class SupportAction : UnitAction
         await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
         print($"{_person.UnitName} helps {_target.UnitName} with smth");
 
-        //_target.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
+        if (_skill) _skill.Use(_person, _target);
+
         _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Support, out _animDelay);
 
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
@@ -27,11 +26,5 @@ public class SupportAction : UnitAction
         _person = person;
         _target = target;
 
-        if(_skill) _skill.Use(person, target);
-    }
-
-    public override void Undo()
-    {
-        if (_skill) _skill.Undo();
     }
 }

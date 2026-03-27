@@ -5,9 +5,7 @@ using UnityEngine;
 public class UltimateAttackAction : UnitAction
 {
     [SerializeField] private int _attackCooldown;
-    [SerializeField] private Modifier _ultimateModifier;
 
-    private float _damageValue;
     private int _currentCooldown;
 
     public override bool CanUse()
@@ -30,38 +28,25 @@ public class UltimateAttackAction : UnitAction
             _person = GetComponentInParent<Unit>();
         }
 
-        await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
 
-        if (_ultimateModifier)
+        if (_skill)
         {
-            _person.Damage.MinDamage.ApplyModifier(_ultimateModifier);
-            _person.Damage.MaxDamage.ApplyModifier(_ultimateModifier);
+            print($"{_person.UnitName} do ultimate skill on {_target.UnitName}");
+            _skill.Use(_target);
+
+            await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
+
+            _animDelay = _skill.UseDelay();
         }
-
-        _damageValue = _person.Damage.DealBaseDamage();
-
-        if (!_target) _target = ServiceLocator.Instance.GetService<BattleManager>().GetRandomEnemy();
-        _target.Health.ApplyDamage(_damageValue);
-
-        print($"{_person.UnitName} attacks {_target.UnitName} with {_damageValue} damage!");
 
         _currentCooldown = _attackCooldown;
 
-        _target.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
-        _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _animDelay);
-
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
-
     }
 
     public override void Plan(Unit person, Unit target)
     {
         _target = target;
         _person = person;
-    }
-
-    public override void Undo()
-    {
-        _currentCooldown = Mathf.Min(_currentCooldown + 1, _attackCooldown);
     }
 }

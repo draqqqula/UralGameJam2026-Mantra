@@ -43,10 +43,6 @@ public class TurnManager : MonoBehaviour, IService
         }
 
         currentUnit.Value = unit;
-        if (action != null)
-        {
-            action.Undo();
-        }
 
         var order = new Queue<Unit>(unitOrder);
 
