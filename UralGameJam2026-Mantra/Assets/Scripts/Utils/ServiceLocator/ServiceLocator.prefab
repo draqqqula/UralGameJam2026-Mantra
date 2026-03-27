@@ -1596,61 +1596,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audio:
   - <Name>k__BackingField: Damage
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
-    Volume: 1
+    <Clip>k__BackingField: {fileID: 8300000, guid: a3a92cecbc9ef43de82e5c26a57af012, type: 3}
+    Volume: 0.5
   - <Name>k__BackingField: Heal
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: 7b5a556e16f24401e90f7570645d4370, type: 3}
     Volume: 1
   - <Name>k__BackingField: Ulta
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: 87a2e502ddd174591af0e35f76e448a2, type: 3}
     Volume: 1
   - <Name>k__BackingField: Death
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: 2016286d7f4dd4b94950f6aca088e30c, type: 3}
     Volume: 1
   - <Name>k__BackingField: WarriorAttack
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: 664f5b85cee9541fc90f71e9f3f19b18, type: 3}
     Volume: 1
   - <Name>k__BackingField: RangerAttack
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: 082dbd68f49af4417bd544d8ee795a04, type: 3}
     Volume: 1
   - <Name>k__BackingField: SpearmanAttack
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: 6799e23fee066422e842b359cf23ebfc, type: 3}
     Volume: 1
   - <Name>k__BackingField: MageAttack
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: 2b26cbea232414fcfab41a84fc7a1c55, type: 3}
     Volume: 1
   - <Name>k__BackingField: WarriorSupport
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: 9632ff77418524c55a7cbe1602702ff1, type: 3}
     Volume: 1
   - <Name>k__BackingField: RangerSupport
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
-    Volume: 1
+    <Clip>k__BackingField: {fileID: 8300000, guid: 8f248ec3776154895bb05e8b97da58b0, type: 3}
+    Volume: 3
   - <Name>k__BackingField: SpearmanSupport
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: 9b9b9280687cb4087b4153c9cfb0473e, type: 3}
     Volume: 1
-  - <Name>k__BackingField: SpearmanSupport
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+  - <Name>k__BackingField: MageSupport
+    <Clip>k__BackingField: {fileID: 8300000, guid: 309ba4268812140b78b7085d48a77bd4, type: 3}
     Volume: 1
   - <Name>k__BackingField: Dialogue
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
-    Volume: 1
+    <Clip>k__BackingField: {fileID: 8300000, guid: 897642459255f4d699a17fa5a1f648dd, type: 3}
+    Volume: 0.5
   - <Name>k__BackingField: Click
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: a5f0f04b8f0fb024f82b15828f2d6c12, type: 3}
     Volume: 1
   - <Name>k__BackingField: Recruiting
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: cc54d07641a5149599c2d8de2ccd466b, type: 3}
     Volume: 1
   - <Name>k__BackingField: NextRoom
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: c0cb7dfd7f4a84eb89d560c9bde36084, type: 3}
     Volume: 1
   - <Name>k__BackingField: RoomVictory
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: 2dda7d21a5e8943dfabcb57948be8db3, type: 3}
     Volume: 1
   - <Name>k__BackingField: Victory
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: 2eda1c534c9df4f43bcfac77dc365d78, type: 3}
     Volume: 1
   - <Name>k__BackingField: Defeat
-    <Clip>k__BackingField: {fileID: 8300000, guid: 06562e3ab099e42a1aedb0010429e17c, type: 3}
+    <Clip>k__BackingField: {fileID: 8300000, guid: 11a9b1e3b6ea54e4ab66e6aa7c069939, type: 3}
     Volume: 1
   _soundsAudioSource: {fileID: 7247191630855096971}
 --- !u!82 &7247191630855096971
