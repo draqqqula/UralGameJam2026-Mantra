@@ -59,7 +59,8 @@ public class RecruitingSystem : MonoBehaviour, IService
             _partyManager.PlayerParty.AddMember(unit);
             
             unit.transform.rotation = Quaternion.identity;
-            unit.ShouldShowAura = true;
+            unit.InstantiateAura();
+            unit.UpdateRenderCameraPoint();
             unit.UpdateUIPosition();
         };
         
@@ -79,7 +80,8 @@ public class RecruitingSystem : MonoBehaviour, IService
             _partyManager.PlayerParty.InsertMember(index, newUnit);
             
             newUnit.transform.rotation = Quaternion.identity;
-            newUnit.ShouldShowAura = true;
+            newUnit.InstantiateAura();
+            newUnit.UpdateRenderCameraPoint();
             newUnit.UpdateUIPosition();
         };
         

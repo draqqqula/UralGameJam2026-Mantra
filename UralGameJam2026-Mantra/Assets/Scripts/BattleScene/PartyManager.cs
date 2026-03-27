@@ -112,7 +112,7 @@ public class PartyManager : MonoBehaviour, IService
         for (int i = 0; i < remainingCounts; i++)
         {
             var unit = SpawnRandomUnit(_memberPrefabs[0], EnemyParty.transform);
-            unit.ShouldShowAura = false;
+            unit.ShouldСreateAura = false;
             units.Add(unit);
         }
         InitializeEnemyParty(units);

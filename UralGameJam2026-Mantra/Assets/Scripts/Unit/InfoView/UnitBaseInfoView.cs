@@ -16,7 +16,9 @@ public class UnitBaseInfoView : MonoBehaviour, IService
     [SerializeField] private Camera _renderTextureCamera;
     [SerializeField] private Material _material;
 
-    private TargetSystem _targetSystem;
+    [SerializeField] private UnitSkillInfo _unitSkillInfo;
+    [SerializeField] private UnitStatusesInfo _unitStatusesInfo;
+
     private Unit _unit;
 
     private (float, float) _damage;
@@ -26,9 +28,6 @@ public class UnitBaseInfoView : MonoBehaviour, IService
     private void Start()
     {
         _unitImage.material = null;
-
-        _targetSystem = TargetSystem.Instance;
-        _targetSystem.OnSetTarget += DrawBaseInfo;
     }
 
     public void ShowView()
@@ -41,9 +40,9 @@ public class UnitBaseInfoView : MonoBehaviour, IService
         _viewObject.SetActive(false);
     }
 
-    private void DrawBaseInfo(Targetable target)
+    public void DrawBaseInfo(Unit unit)
     {
-        UpdateUnit(ref _unit, target.Unit);
+        UpdateUnit(ref _unit, unit);
 
         if (_unit == null)
         {
@@ -71,6 +70,9 @@ public class UnitBaseInfoView : MonoBehaviour, IService
         ChangeCameraPosition(_unit.RenderCameraPoint);
 
         _unitImage.material = _material;
+
+        _unitSkillInfo.ShowSkill(_unit);
+        _unitStatusesInfo.Show(_unit);
     }
 
     public void ResetInfo()
@@ -83,6 +85,11 @@ public class UnitBaseInfoView : MonoBehaviour, IService
         _critChanceText.text = $"0%";
         _critMultiText.text = $"0x";
         _nameText.text = string.Empty;
+    }
+
+    public bool IsEmpty()
+    {
+        return _unit;
     }
 
     private void ChangeCameraPosition(Transform point)
@@ -149,10 +156,5 @@ public class UnitBaseInfoView : MonoBehaviour, IService
     private void UpdateMinDamageInfo(float value)
     {
         _damage.Item1 = value;
-    }
-
-    private void OnDestroy()
-    {
-        _targetSystem.OnSetTarget -= DrawBaseInfo;
     }
 }

@@ -17,12 +17,11 @@ public class BattleManager : MonoBehaviour, IService
 
     private HashSet<Unit> _allUnits = new();
 
-    private ReactiveProperty<Unit> _currentUnit = new ReactiveProperty<Unit>();
-    public ReadOnlyReactiveProperty<Unit> Current => _currentUnit;
+    public ReadOnlyReactiveProperty<Unit> InitiatorUnit => _currentPipeline?.InitiatorUnit;
+    public ReadOnlyReactiveProperty<Unit> SelectedUnit => _currentPipeline?.SelectedUnit;
 
     private MatchManager _matchManager;
-    private RoomsController _roomController;
-    private UnitBaseInfoView _unitInfo;
+    private InfoViewController _infoViewController;
 
     private Turn _currentTurn = Turn.None;
     private BattleStrategy _currentPipeline;
@@ -35,8 +34,7 @@ public class BattleManager : MonoBehaviour, IService
     public void Init()
     {
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
-        _roomController = ServiceLocator.Instance.GetService<RoomsController>();
-        _unitInfo = ServiceLocator.Instance.GetService<UnitBaseInfoView>();
+        _infoViewController = ServiceLocator.Instance.GetService<InfoViewController>();
     }
 
     public void Cancel()
@@ -61,7 +59,7 @@ public class BattleManager : MonoBehaviour, IService
     {
         SetPlayerTurn();
 
-        _unitInfo.ShowView();
+        _infoViewController.Show();
         _enemyParty.Members.Reverse();
         _matchManager.CurrentMatchState = MatchManager.State.Battle;
 
@@ -195,8 +193,7 @@ public class BattleManager : MonoBehaviour, IService
             _currentPipeline = null;
             _matchManager.DeclareDefeat();
 
-            _unitInfo.HideView();
-            _unitInfo.ResetInfo();
+            _infoViewController.Hide();
 
             SetNoneTurn();
 

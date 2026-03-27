@@ -33,8 +33,8 @@ public class UnitHealth : IDisposable
 
     public void SetupValue()
     {
-        MaxHealth = CurrentHealth = MaxDefaultDefense;
-        MaxDefense = CurrentDefense = MaxDefaultHealth;
+        MaxHealth = CurrentHealth = MaxDefaultHealth;
+        MaxDefense = CurrentDefense = MaxDefaultDefense;
     }
 
     public void ApplyDamage(float damage)
