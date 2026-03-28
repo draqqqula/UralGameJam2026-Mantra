@@ -1,10 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Party : MonoBehaviour
 {
     public List<Unit> Members = new();
     [SerializeField] private int _maxCount = 4;
+    public event Action OnMembersEmpty;
     
     public int MaxCount => _maxCount;
     
@@ -31,6 +34,7 @@ public class Party : MonoBehaviour
             Destroy(unit.gameObject);
         }
         Members.Clear();
+        if (Members.Count == 0) OnMembersEmpty?.Invoke();
     }
 
     public void AddMember(Unit member)
@@ -51,6 +55,7 @@ public class Party : MonoBehaviour
     {
         if (!Members.Contains(member)) return;
         Members.Remove(member);
+        if (Members.Count == 0) OnMembersEmpty?.Invoke();
     }
 
     public int IndexOfMember(Unit member)

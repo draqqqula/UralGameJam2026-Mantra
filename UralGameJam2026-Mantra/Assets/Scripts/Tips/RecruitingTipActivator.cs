@@ -5,24 +5,38 @@ public class RecruitingTipActivator : MonoBehaviour, IService
 {
     private RecruitingSystem _recruitingSystem;
     private MatchManager _matchManager;
+    private PartyManager _partyManager;
+    
     [SerializeField] private ActionTip _actionTip;
     
     [SerializeField] private string playerUnitTip;
     [SerializeField] private string enemyUnitTip;
     
+    [SerializeField] private Transform _playerTipPoint;
+    [SerializeField] private Transform _enemyTipPoint;
+    
     private void Awake()
     {
         _recruitingSystem = ServiceLocator.Instance.GetService<RecruitingSystem>();
-        _recruitingSystem.OnUnitChoosed += Show;
+        _recruitingSystem.OnUnitChoosed += OnUnitChoosed;
         
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
         _matchManager.CurrentStateProperty.Subscribe(OnMatchStateChanged).AddTo(this);
+        
+        _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
+        _partyManager.EnemyParty.OnMembersEmpty += Hide;
     }
 
     private void OnMatchStateChanged(MatchManager.State matchState)
     {
         if (matchState == MatchManager.State.Recrouting) Show();
         else Hide();
+    }
+
+    private void OnUnitChoosed()
+    {
+        if (_partyManager.EnemyParty.Members.Count <= 0) Hide();
+        else Show();
     }
     
     private void Show()
@@ -33,11 +47,13 @@ public class RecruitingTipActivator : MonoBehaviour, IService
 
     private void ShowChoosingPlayerUnitTip()
     {
+        _actionTip.transform.position = _playerTipPoint.position;
         _actionTip.Show(playerUnitTip);
     }
 
     private void ShowChoosingEnemyUnitTip()
     {
+        _actionTip.transform.position = _enemyTipPoint.position;
         _actionTip.Show(enemyUnitTip);
     }
 
@@ -49,6 +65,7 @@ public class RecruitingTipActivator : MonoBehaviour, IService
 
     private void OnDestroy()
     {
-        _recruitingSystem.OnUnitChoosed -= Show;
+        _recruitingSystem.OnUnitChoosed -= OnUnitChoosed;
+        _partyManager.EnemyParty.OnMembersEmpty -= Hide;
     }
 }

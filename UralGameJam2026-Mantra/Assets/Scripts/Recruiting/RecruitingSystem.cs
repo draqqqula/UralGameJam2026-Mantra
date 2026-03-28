@@ -81,14 +81,14 @@ public class RecruitingSystem : MonoBehaviour, IService
 
     public void RecruitUnitWithReplacement(Unit oldUnit, Unit newUnit)
     {
-        var index = _partyManager.PlayerParty.IndexOfMember(oldUnit) + _movingUnits.Count;
-        _partyManager.PlayerParty.RemoveMember(oldUnit);
+        var index = _partyManager.PlayerParty.IndexOfMember(oldUnit);
+        _partyManager.PlayerParty.Members[index] = null;
         OnBeforeRecruit(newUnit);
         
         Action onAnimationFinished = () =>
         {
-            Destroy(oldUnit.gameObject);
-            _partyManager.PlayerParty.InsertMember(index, newUnit);
+            if (oldUnit != null) Destroy(oldUnit.gameObject);
+            _partyManager.PlayerParty.Members[index] = newUnit;
             
             newUnit.transform.rotation = Quaternion.identity;
             //newUnit.InstantiateAura();
