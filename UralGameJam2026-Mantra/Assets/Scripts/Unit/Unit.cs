@@ -58,6 +58,16 @@ public class Unit : MonoBehaviour
         _healthBarTransform = healthbar.transform; 
     }
 
+    public void ClearModifiers()
+    {
+        Health.CurrentDefense.ClearModifiers();
+        Damage.MinDamage.ClearModifiers();
+        Damage.MaxDamage.ClearModifiers();
+        Damage.CritMultiplyer.ClearModifiers();
+        Damage.CritChance.ClearModifiers();
+        AttachedSkills.Clear();
+    }
+
     public bool RespondSkill(Unit enemy)
     {
         foreach (var skill in AttachedSkills)

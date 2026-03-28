@@ -28,11 +28,6 @@ public class UnitAnimator : MonoBehaviour
             _ => "Idle",
         };
 
-        if (!_unit.IsAlive){
-            duration = 0;
-            return;
-        }
-
         var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         duration = stateInfo.length;
 
