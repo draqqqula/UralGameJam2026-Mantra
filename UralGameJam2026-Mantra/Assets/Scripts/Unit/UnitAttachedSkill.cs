@@ -20,7 +20,7 @@ public class UnitAttachedSkill : ModifierEffect
         if (_source.IsAlive)
         {
             enemy.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _);
-            var damage = _source.Damage.DealCritDamage(extraCritMulti: 2);
+            var damage = _source.Damage.DealCritDamage(extraCritMulti: 1);
             _source.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _);
             enemy.Health.ApplyDamage(damage);
             enemy.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
