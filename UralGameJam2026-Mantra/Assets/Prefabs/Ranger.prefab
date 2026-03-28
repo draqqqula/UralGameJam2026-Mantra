@@ -195,9 +195,9 @@ MonoBehaviour:
   - {fileID: 7108339969198208228, guid: 4e2d801652f674e4b88caba2b4b821a0, type: 3}
   - {fileID: 7108339969198208228, guid: cba11672eb52e28458c175f656abd760, type: 3}
   _variantsPlayer:
-  - {fileID: 7108339969198208228, guid: cba11672eb52e28458c175f656abd760, type: 3}
-  - {fileID: 7108339969198208228, guid: 2446ccbd31af6704090854731a9a017e, type: 3}
-  - {fileID: 7108339969198208228, guid: 4e2d801652f674e4b88caba2b4b821a0, type: 3}
+  - {fileID: 7108339969198208228, guid: fcd52c25d6d4fb24098b63e61b64e464, type: 3}
+  - {fileID: 7108339969198208228, guid: d26d10e650655024b89da0e8d469a287, type: 3}
+  - {fileID: 7108339969198208228, guid: 2612dd25ab455354fbb4dfc0ec72a65b, type: 3}
 --- !u!1 &4711881969993555622
 GameObject:
   m_ObjectHideFlags: 0

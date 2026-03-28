@@ -11,6 +11,11 @@ public class VariantResolver : MonoBehaviour
     [SerializeField] private List<SpriteLibraryAsset> _variantsEnemy;
     [SerializeField] private List<SpriteLibraryAsset> _variantsPlayer;
 
+    private void Start()
+    {
+        UpdateSprite();
+    }
+
     public void UpdateSprite()
     {
         var battle = ServiceLocator.Instance.GetService<BattleManager>();
