@@ -17,6 +17,7 @@ public class UnitAnimator : MonoBehaviour
 
     public void Play(UnitAnimation unitAnimation, out float duration)
     {
+
         var name = unitAnimation switch
         {
             UnitAnimation.Attack => "Attack",
@@ -26,6 +27,11 @@ public class UnitAnimator : MonoBehaviour
             UnitAnimation.Idle => "Idle",
             _ => "Idle",
         };
+
+        if (!_unit.IsAlive){
+            duration = 0;
+            return;
+        }
 
         var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         duration = stateInfo.length;

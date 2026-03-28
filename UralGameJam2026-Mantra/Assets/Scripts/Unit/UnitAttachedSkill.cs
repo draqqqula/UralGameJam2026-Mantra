@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class UnitAttachedSkill : ModifierEffect
@@ -19,14 +20,20 @@ public class UnitAttachedSkill : ModifierEffect
     {
         if (_source.IsAlive)
         {
-            enemy.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _);
-            var damage = _source.Damage.DealCritDamage(extraCritMulti: 1);
-            _source.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _);
-            enemy.Health.ApplyDamage(damage);
-            enemy.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
+            Counter(enemy).Forget();
             if(!enemy.IsAlive) return true;
         }
 
         return false;
+    }
+
+    private async UniTaskVoid Counter(Unit enemy)
+    {
+        enemy.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _);
+        await UniTask.Yield();
+        var damage = _source.Damage.DealCritDamage(extraCritMulti: 1);
+        _source.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _);
+        enemy.Health.ApplyDamage(damage);
+        enemy.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
     }
 }
