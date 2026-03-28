@@ -4576,22 +4576,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 515830254675409581, guid: 145bf8382deff4a0a85000de346d18a7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 977772723478248730, guid: 145bf8382deff4a0a85000de346d18a7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3589978282917612866, guid: 145bf8382deff4a0a85000de346d18a7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3630747361384564440, guid: 145bf8382deff4a0a85000de346d18a7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3778977520379386389, guid: 145bf8382deff4a0a85000de346d18a7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.053447
@@ -4635,10 +4619,6 @@ PrefabInstance:
     - target: {fileID: 4111340100665565753, guid: 145bf8382deff4a0a85000de346d18a7, type: 3}
       propertyPath: m_Name
       value: ServiceLocator
-      objectReference: {fileID: 0}
-    - target: {fileID: 6558992272242204198, guid: 145bf8382deff4a0a85000de346d18a7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

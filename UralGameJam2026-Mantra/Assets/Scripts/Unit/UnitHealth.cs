@@ -50,6 +50,7 @@ public class UnitHealth : IDisposable
 
     public void ApplyHeal(float heal)
     {
+        if (heal == 0) return;
         Heal(heal);
         OnHeal?.Invoke(heal);
     }
@@ -63,6 +64,8 @@ public class UnitHealth : IDisposable
     public void ApplyHealToMax()
     {
         var heal = MaxHealth - CurrentHealth;
+        if (heal == 0) return;
+        
         Heal(heal);
         OnHeal?.Invoke(heal);
     }
