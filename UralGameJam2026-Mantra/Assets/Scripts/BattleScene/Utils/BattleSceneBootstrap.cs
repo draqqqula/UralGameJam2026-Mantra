@@ -23,6 +23,7 @@ public class BattleSceneBootstrap : MonoBehaviour
     [SerializeField] private RecruitingSystem _recruitingSystem;
     
     [SerializeField] private NextRoomActivator _nextRoomActivator;
+    [SerializeField] private RecruitingTipActivator _recruitingTipActivator;
     
     private void Awake()
     {
@@ -49,6 +50,7 @@ public class BattleSceneBootstrap : MonoBehaviour
         ServiceLocator.Instance.RegisterService(_recruitingSystem);
         
         ServiceLocator.Instance.RegisterService(_nextRoomActivator);
+        ServiceLocator.Instance.RegisterService(_recruitingTipActivator);
 
         var battlesStarter = new BattleStarter(_dialoguePlayer, _battleManager, _roomsController);
         ServiceLocator.Instance.RegisterService(battlesStarter);
