@@ -87,6 +87,15 @@ public class BattleManager : MonoBehaviour, IService
         _canPlayerMove = true;
     }
 
+    public void CancelTurn()
+    {
+        if (_currentPipeline == null || IsEnemyTurn())
+        {
+            return;
+        }
+        _currentPipeline.Cancel();
+    }
+
 
     private void CheckBattlefield()
     {
