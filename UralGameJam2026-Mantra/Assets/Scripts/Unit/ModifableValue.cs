@@ -44,6 +44,11 @@ public class ModifableValue
             }
         }
     }
+
+    public void ClearModifiers()
+    {
+        Modifiers.Clear();
+    }
 }
 
 public class ModifierEffect

@@ -70,9 +70,11 @@ public class MatchManager : MonoBehaviour, IService
         {
             CurrentMatchState = State.Waiting;
             
-            var mainHero = _partyManager.GetMainHero();
-            if (!mainHero.IsAlive) mainHero.Resurrect();
-                
+            foreach (var unit in _partyManager.PlayerParty.Members)
+            {
+                unit.Resurrect();
+            }
+
             _audioManager.PlaySound("RoomVictory");
             TargetSystem.Instance.TrySetTarget(null);
 

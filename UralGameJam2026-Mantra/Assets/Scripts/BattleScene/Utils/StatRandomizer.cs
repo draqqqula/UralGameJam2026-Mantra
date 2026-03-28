@@ -1,22 +1,25 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class StatRandomizer : MonoBehaviour, IService
 {
-    [SerializeField] private StatRandomizerData _data;
+    [SerializeField] private StatRandomizerData[] _datas;
 
     public void InitUnit(Unit unit)
     {
-        unit.Damage.DefaultCritChance = (float)Math.Round(Random.Range(_data.MinCritChance, _data.MaxCritChance), 2);
-        unit.Damage.DefaultCritMultiplyer = (float)Math.Round(Random.Range(_data.MinCritMulti, _data.MaxCritMulti), 2);
+        var data = _datas.FirstOrDefault(x => x.UnitType == unit.UnitType);
 
-        unit.Damage.MinDefaultDamage = (float)Math.Round(Random.Range(_data.MinMinDamage, _data.MaxMinDamage));
-        unit.Damage.MaxDefaultDamage = (float)Math.Round(Random.Range(_data.MinMaxDamage, _data.MaxMaxDamage));
+        unit.Damage.DefaultCritChance = (float)Math.Round(Random.Range(data.MinCritChance, data.MaxCritChance), 2);
+        unit.Damage.DefaultCritMultiplyer = (float)Math.Round(Random.Range(data.MinCritMulti, data.MaxCritMulti), 2);
 
-        unit.Health.MaxDefaultDefense = (float)Math.Round(Random.Range(_data.MinDefense, _data.MaxDefense));
+        unit.Damage.MinDefaultDamage = (float)Math.Round(Random.Range(data.MinMinDamage, data.MaxMinDamage));
+        unit.Damage.MaxDefaultDamage = (float)Math.Round(Random.Range(data.MinMaxDamage, data.MaxMaxDamage));
 
-        unit.Health.MaxDefaultHealth = (float)Math.Round(Random.Range(_data.MinHealth, _data.MaxHealth));
+        unit.Health.MaxDefaultDefense = (float)Math.Round(Random.Range(data.MinDefense, data.MaxDefense));
+
+        unit.Health.MaxDefaultHealth = (float)Math.Round(Random.Range(data.MinHealth, data.MaxHealth));
 
         unit.Init();
     }
