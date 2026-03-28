@@ -38,9 +38,10 @@ public class ModifableValue
     {
         for(int i = 0; i < Modifiers.Count; i++)
         {
-            Modifiers[i].Turn--;
-
-            if (Modifiers[i].Turn <= 0) Modifiers.RemoveAt(i);
+            if (!Modifiers[i].UpdateTurns())
+            {
+                Modifiers.Remove(Modifiers[i]);
+            }
         }
     }
 }
@@ -59,10 +60,14 @@ public class ModifierEffect
         Description = description;
     }
 
-    public override bool Equals(object obj)
+    public virtual bool UpdateTurns(Action callback = null)
     {
-        if(obj is not ModifierEffect casted) return false;
-
-        return Name == casted.Name;
+        Turn--;
+        if (Turn <= 0)
+        {
+            callback?.Invoke();
+            return false;
+        }
+        return true;
     }
 }

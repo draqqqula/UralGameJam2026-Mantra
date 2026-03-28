@@ -36,7 +36,7 @@ public class Unit : MonoBehaviour
     private TurnManager _turnManager;
 
     public event Action OnDestroyed;
-    public UnityEvent<Unit> OnTakeDamageRespond;
+    public List<UnitAttachedSkill> AttachedSkills = new();
         
 
     private void Start()
@@ -57,10 +57,35 @@ public class Unit : MonoBehaviour
 
         _healthBarTransform = healthbar.transform; 
     }
-    
-    public void ResetDamageRespond()
+
+    public bool RespondSkill(Unit enemy)
     {
-        OnTakeDamageRespond.RemoveAllListeners();
+        foreach (var skill in AttachedSkills)
+        {
+            var successRespond = skill.TryRespond(enemy);
+            if (successRespond) return true;
+        }
+
+        return false;
+    }
+
+    public void AttachSkill(UnitAttachedSkill skill)
+    {
+        var attachedBefore = AttachedSkills.FirstOrDefault(x => x.Equals(skill));
+        if (attachedBefore != null) return;
+
+        AttachedSkills.Add(skill);
+    }
+
+    public void CheckAttached()
+    {
+        foreach(var attached in AttachedSkills.ToList())
+        {
+            if (!attached.UpdateTurns())
+            {
+                AttachedSkills.Remove(attached);
+            }
+        }
     }
 
     public void InstantiateAura()

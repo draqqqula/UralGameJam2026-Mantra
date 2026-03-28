@@ -21,6 +21,7 @@ public class UnitStatusesInfo : MonoBehaviour
         AddDefenseSprite();
         AddCritChanceSprite();
         AddCritMultiSprite();
+        AddAttachedSprite();
     }
 
     private void Hide()
@@ -56,6 +57,22 @@ public class UnitStatusesInfo : MonoBehaviour
         var instantiate = Instantiate(_prefab, _statusFieldObject.transform);
         instantiate.SetSprite(_attackSprite);
         instantiate.SetValue(distinct);
+    }
+
+    private void AddAttachedSprite()
+    {
+        var setStats = new List<ModifierEffect>();
+
+        if (!_unit.AttachedSkills.Any())
+        {
+            return;
+        }
+
+        setStats.AddRange(_unit.AttachedSkills);
+
+        var instantiate = Instantiate(_prefab, _statusFieldObject.transform);
+        instantiate.SetSprite(_defenseSprite);
+        instantiate.SetValue(setStats);
     }
 
     private void AddDefenseSprite()

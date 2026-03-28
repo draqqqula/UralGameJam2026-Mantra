@@ -3,17 +3,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Thorn", menuName = "Unit/Skills/Thorn")]
 public class ThornSkill : Skill
 {
-    [SerializeField] private float _thornDamage;
+    [SerializeField] private Modifier _thornModifier;
     private float _animDelay;
 
     public override void Use(params Unit[] units)
     {
-        var battleManager = ServiceLocator.Instance.GetService<BattleManager>();
-
         units[0].GetComponent<UnitAnimator>().Play(UnitAnimation.Support, out _animDelay);
 
-        units[1].OnTakeDamageRespond.RemoveListener(ApplyThorn);
-        units[1].OnTakeDamageRespond.AddListener(ApplyThorn);
+        var skill = CreateThorn(units[0]);
+        units[1].AttachSkill(skill);
     }
 
     public override float UseDelay()
@@ -22,8 +20,14 @@ public class ThornSkill : Skill
     }
 
 
-    private void ApplyThorn(Unit enemy)
+    private UnitAttachedSkill CreateThorn(Unit source)
     {
-        enemy.Health.ApplyDirectDamage(_thornDamage);
+        var unitAttached = new UnitAttachedSkill(source,
+            _thornModifier.ModifierTurns,
+            _thornModifier.Multiplyer,
+            _thornModifier.ModifierName,
+            _thornModifier.ModifierDescription);
+
+        return unitAttached;
     }
 }

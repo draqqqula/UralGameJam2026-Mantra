@@ -38,4 +38,11 @@ public class UnitDamage
 
         return Mathf.Round(damage);
     }
+
+    public float DealCritDamage(int extraCritMulti = 1)
+    {
+        var damage = Mathf.Round(Random.Range(MinDamage.ModValue, MaxDamage.ModValue)) * (extraCritMulti * CritMultiplyer.ModValue);
+
+        return Mathf.Round(damage);
+    }
 }

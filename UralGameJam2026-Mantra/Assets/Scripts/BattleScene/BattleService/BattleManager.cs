@@ -99,6 +99,8 @@ public class BattleManager : MonoBehaviour, IService
     {
         foreach (var unit in units)
         {
+            unit.CheckAttached();
+
             unit.Damage.CritMultiplyer.CheckModifiers();
             unit.Damage.CritChance.CheckModifiers();
 

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40b2fcc88e62f74b8569a9e501099c9, type: 3}
   m_Name: Thorn_Ranger
   m_EditorClassIdentifier: 
-  _thornDamage: 3
+  _thornModifier: {fileID: 11400000, guid: 1bdaff9b627fc3d44a27aa4bc30a6412, type: 2}

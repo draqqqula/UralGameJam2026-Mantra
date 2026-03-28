@@ -17,6 +17,12 @@ public class AttackAction : UnitAction
         var cached = match.CurrentMatchState;
         match.CurrentMatchState = MatchManager.State.Waiting;
 
+        if (_target.RespondSkill(_person))
+        {
+            match.CurrentMatchState = cached;
+            return;
+        }
+
         if (_skill)
         {
             _skill.Use(_person, _target);
@@ -33,8 +39,6 @@ public class AttackAction : UnitAction
             _target.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
             _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _animDelay);
         }
-
-        _target.OnTakeDamageRespond?.Invoke(_person);
 
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
         match.CurrentMatchState = cached;
