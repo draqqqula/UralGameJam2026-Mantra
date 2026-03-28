@@ -61,4 +61,5 @@ public class SaveData
     public float MusicSetting = 0.7f;
 
     public List<SerializeUnit> PreviousPlayerParty = new List<SerializeUnit>();
+    public SerializeUnit PreviousPlayer;
 }

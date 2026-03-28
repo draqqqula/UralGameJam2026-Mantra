@@ -15,6 +15,7 @@ public class MatchManager : MonoBehaviour, IService
     private NextRoomActivator _nextRoomActivator;
     
     private PartyManager _partyManager;
+    private AudioManager _audioManager;
     
     public event Action OnBattleVictory;
     public event Action OnAllBattlesVictory;
@@ -28,6 +29,7 @@ public class MatchManager : MonoBehaviour, IService
         _nextRoomActivator = ServiceLocator.Instance.GetService<NextRoomActivator>();
         
         _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
+        _audioManager = ServiceLocator.Instance.GetService<AudioManager>();
     }
     
     public void DeclareVictory()
@@ -39,10 +41,14 @@ public class MatchManager : MonoBehaviour, IService
                 .Select(m => m.Serialize())
                 .ToList();
             
+            var player = _partyManager.PlayerParty.Members.FirstOrDefault(p => p.IsMainHero);
+
+            SaveService.SaveData.PreviousPlayer = player.Serialize();
             SaveService.SaveData.PreviousPlayerParty = playerParty;
             SaveService.Save();
             
             _matchResultHandler.MatchResult = MatchResultHandler.Result.Victory;
+            _audioManager.PlaySound("Victory");
             CustomSceneManager.LoadVictoryOutroScene();
             OnAllBattlesVictory?.Invoke();
         }
@@ -53,8 +59,19 @@ public class MatchManager : MonoBehaviour, IService
             var mainHero = _partyManager.GetMainHero();
             if (!mainHero.IsAlive) mainHero.Resurrect();
                 
+            _audioManager.PlaySound("RoomVictory");
             TargetSystem.Instance.TrySetTarget(null);
-            _dialoguePlayer.PlayDialogueWithChance("Victory", 2, OnReadyToRecruiting);
+
+            if (_roomsController.IsRecruitsRoom())
+            {
+                _nextRoomActivator.ActivateNextRoomUI();
+                _partyManager.HidePlayerPartyAuras();
+            }
+            else
+            {
+                _dialoguePlayer.PlayDialogueWithChance("Victory", 2, OnReadyToRecruiting);
+            }
+            
             OnBattleVictory?.Invoke();
         }
     }
@@ -68,6 +85,7 @@ public class MatchManager : MonoBehaviour, IService
 
     public void DeclareDefeat()
     {
+        _audioManager.PlaySound("Defeat");
         _matchResultHandler.MatchResult = MatchResultHandler.Result.Defeat;
         CustomSceneManager.LoadDefeatOutroScene();
         OnDefeat?.Invoke();

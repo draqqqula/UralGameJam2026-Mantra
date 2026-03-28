@@ -274,4 +274,4 @@ public class Unit : MonoBehaviour
     }
 }
 
-public enum UnitType {Warrior, Range, Spearman, Mage}
+public enum UnitType {Warrior, Ranger, Spearman, Mage}

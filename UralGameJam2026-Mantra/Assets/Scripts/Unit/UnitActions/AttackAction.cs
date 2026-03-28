@@ -33,6 +33,16 @@ public class AttackAction : UnitAction
         {
             _damageValue = _person.Damage.DealBaseDamage();
             _target.Health.ApplyDamage(_damageValue);
+        var cached = ActionHelper.DisableTargetSystem();
+
+        await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
+
+        var audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        audioManager.PlaySound(_person.UnitType + "Attack");
+        await UniTask.Yield();
+        
+        _damageValue = _person.Damage.DealBaseDamage();
+        _target.Health.ApplyDamage(_damageValue);
 
             print($"{_person.UnitName} attacks {_target.UnitName} with {_damageValue} damage!");
 
@@ -41,7 +51,8 @@ public class AttackAction : UnitAction
         }
 
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
-        match.CurrentMatchState = cached;
+
+        ActionHelper.EnableTargetSystem(cached);
     }
 
     public override void Plan(Unit person, Unit target)

@@ -81,10 +81,13 @@ public class UnitHealth : IDisposable
 
     private void TakeDamage(float damage)
     {
+        var audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        audioManager.PlaySound("Damage");
         CurrentHealth = Mathf.Clamp(CurrentHealth - damage, 0, MaxHealth);
         
         if(CurrentHealth <= 0)
         {
+            audioManager.PlaySound("Death");
             OnDeath?.Invoke();
         }
         DrawHealth?.Invoke();

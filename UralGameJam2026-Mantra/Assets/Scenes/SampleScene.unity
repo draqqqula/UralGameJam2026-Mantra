@@ -5527,7 +5527,6 @@ MonoBehaviour:
   _playerPartyPlacer: {fileID: 442763605}
   _unitSelector:
     _pool:
-    - {fileID: 11400000, guid: 655db555fe8466a45a9d607d26114a31, type: 2}
     - {fileID: 11400000, guid: 1aef05f599aae3f4d9d5948afed197d8, type: 2}
     - {fileID: 11400000, guid: cd8722fea579a0d449f1708d821f0fc3, type: 2}
     - {fileID: 11400000, guid: 98f491becdfc08a4c9c78e3d4150cb92, type: 2}
@@ -5582,6 +5581,11 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    _unitPrefabs:
+    - {fileID: 3462002425916617404, guid: d19417cee793bb74fb51d4341d095d29, type: 3}
+    - {fileID: 3462002425916617404, guid: 4f7f7b5136354da43a182ce1b589e058, type: 3}
+    - {fileID: 3462002425916617404, guid: d2c7d4273a65e3f4ba19b89b5d89fe45, type: 3}
+    - {fileID: 3462002425916617404, guid: 81dc5c399b133cc4db5db01f8bcd8c81, type: 3}
 --- !u!1 &1100287427
 GameObject:
   m_ObjectHideFlags: 0
@@ -6992,6 +6996,16 @@ MonoBehaviour:
     - "\u042F \u0433\u043E\u0442\u043E\u0432 \u043F\u0440\u0438\u043C\u043A\u043D\u0443\u0442\u044C
       \u043A \u0442\u0435\u0431\u0435!"
     <Chance>k__BackingField: 0.8
+  - <GroupKey>k__BackingField: PrevRecruits
+    <Replicas>k__BackingField:
+    - "\u041C\u044B \u0432\u0435\u0440\u043D\u044B \u0442\u043E\u043B\u044C\u043A\u043E
+      \u043A\u043E\u0440\u043E\u043B\u044E!"
+    <Chance>k__BackingField: 1
+  - <GroupKey>k__BackingField: King
+    <Replicas>k__BackingField:
+    - "\u0425\u043E\u0447\u0435\u0448\u044C \u044D\u0442\u0443 \u043A\u043E\u0440\u043E\u043D\u0443?
+      \u0422\u0430\u043A \u0437\u0430\u0431\u0435\u0440\u0438 \u0435\u0451!"
+    <Chance>k__BackingField: 1
   _dialogueDisplay: {fileID: 1395028955}
   _continueInput: {fileID: -5616084956409532658, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!1 &1385772841

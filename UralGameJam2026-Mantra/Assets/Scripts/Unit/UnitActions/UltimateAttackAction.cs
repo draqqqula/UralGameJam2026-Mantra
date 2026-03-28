@@ -27,11 +27,16 @@ public class UltimateAttackAction : UnitAction
 
     public override async UniTask Execute(CancellationToken token = default)
     {
-        if(_person == null)
+        var cached = ActionHelper.DisableTargetSystem();
+
+        if (_person == null)
         {
             _person = GetComponentInParent<Unit>();
         }
 
+        var audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        audioManager.PlaySound("Ulta");
+        await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
 
         if (_skill)
         {
@@ -46,6 +51,8 @@ public class UltimateAttackAction : UnitAction
         _currentCooldown = _attackCooldown;
 
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
+
+        ActionHelper.EnableTargetSystem(cached);
     }
 
     public override void Plan(Unit person, Unit target)

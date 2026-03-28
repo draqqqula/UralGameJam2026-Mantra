@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cost: 40
   Prefab: {fileID: 3462002425916617404, guid: 81dc5c399b133cc4db5db01f8bcd8c81, type: 3}
+  UnitType: 2
