@@ -57,7 +57,9 @@ public class MatchManager : MonoBehaviour, IService
             
             var player = _partyManager.PlayerParty.Members.FirstOrDefault(p => p.IsMainHero);
 
-            SaveService.SaveData.PreviousPlayer = player.Serialize();
+            var serializedPlayer = player.Serialize();
+
+            SaveService.SaveData.PreviousPlayer = BuffKing(serializedPlayer);
             SaveService.SaveData.PreviousPlayerParty = playerParty;
             SaveService.Save();
             
@@ -90,6 +92,19 @@ public class MatchManager : MonoBehaviour, IService
             
             OnBattleVictory?.Invoke();
         }
+    }
+
+    private SerializeUnit BuffKing(SerializeUnit unit, float multi = 2, float multiHP = 5, float multiAttack = 1.5f)
+    {
+        var buffed = unit;
+
+        buffed.Defense *= multi;
+        buffed.MaxDefaultDefense *= multi;
+        buffed.MaxDefaultDamage *= multiAttack;
+        buffed.MinDefaultDamage *= multiAttack;
+        buffed.MaxHealth *= multiHP;
+
+        return buffed;
     }
 
     private void OnReadyToRecruiting()
