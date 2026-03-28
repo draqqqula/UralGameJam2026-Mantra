@@ -15,12 +15,13 @@ public class RoomsIndicator : MonoBehaviour
     
     [SerializeField] private RectTransform _content;
     [SerializeField] private RectTransform _viewport;
+    [SerializeField] private RectTransform _wrapper;
     
     private RoomsController _roomsController;
     [SerializeField] private Image _nodePrefab;
     
     [SerializeField] private int _countInViewport;
-    private float _spaceOffset;
+    [SerializeField] private float _spaceOffset;
     
     private float _viewportWidth;
     private float _roomWidth;
@@ -41,12 +42,11 @@ public class RoomsIndicator : MonoBehaviour
         SetCurrentNode(_roomsNodes[0]);
         
         _roomWidth = _roomsNodes[0].Image.rectTransform.rect.width;
+        AlignIndicator(_countInViewport);
         _viewportWidth = _viewport.rect.width;
-        
-        AlignElements(_countInViewport);
     }
 
-    private void AlignElements(int countInViewport)
+    private void AlignIndicator(int countInViewport)
     {
         var roomsCount = _roomsNodes.Count;
         
@@ -54,17 +54,9 @@ public class RoomsIndicator : MonoBehaviour
         {
             countInViewport = roomsCount;
         }
-
-        if (roomsCount <= 1)
-        {
-            _spaceOffset = 0;
-        }
-        else
-        {
-            var freeSpace = _viewportWidth - (countInViewport * _roomWidth);
-            _spaceOffset = freeSpace / (countInViewport - 1);
-        }
-
+        
+        var width = (countInViewport * _roomWidth) + ((countInViewport - 1) * _spaceOffset);
+        _wrapper.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
         _horizontalLayoutGroup.spacing = _spaceOffset;
     }
 
