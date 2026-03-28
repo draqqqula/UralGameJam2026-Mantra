@@ -87,7 +87,7 @@ public class PartyPlacer : MonoBehaviour
         }
     }
 
-    public void PlaceInParty(Unit unit)
+    public void PlaceInParty(Unit unit, int stepsCount = 1)
     {
         var lastUnit = _partyMembers.Members[_partyMembers.Members.Count - 1];
         var direction = _direction == PlaceDirection.Right ? 1f : -1f;
@@ -97,7 +97,7 @@ public class PartyPlacer : MonoBehaviour
         var lastMember = lastUnit.GetComponent<PartyMemberGap>();
 
         var step = _gap + lastMember.MemberGap + member.MemberGap;
-        var newPos = prevPoint + new Vector2(step * direction, 0);
+        var newPos = prevPoint + new Vector2(stepsCount * step * direction, 0);
         
         member.transform.SetParent(_partyMembers.transform);
         member.transform.position = newPos;

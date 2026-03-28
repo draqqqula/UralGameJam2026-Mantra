@@ -10,6 +10,9 @@ public class PointerHandler : MonoBehaviour
         {
             var battle = ServiceLocator.Instance.GetService<BattleManager>();
             battle.CancelTurn();
+            
+            var recruitingSystem = ServiceLocator.Instance.GetService<RecruitingSystem>();
+            recruitingSystem.CancelRecruit();
         }
     }
 }
