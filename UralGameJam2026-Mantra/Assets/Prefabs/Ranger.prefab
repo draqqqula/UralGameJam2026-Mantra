@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 3662050779870009345}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: -10, z: 0}
-  m_LocalScale: {x: 1, y: 1.13, z: 1}
+  m_LocalPosition: {x: 1.08, y: -10.56, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3491138236797506658}
@@ -457,9 +457,6 @@ MonoBehaviour:
   _auraPoint: {fileID: 7386312218925282164}
   _healthbarPrefab: {fileID: 2338016816414332837, guid: 69b39b346f05d4099871c76a76a65284, type: 3}
   _auraPrefab: {fileID: 9210947660843906074, guid: 37f77c80bc034c64b8e87dd119e4343b, type: 3}
-  OnTakeDamageRespond:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &7624932100761901221
 MonoBehaviour:
   m_ObjectHideFlags: 0
