@@ -619,11 +619,11 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_StartCorner: 0
-  m_StartAxis: 1
-  m_CellSize: {x: 400, y: 35}
-  m_Spacing: {x: 0, y: 5.44}
-  m_Constraint: 2
-  m_ConstraintCount: 3
+  m_StartAxis: 0
+  m_CellSize: {x: 60, y: 60}
+  m_Spacing: {x: 30, y: 0}
+  m_Constraint: 1
+  m_ConstraintCount: 4
 --- !u!1 &1713887698574685824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1389,11 +1389,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _statusFieldObject: {fileID: 1644273577037697461}
-  _attackSprite: {fileID: 15498587377638789, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
-  _critMultiSprite: {fileID: 1560072642305071498, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
-  _critChanceSprite: {fileID: -2847854109469819822, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
-  _defenseSprite: {fileID: 0}
-  _rangerSupportSprite: {fileID: 0}
+  _attackSprite: {fileID: 21300000, guid: 614a0a315c02c4f21bb8fd9cf64f571e, type: 3}
+  _critMultiSprite: {fileID: 21300000, guid: e119a8d3d24d24a92a0f570db694d235, type: 3}
+  _critChanceSprite: {fileID: 21300000, guid: c0571c56c7abd4cecaeaeab0da4114cd, type: 3}
+  _defenseSprite: {fileID: 21300000, guid: b12838222c31148aead025d89460e827, type: 3}
+  _rangerSupportSprite: {fileID: 21300000, guid: 6d5496be4dca34817b59d7e0abc3bdc5, type: 3}
   _prefab: {fileID: 685583068959965781, guid: 0616cc458778b924088524c4cf4205ce, type: 3}
 --- !u!1 &3531778580015202279
 GameObject:
