@@ -110,8 +110,6 @@ public class BattleManager : MonoBehaviour, IService
 
     private void CheckBattlefield()
     {
-        CheckParty();
-
         DetermineTurn().Forget();
     }
 

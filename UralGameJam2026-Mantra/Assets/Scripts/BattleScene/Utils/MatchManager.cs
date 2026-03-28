@@ -75,6 +75,8 @@ public class MatchManager : MonoBehaviour, IService
             foreach (var unit in _partyManager.PlayerParty.Members)
             {
                 unit.Resurrect();
+                unit.HideHalo();
+                unit.HideUltimate();
             }
 
             _audioManager.PlaySound("RoomVictory");
