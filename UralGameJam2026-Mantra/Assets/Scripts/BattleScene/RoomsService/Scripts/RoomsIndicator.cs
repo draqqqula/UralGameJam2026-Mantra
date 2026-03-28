@@ -11,6 +11,7 @@ public class RoomsIndicator : MonoBehaviour
     
     [SerializeField] private Sprite _currentRoomImage;
     [SerializeField] private Sprite _prevRoomImage;
+    [SerializeField] private Sprite _bossRoomImage;
     
     [SerializeField] private RectTransform _content;
     [SerializeField] private RectTransform _viewport;
@@ -33,6 +34,8 @@ public class RoomsIndicator : MonoBehaviour
         {
             var image = Instantiate(_nodePrefab, _content);
             _roomsNodes.Add(new RoomNode() {Image = image, Index = i});
+            
+            if (i == _roomsController.RoomsCount - 1) image.sprite = _bossRoomImage;
         }
         
         SetCurrentNode(_roomsNodes[0]);

@@ -29,6 +29,7 @@ public class UnitSkillInfo : MonoBehaviour
             instantiate.SetValue(action);
 
             instantiate.SetText(action.ActionInfo.ActionName);
+            instantiate.SetIcon(action.ActionInfo.Icon);
         }
     }
 

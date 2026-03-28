@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4419189f760c43944beeb5d917db3245, type: 3}
   m_Name: Action_BowAttack
   m_EditorClassIdentifier: 
-  ActionName: "<color=red>\u0410\u0442\u0430\u043A\u0430</color>\\n\u0412\u044B\u0441\u0442\u0440\u0435\u043B"
+  ActionName: "\u0412\u044B\u0441\u0442\u0440\u0435\u043B"
   ActionDescription: "\u041E\u0431\u044B\u043A\u043D\u043E\u0432\u0435\u043D\u043D\u044B\u0439
     \u0432\u044B\u0441\u0442\u0440\u0435\u043B \u0441\u0442\u0440\u0435\u043B\u043E\u0439"
+  Icon: {fileID: 21300000, guid: 16cdd60895e744469b2dcc11e52149d7, type: 3}

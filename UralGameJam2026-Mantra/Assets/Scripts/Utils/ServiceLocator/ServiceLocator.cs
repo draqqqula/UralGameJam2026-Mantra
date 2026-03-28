@@ -11,6 +11,7 @@ public class ServiceLocator : MonoBehaviour
     [SerializeField] private MatchResultHandler _matchResultHandler;
     [SerializeField] private Settings _settings;
     [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private ScreenTransitionActivator _transitionActivator;
     
     private Dictionary<Type, IService> _services = new Dictionary<Type, IService>();
 
@@ -33,6 +34,7 @@ public class ServiceLocator : MonoBehaviour
         RegisterService(_matchResultHandler);
         RegisterService(_settings);
         RegisterService(_audioManager);
+        RegisterService(_transitionActivator);
     }
 
     public void RegisterService(IService service)
