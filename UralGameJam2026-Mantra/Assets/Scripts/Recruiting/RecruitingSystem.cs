@@ -23,6 +23,7 @@ public class RecruitingSystem : MonoBehaviour, IService
     private List<Unit> _movingUnits = new List<Unit>();
     
     public event Action OnUnitChoosed;
+    public event Action OnUnitCancelled;
     
     private void Awake()
     {
@@ -121,6 +122,13 @@ public class RecruitingSystem : MonoBehaviour, IService
             animation?.Kill();
         }
         _animations.Clear();
+    }
+
+    public void CancelRecruit()
+    {
+        IsChoosingPlayerUnitToSwitch = false;
+        _chosenEnemyUnit = null;
+        OnUnitCancelled?.Invoke();
     }
 
     private void OnDestroy()

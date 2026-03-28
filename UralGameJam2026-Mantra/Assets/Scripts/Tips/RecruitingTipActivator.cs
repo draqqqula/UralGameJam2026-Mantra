@@ -18,7 +18,8 @@ public class RecruitingTipActivator : MonoBehaviour, IService
     private void Awake()
     {
         _recruitingSystem = ServiceLocator.Instance.GetService<RecruitingSystem>();
-        _recruitingSystem.OnUnitChoosed += OnUnitChoosed;
+        _recruitingSystem.OnUnitChoosed += OnChoosedUnitChanged;
+        _recruitingSystem.OnUnitCancelled += OnChoosedUnitChanged;
         
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
         _matchManager.CurrentStateProperty.Subscribe(OnMatchStateChanged).AddTo(this);
@@ -33,7 +34,7 @@ public class RecruitingTipActivator : MonoBehaviour, IService
         else Hide();
     }
 
-    private void OnUnitChoosed()
+    private void OnChoosedUnitChanged()
     {
         if (_partyManager.EnemyParty.Members.Count <= 0) Hide();
         else Show();
@@ -65,7 +66,8 @@ public class RecruitingTipActivator : MonoBehaviour, IService
 
     private void OnDestroy()
     {
-        _recruitingSystem.OnUnitChoosed -= OnUnitChoosed;
+        _recruitingSystem.OnUnitChoosed -= OnChoosedUnitChanged;
+        _recruitingSystem.OnUnitCancelled -= OnChoosedUnitChanged;
         _partyManager.EnemyParty.OnMembersEmpty -= Hide;
     }
 }
