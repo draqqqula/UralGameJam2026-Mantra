@@ -9,7 +9,7 @@ public class HealSkill : Skill
     {
         units[0].GetComponent<UnitAnimator>().Play(UnitAnimation.Support, out var source);
 
-        var healing = Random.Range(_healValue, units[1].Health.MaxHealth);
+        var healing = Mathf.Round(Random.Range(_healValue, units[1].Health.MaxHealth));
         var target = 0f;
 
         units[1].Health.ApplyHeal(healing);
