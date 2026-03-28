@@ -71,7 +71,14 @@ public class RecruitingSystem : MonoBehaviour, IService
             //unit.InstantiateAura();
             unit.UpdateRenderCameraPoint();
             unit.UpdateUIPosition();
+
             _movingUnits.Remove(unit);
+
+            var variantResolver = unit.gameObject.GetComponentInChildren<VariantResolver>();
+            if (variantResolver != null)
+            {
+                variantResolver.UpdateSprite();
+            }
         };
         
         var animation = new RecruitingAnimation(_partyManager.PlayerPartyPlacer, _audioManager);
@@ -96,6 +103,12 @@ public class RecruitingSystem : MonoBehaviour, IService
             newUnit.UpdateRenderCameraPoint();
             newUnit.UpdateUIPosition();
             _movingUnits.Remove(newUnit);
+
+            var variantResolver = newUnit.gameObject.GetComponentInChildren<VariantResolver>();
+            if (variantResolver != null)
+            {
+                variantResolver.UpdateSprite();
+            }
         };
         
         var animation = new RecruitingAnimation(_partyManager.PlayerPartyPlacer, _audioManager);

@@ -5,6 +5,7 @@ public class SerializeUnit
 {
     public string Name;
     public UnitType Type;
+    public int Variant;
     
     public float MaxHealth;
     public float MaxDefaultHealth;
