@@ -41,6 +41,9 @@ public class MatchManager : MonoBehaviour, IService
                 .Select(m => m.Serialize())
                 .ToList();
             
+            var player = _partyManager.PlayerParty.Members.FirstOrDefault(p => p.IsMainHero);
+
+            SaveService.SaveData.PreviousPlayer = player.Serialize();
             SaveService.SaveData.PreviousPlayerParty = playerParty;
             SaveService.Save();
             
@@ -58,7 +61,17 @@ public class MatchManager : MonoBehaviour, IService
                 
             _audioManager.PlaySound("RoomVictory");
             TargetSystem.Instance.TrySetTarget(null);
-            _dialoguePlayer.PlayDialogueWithChance("Victory", 2, OnReadyToRecruiting);
+
+            if (_roomsController.IsRecruitsRoom())
+            {
+                _nextRoomActivator.ActivateNextRoomUI();
+                _partyManager.HidePlayerPartyAuras();
+            }
+            else
+            {
+                _dialoguePlayer.PlayDialogueWithChance("Victory", 2, OnReadyToRecruiting);
+            }
+            
             OnBattleVictory?.Invoke();
         }
     }

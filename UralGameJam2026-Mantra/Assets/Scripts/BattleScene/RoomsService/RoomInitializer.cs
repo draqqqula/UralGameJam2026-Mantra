@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomInitializer : MonoBehaviour, IService
@@ -15,7 +16,7 @@ public class RoomInitializer : MonoBehaviour, IService
     
     public void InitializeRoom()
     {
-        _partyManager.InitializePlayerParty(4);
+        _partyManager.InitializePlayerParty(new List<UnitType>() { UnitType.Warrior });
         _partyManager.InitializeEnemyParty(4);
         
         _environmentGenerator.CreateRandom();
@@ -56,7 +57,10 @@ public class RoomInitializer : MonoBehaviour, IService
         _partyManager.HidePlayerParty();
         
         _partyManager.RemoveAllEnemyPartyMembers();
-        _partyManager.InitializeEnemyParty(1);
+        
+        var prevPlayer = SaveService.SaveData.PreviousPlayer;
+        if (prevPlayer == null) _partyManager.InitializeEnemyParty(new List<UnitType>() { UnitType.Warrior });
+        else _partyManager.InitializeEnemyParty(new List<SerializeUnit>() {SaveService.SaveData.PreviousPlayer});
         
         _environmentGenerator.CreateRandom();
     }
