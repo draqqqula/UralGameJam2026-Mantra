@@ -30,18 +30,32 @@ public class TargetNavigation : MonoBehaviour
 
     private bool TryGetOffset(Targetable current, int offset, out Targetable target)
     {
-        var currentIndex = _ordered.FindIndex(it => it.Item1 == current);
-        var index = Mathf.Clamp(currentIndex + offset, 0, _ordered.Count - 1);
+        target = null;
 
-        target = _ordered[index].Item1;
+        if (_ordered.Count == 0)
+            return false;
 
-        if(!target.Unit.IsAlive)
+        int index = _ordered.FindIndex(t => t.Item1 == current);
+        if (index == -1)
+            return false;
+
+        int direction = Sign(offset);
+        int i = index + direction;
+
+        while (i >= 0 && i < _ordered.Count)
         {
-            int additionalOffset = offset + Sign(offset);
-            var res = TryGetOffset(current, additionalOffset, out target);
-            return res;
+            var candidate = _ordered[i].Item1;
+
+            if (TargetSystem.Instance.IsTargetable(candidate))
+            {
+                target = candidate;
+                return true;
+            }
+
+            i += direction;
         }
-        return target;
+
+        return false;
     }
 
     private int Sign(int value)
