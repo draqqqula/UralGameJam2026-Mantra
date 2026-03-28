@@ -9,7 +9,7 @@ public class PauseHandler : MonoBehaviour, IService
     private MatchManager _matchManager;
     
     private bool _pauseActivated = false;
-    private bool _canActivatePause = false;
+    private bool _canActivatePause = true;
 
     public void Init()
     {
@@ -18,8 +18,8 @@ public class PauseHandler : MonoBehaviour, IService
         _battleManager = ServiceLocator.Instance.GetService<BattleManager>();
         
         _pauseAction.action.performed += OnActionPerformed;
-        _matchManager.OnBattleVictory += OnBattleVictory;
-        _battleManager.OnBattleStarted += OnBattleStarted;
+        //_matchManager.OnBattleVictory += OnBattleVictory;
+        //_battleManager.OnBattleStarted += OnBattleStarted;
     }
 
     public void ActivatePause()
@@ -46,7 +46,7 @@ public class PauseHandler : MonoBehaviour, IService
 
     private void OnActionPerformed(InputAction.CallbackContext context)
     {
-        if (_canActivatePause) return;
+        if (!_canActivatePause) return;
         
         if (!_pauseActivated)
         {
@@ -65,13 +65,13 @@ public class PauseHandler : MonoBehaviour, IService
 
     private void OnBattleStarted()
     {
-        _canActivatePause = false;
+        _canActivatePause = true;
     }
 
     private void OnDestroy()
     {
         _pauseAction.action.performed -= OnActionPerformed;
-        _matchManager.OnBattleVictory -= OnBattleVictory;
-        _battleManager.OnBattleStarted -= OnBattleStarted;
+        //_matchManager.OnBattleVictory -= OnBattleVictory;
+        //_battleManager.OnBattleStarted -= OnBattleStarted;
     }
 }
