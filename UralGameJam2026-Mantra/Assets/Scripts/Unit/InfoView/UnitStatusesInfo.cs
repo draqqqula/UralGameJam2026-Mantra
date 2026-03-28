@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnitStatusesInfo : MonoBehaviour
 {
     [SerializeField] private GameObject _statusFieldObject;
-    [SerializeField] private Sprite _attackSprite, _critMultiSprite, _critChanceSprite, _defenseSprite;
+    [SerializeField] private Sprite _attackSprite, _critMultiSprite, _critChanceSprite, _defenseSprite, _rangerSupportSprite;
 
     [SerializeField] private ModifierEffectInfo _prefab;
 
@@ -71,7 +71,7 @@ public class UnitStatusesInfo : MonoBehaviour
         setStats.AddRange(_unit.AttachedSkills);
 
         var instantiate = Instantiate(_prefab, _statusFieldObject.transform);
-        instantiate.SetSprite(_defenseSprite);
+        instantiate.SetSprite(_rangerSupportSprite);
         instantiate.SetValue(setStats);
     }
 

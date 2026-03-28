@@ -14,12 +14,10 @@ public class AttackAction : UnitAction
     public override async UniTask Execute(CancellationToken token)
     {
         var match = ServiceLocator.Instance.GetService<MatchManager>();
-        var cached = match.CurrentMatchState;
-        match.CurrentMatchState = MatchManager.State.Waiting;
+        var cached = ActionHelper.DisableTargetSystem();
 
         if (_target.RespondSkill(_person))
         {
-            match.CurrentMatchState = cached;
             return;
         }
 
@@ -33,22 +31,11 @@ public class AttackAction : UnitAction
         {
             _damageValue = _person.Damage.DealBaseDamage();
             _target.Health.ApplyDamage(_damageValue);
-        var cached = ActionHelper.DisableTargetSystem();
-
-        await UniTask.WaitForSeconds(Random.value, cancellationToken: token);
+        }
 
         var audioManager = ServiceLocator.Instance.GetService<AudioManager>();
         audioManager.PlaySound(_person.UnitType + "Attack");
         await UniTask.Yield();
-        
-        _damageValue = _person.Damage.DealBaseDamage();
-        _target.Health.ApplyDamage(_damageValue);
-
-            print($"{_person.UnitName} attacks {_target.UnitName} with {_damageValue} damage!");
-
-            _target.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
-            _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _animDelay);
-        }
 
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
 

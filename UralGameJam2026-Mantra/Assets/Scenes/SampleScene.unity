@@ -5475,6 +5475,7 @@ MonoBehaviour:
   _critMultiSprite: {fileID: 1560072642305071498, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
   _critChanceSprite: {fileID: -2847854109469819822, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
   _defenseSprite: {fileID: -979862251279617105, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
+  _rangerSupportSprite: {fileID: 1103388849407257117, guid: c580c371f676398408ade469fbab019c, type: 3}
   _prefab: {fileID: 685583068959965781, guid: 0616cc458778b924088524c4cf4205ce, type: 3}
 --- !u!114 &1070835498
 MonoBehaviour:
@@ -8093,6 +8094,7 @@ MonoBehaviour:
   _critMultiSprite: {fileID: 1560072642305071498, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
   _critChanceSprite: {fileID: -2847854109469819822, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
   _defenseSprite: {fileID: -979862251279617105, guid: 79e7d8974ce74b94d8580a1cfe23c70e, type: 3}
+  _rangerSupportSprite: {fileID: 1103388849407257117, guid: c580c371f676398408ade469fbab019c, type: 3}
   _prefab: {fileID: 685583068959965781, guid: 0616cc458778b924088524c4cf4205ce, type: 3}
 --- !u!1 &1554544696
 GameObject:
