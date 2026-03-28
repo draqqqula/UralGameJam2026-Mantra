@@ -53,6 +53,12 @@ public class BattleStrategy
         await UseActionOn(callback, token);
     }
 
+    public void Cancel()
+    {
+        _initiatorUnit.Value = null;
+        _selectedUnit.Value = null;
+    }
+
     protected virtual async UniTask UseActionOn(Action callback = null, CancellationToken token = default)
     {
         var source = _initiatorUnit.Value;

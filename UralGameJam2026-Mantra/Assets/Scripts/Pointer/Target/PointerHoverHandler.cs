@@ -14,7 +14,10 @@ public class PointerHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        TargetSystem.Instance.SubmitAction();
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            TargetSystem.Instance.SubmitAction();
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
