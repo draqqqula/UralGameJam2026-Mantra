@@ -13,7 +13,6 @@ public class AttackAction : UnitAction
 
     public override async UniTask Execute(CancellationToken token)
     {
-        var match = ServiceLocator.Instance.GetService<MatchManager>();
         var cached = ActionHelper.DisableTargetSystem();
 
         if (_target.RespondSkill(_person))
@@ -31,6 +30,9 @@ public class AttackAction : UnitAction
         {
             _damageValue = _person.Damage.DealBaseDamage();
             _target.Health.ApplyDamage(_damageValue);
+
+            _person.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _animDelay);
+            if(_target.IsAlive)_target.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
         }
 
         var audioManager = ServiceLocator.Instance.GetService<AudioManager>();

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public class XSlashSkill : Skill
 
         var enemies = battleManager.GetAliveEnemyUnits(units[0]);
 
-        DoSlashAttack(units[0], enemies, _repeats);
+        DoSlashAttack(units[0], enemies, _repeats).Forget();
     }
 
     public override float UseDelay()
@@ -21,7 +22,7 @@ public class XSlashSkill : Skill
         return _animDelay;
     }
 
-    private void DoSlashAttack(Unit source, List<Unit> targets, int repeat = 2)
+    private async UniTaskVoid DoSlashAttack(Unit source, List<Unit> targets, int repeat = 2)
     {
         var baseDamage = source.Damage.DealBaseDamage() * _attackModifier.Multiplyer;
         for (int i = 0; i < repeat; i++)
@@ -33,6 +34,8 @@ public class XSlashSkill : Skill
                 unit.Health.ApplyDamage(baseDamage);
                 unit.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
             }
+
+            await UniTask.WaitForSeconds(_animDelay);
         }
     }
 }
