@@ -50,7 +50,7 @@ public class BattleSceneBootstrap : MonoBehaviour
         
         ServiceLocator.Instance.RegisterService(_nextRoomActivator);
 
-        var battlesStarter = new BattleStarter(_dialoguePlayer, _battleManager);
+        var battlesStarter = new BattleStarter(_dialoguePlayer, _battleManager, _roomsController);
         ServiceLocator.Instance.RegisterService(battlesStarter);
         
         _matchManager.Init();

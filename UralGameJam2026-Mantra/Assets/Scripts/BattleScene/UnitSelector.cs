@@ -8,6 +8,7 @@ public class UnitSelector
 {
     [SerializeField] private UnitCost[] _pool;
     [SerializeField] private AnimationCurve _curve;
+    [SerializeField] private Unit[] _unitPrefabs;
 
     public Unit RandomSelect()
     {
@@ -32,6 +33,6 @@ public class UnitSelector
 
     public Unit SelectUnit(UnitType unitType)
     {
-        return _pool.FirstOrDefault(x => x.UnitType == unitType)?.Prefab;
+        return _unitPrefabs.FirstOrDefault(x => x.UnitType == unitType);
     }
 }
