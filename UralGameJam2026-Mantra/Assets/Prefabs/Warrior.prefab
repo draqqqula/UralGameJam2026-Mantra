@@ -742,6 +742,14 @@ PrefabInstance:
       value: Circle
       objectReference: {fileID: 0}
     - target: {fileID: 9193777253045519322, guid: 54b5b289cc8ff5c4c9a80e5e83de05cd, type: 3}
+      propertyPath: _glow
+      value: 
+      objectReference: {fileID: 5088872796743889625}
+    - target: {fileID: 9193777253045519322, guid: 54b5b289cc8ff5c4c9a80e5e83de05cd, type: 3}
+      propertyPath: _sprite
+      value: 
+      objectReference: {fileID: 3489628805398400982}
+    - target: {fileID: 9193777253045519322, guid: 54b5b289cc8ff5c4c9a80e5e83de05cd, type: 3}
       propertyPath: _selectable
       value: 
       objectReference: {fileID: 3478614549149243388}
@@ -750,8 +758,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54b5b289cc8ff5c4c9a80e5e83de05cd, type: 3}
+--- !u!212 &3489628805398400982 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7707555547867812072, guid: 54b5b289cc8ff5c4c9a80e5e83de05cd, type: 3}
+  m_PrefabInstance: {fileID: 6528840706113314622}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3812811696357542499 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7958650053426812253, guid: 54b5b289cc8ff5c4c9a80e5e83de05cd, type: 3}
+  m_PrefabInstance: {fileID: 6528840706113314622}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &5088872796743889625 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2018831851198606823, guid: 54b5b289cc8ff5c4c9a80e5e83de05cd, type: 3}
   m_PrefabInstance: {fileID: 6528840706113314622}
   m_PrefabAsset: {fileID: 0}

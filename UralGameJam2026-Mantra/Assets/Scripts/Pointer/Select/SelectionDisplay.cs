@@ -8,13 +8,15 @@ public class SelectionDisplay : MonoBehaviour
 {
     [SerializeField] private SelectableUnit _selectable;
     [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] private SpriteRenderer _glow;
     [SerializeField] private Unit _unit;
     [SerializeField] private Color _red;
     [SerializeField] private Color _blue;
     [SerializeField] private Color _yellow;
     [SerializeField] private Sprite _selected;
     [SerializeField] private Sprite _default;
-    private Tween _cached;
+    private Tween _cachedA;
+    private Tween _cachedB;
 
     private void Start()
     {
@@ -24,26 +26,31 @@ public class SelectionDisplay : MonoBehaviour
 
     private void HandleStateChanged(SelectState state)
     {
-        _cached?.Kill();
+        _cachedA?.Kill();
+        _cachedB?.Kill();
 
         var isFriend = ServiceLocator.Instance.GetService<BattleManager>().IsPlayerPartyMember(_unit);
         var defaultColor = isFriend ? _blue : _red;
 
         if (state == SelectState.Unavailable)
         {
-            _cached = _sprite.DOFade(0, 0.4f).SetLink(gameObject);
+            _cachedA = _sprite.DOFade(0, 0.4f).SetLink(gameObject);
+            _cachedB = _glow.DOFade(0, 0.4f).SetLink(gameObject);
         }
         else if (state == SelectState.Available)
         {
-            _cached = _sprite.DOColor(defaultColor, 0.4f).SetLink(gameObject);
+            _cachedA = _sprite.DOFade(1, 0.4f).SetLink(gameObject);
+            _cachedB = _glow.DOColor(defaultColor, 0.4f).SetLink(gameObject);
         }
         else if (state == SelectState.Hover)
         {
-            _cached = _sprite.DOColor(_yellow, 0.4f).SetLink(gameObject);
+            _cachedA = _sprite.DOFade(1, 0.4f).SetLink(gameObject);
+            _cachedB = _glow.DOColor(_yellow, 0.4f).SetLink(gameObject);
         }
         else if (state == SelectState.Selected)
         {
-            _cached = _sprite.DOColor(Color.white, 0.4f).SetLink(gameObject);
+            _cachedA = _sprite.DOFade(1, 0.4f).SetLink(gameObject);
+            _cachedB = _glow.DOColor(Color.white, 0.4f).SetLink(gameObject);
         }
     }
 }
