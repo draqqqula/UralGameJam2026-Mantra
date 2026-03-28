@@ -56,8 +56,8 @@ public class HealthbarView : MonoBehaviour
         
         _healthBarSequence = DOTween.Sequence();
         _healthBarSequence.Insert(_delayDuration, _healthBarDelayImage
-            .DOFillAmount(_unit.Health.CurrentHealth / _unit.Health.MaxHealth, _animationDuration)
-            .SetLink(gameObject));
+            .DOFillAmount(_unit.Health.CurrentHealth / _unit.Health.MaxHealth, _animationDuration))
+            .SetLink(gameObject);
         _healthBar.fillAmount = _unit.Health.CurrentHealth / _unit.Health.MaxHealth;
         
         _healthProgressText.text = Mathf.Clamp(_unit.Health.CurrentHealth, 0, _unit.Health.MaxHealth) + " / " + _unit.Health.MaxHealth;
