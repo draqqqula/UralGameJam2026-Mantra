@@ -30,6 +30,8 @@ public class MatchManager : MonoBehaviour, IService
     
     private PartyManager _partyManager;
     private AudioManager _audioManager;
+
+    public bool IsRoundEnded { get; set; }
     
     public event Action OnBattleVictory;
     public event Action OnAllBattlesVictory;
@@ -48,6 +50,9 @@ public class MatchManager : MonoBehaviour, IService
     
     public void DeclareVictory()
     {
+        if (IsRoundEnded) return;
+        
+        IsRoundEnded = true;
         if (_roomsController.IsLastRoom())
         {
             var playerParty = _partyManager.PlayerParty.Members
@@ -116,6 +121,9 @@ public class MatchManager : MonoBehaviour, IService
 
     public void DeclareDefeat()
     {
+        if (IsRoundEnded) return;
+        
+        IsRoundEnded = true;
         _audioManager.PlaySound("Defeat");
         _matchResultHandler.MatchResult = MatchResultHandler.Result.Defeat;
         CustomSceneManager.LoadDefeatOutroScene();

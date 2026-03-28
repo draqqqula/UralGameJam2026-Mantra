@@ -44,6 +44,7 @@ public class NextRoomActivator : MonoBehaviour, IService
     {
         DeactivateNextRoomUI();
 
+        _matchManager.IsRoundEnded = false;
         _matchManager.CurrentMatchState = MatchManager.State.Transiting;
         _roomsController.TryUpdateCurrentRoom();
         _roomTransitionHandler.ActivateRoomTransition(OnReadyToUpdateRoom, OnReadyToStartPlayerTransition);
