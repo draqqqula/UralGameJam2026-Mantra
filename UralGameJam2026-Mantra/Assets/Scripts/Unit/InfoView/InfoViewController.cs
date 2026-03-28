@@ -24,6 +24,12 @@ public class InfoViewController : MonoBehaviour, IService
         _viewObject.SetActive(true);
     }
 
+    public void ResetInfo()
+    {
+        _initiator.ResetInfo();
+        _target.ResetInfo();
+    }
+
     public void Hide()
     {
         _viewObject.SetActive(false);
@@ -58,6 +64,6 @@ public class InfoViewController : MonoBehaviour, IService
 
     private void OnDestroy()
     {
-        _targetSystem.OnSetTarget += ShowInfo;
+        _targetSystem.OnSetTarget -= ShowInfo;
     }
 }

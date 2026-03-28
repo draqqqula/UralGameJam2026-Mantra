@@ -65,6 +65,12 @@ public class BattleManager : MonoBehaviour, IService
 
         OnBattleStarted?.Invoke();
         Setup();
+
+        foreach (var unit in _allUnits)
+        {
+            unit.ClearModifiers();
+        }
+
         DetermineTurn().Forget();
     }
 
@@ -263,7 +269,7 @@ public class BattleManager : MonoBehaviour, IService
             _currentPipeline = null;
             _matchManager.DeclareDefeat();
 
-            _infoViewController.Hide();
+            _infoViewController.ResetInfo();
 
             SetNoneTurn();
 

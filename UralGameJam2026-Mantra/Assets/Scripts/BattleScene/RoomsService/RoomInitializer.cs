@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class RoomInitializer : MonoBehaviour, IService
 {
+    [SerializeField] private EvaluateEnemyInRoom _evaluate;
+
     private PartyManager _partyManager;
     private EnvironmentGenerator _environmentGenerator;
     private RoomsController _roomsController;
@@ -17,7 +19,9 @@ public class RoomInitializer : MonoBehaviour, IService
     public void InitializeRoom()
     {
         _partyManager.InitializePlayerParty(new List<UnitType>() { UnitType.Warrior });
-        _partyManager.InitializeEnemyParty(4);
+
+        var evaluate = _evaluate.GetEnemyCount(_roomsController.CurrentRoom, _roomsController.RoomsCount);
+        _partyManager.InitializeEnemyParty(evaluate);
         
         _environmentGenerator.CreateRandom();
     }
@@ -35,7 +39,8 @@ public class RoomInitializer : MonoBehaviour, IService
         _partyManager.HidePlayerParty();
         
         _partyManager.RemoveAllEnemyPartyMembers();
-        _partyManager.InitializeEnemyParty(4);
+        var evaluate = _evaluate.GetEnemyCount(_roomsController.CurrentRoom, _roomsController.RoomsCount);
+        _partyManager.InitializeEnemyParty(evaluate);
         
         _environmentGenerator.CreateRandom();
     }

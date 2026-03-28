@@ -12,6 +12,7 @@ public class Unit : MonoBehaviour
     public Transform RenderCameraPoint;
     public bool IsAlive => Health.CurrentHealth > 0;
     public string UnitName;
+    public int Variant;
     public bool ShouldCreateAura = true;
 
     [field: SerializeField] public UnitType UnitType { get; private set; }
@@ -56,6 +57,16 @@ public class Unit : MonoBehaviour
         healthbar.Init(this);
 
         _healthBarTransform = healthbar.transform; 
+    }
+
+    public void ClearModifiers()
+    {
+        Health.CurrentDefense.ClearModifiers();
+        Damage.MinDamage.ClearModifiers();
+        Damage.MaxDamage.ClearModifiers();
+        Damage.CritMultiplyer.ClearModifiers();
+        Damage.CritChance.ClearModifiers();
+        AttachedSkills.Clear();
     }
 
     public bool RespondSkill(Unit enemy)
@@ -196,6 +207,7 @@ public class Unit : MonoBehaviour
         {
             Name = UnitName,
             Type = UnitType,
+            Variant = Variant,
             
             MaxHealth = Health.MaxHealth,
             MaxDefaultHealth = Health.MaxDefaultHealth,
@@ -226,6 +238,7 @@ public class Unit : MonoBehaviour
     public void Deserialize(SerializeUnit serializeUnit)
     {
         SetName(serializeUnit.Name);
+        Variant = serializeUnit.Variant;
         Health.CurrentHealth = serializeUnit.MaxHealth;
         Health.MaxHealth = serializeUnit.MaxHealth;
         Health.MaxDefaultHealth = serializeUnit.MaxDefaultHealth;
