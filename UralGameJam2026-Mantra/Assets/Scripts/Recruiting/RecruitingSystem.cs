@@ -10,6 +10,7 @@ public class RecruitingSystem : MonoBehaviour, IService
     private AudioManager _audioManager;
     
     public bool IsChoosingPlayerUnitToSwitch {get; private set;}
+    
     private Unit _chosenEnemyUnit;
     
     [SerializeField] private AnimationCurve _fadeOutCurve;
@@ -19,6 +20,9 @@ public class RecruitingSystem : MonoBehaviour, IService
     [SerializeField] private float _moveSpeed = 5;
     
     private List<RecruitingAnimation> _animations = new List<RecruitingAnimation>();
+    private List<Unit> _movingUnits = new List<Unit>();
+    
+    public event Action OnUnitChoosed;
     
     private void Awake()
     {
@@ -32,11 +36,13 @@ public class RecruitingSystem : MonoBehaviour, IService
         
         if (IsChoosingPlayerUnitToSwitch) OnPlayerUnitChosen(unit);
         else OnEnemyUnitChosen(unit);
+        
+        OnUnitChoosed?.Invoke();
     }
     
     private void OnEnemyUnitChosen(Unit unit)
     {
-        if (_partyManager.PlayerParty.Members.Count < _partyManager.PlayerParty.MaxCount)
+        if (_partyManager.PlayerParty.Members.Count + _movingUnits.Count < _partyManager.PlayerParty.MaxCount)
         {
             RecruitUnit(unit);
         }
@@ -64,33 +70,38 @@ public class RecruitingSystem : MonoBehaviour, IService
             //unit.InstantiateAura();
             unit.UpdateRenderCameraPoint();
             unit.UpdateUIPosition();
+            _movingUnits.Remove(unit);
         };
         
         var animation = new RecruitingAnimation(_partyManager.PlayerPartyPlacer, _audioManager);
-        animation.Play(unit, _moveSpeed, _moveCurve, onAnimationFinished);
+        animation.Play(unit, _movingUnits.Count, _moveSpeed, _moveCurve, onAnimationFinished);
+        _movingUnits.Add(unit);
         _animations.Add(animation);
     }
 
     public void RecruitUnitWithReplacement(Unit oldUnit, Unit newUnit)
     {
+        var index = _partyManager.PlayerParty.IndexOfMember(oldUnit);
+        _partyManager.PlayerParty.Members[index] = null;
         OnBeforeRecruit(newUnit);
         
         Action onAnimationFinished = () =>
         {
-            var index = _partyManager.PlayerParty.IndexOfMember(oldUnit);
-            _partyManager.PlayerParty.DestroyMember(oldUnit);
-            _partyManager.PlayerParty.InsertMember(index, newUnit);
+            if (oldUnit != null) Destroy(oldUnit.gameObject);
+            _partyManager.PlayerParty.Members[index] = newUnit;
             
             newUnit.transform.rotation = Quaternion.identity;
             //newUnit.InstantiateAura();
             newUnit.UpdateRenderCameraPoint();
             newUnit.UpdateUIPosition();
+            _movingUnits.Remove(newUnit);
         };
         
         var animation = new RecruitingAnimation(_partyManager.PlayerPartyPlacer, _audioManager);
         animation.PlayWithReplacement(oldUnit, newUnit, _moveSpeed, _fadeOutDuration, _fadeOutCurve, _moveCurve, onAnimationFinished);
         _audioManager.PlaySound("Recruiting");
         
+        _movingUnits.Add(newUnit);
         _animations.Add(animation);
         
         IsChoosingPlayerUnitToSwitch = false;
@@ -143,19 +154,19 @@ public class RecruitingAnimation
         _animationSequence.OnKill(() => callback?.Invoke());
     }
 
-    public void Play(Unit newUnit, float moveSpeed, AnimationCurve moveCurve, Action callback = null)
+    public void Play(Unit newUnit, int movingUnitsCount, float moveSpeed, AnimationCurve moveCurve, Action callback = null)
     {
-        var targetPos = GetPlayerPartyTargetPos(newUnit);
+        var targetPos = GetPlayerPartyTargetPos(newUnit, movingUnitsCount);
         
         _animationSequence = DOTween.Sequence();
         _animationSequence.Append(PlayMovePart(newUnit, targetPos, moveSpeed, moveCurve));
         _animationSequence.OnKill(() => callback?.Invoke());
     }
 
-    private Vector2 GetPlayerPartyTargetPos(Unit newUnit)
+    private Vector2 GetPlayerPartyTargetPos(Unit newUnit, int movingUnitsCount)
     {
         var startPos = newUnit.transform.position;
-        _playerPartyPlacer.PlaceInParty(newUnit);
+        _playerPartyPlacer.PlaceInParty(newUnit, movingUnitsCount + 1);
         var targetPos = newUnit.transform.position;
         newUnit.transform.position = startPos;
         return targetPos;
