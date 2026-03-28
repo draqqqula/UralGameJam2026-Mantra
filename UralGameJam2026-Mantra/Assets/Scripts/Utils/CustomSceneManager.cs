@@ -1,48 +1,68 @@
 using System;
 using System.Collections;
+using System.Threading;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public static class CustomSceneManager
 {
     public static void LoadMenuScene()
     {
-        LoadScene(0, MainMenuLoadingAction);
+        LoadSceneWithFade(0, LoadingAction);
     }
 
     public static void LoadBattleScene()
     {
-        LoadScene(2, BattleSceneLoadingAction);
+        LoadSceneWithFade(2, LoadingAction);
     }
 
     public static void LoadIntroScene()
     {
-        LoadScene(1, IntroOutroLoadingAction);
+        LoadSceneWithFade(1, LoadingAction);
     }
 
 
     public static void LoadVictoryOutroScene()
     {
-        LoadScene(3, IntroOutroLoadingAction);
+        LoadSceneWithFade(3, LoadingAction);
     }
 
     public static void LoadDefeatOutroScene()
     {
-        LoadScene(4, IntroOutroLoadingAction);
+        LoadSceneWithFade(4, LoadingAction);
     }
 
     public static void LoadGameOverScene()
     {
-        LoadScene(5, GameOverLoadingAction);
-    }
-
-    public static void LoadScene(int sceneIndex, Action<float> loadingAction)
-    {
-        var coroutineHandler = ServiceLocator.Instance;
-        coroutineHandler.StartCoroutine(LoadSceneRoutine(sceneIndex, loadingAction));
+        LoadSceneWithFade(5, LoadingAction);
     }
     
-    public static IEnumerator LoadSceneRoutine(int sceneIndex, Action<float> loadingAction)
+    private static async UniTask LoadSceneWithFade(int sceneIndex, Action<float> loadingAction)
+    {
+        var token = ServiceLocator.Instance.GetCancellationTokenOnDestroy();
+        var transitionActivator = ServiceLocator.Instance.GetService<ScreenTransitionActivator>();
+
+        try
+        {
+            await transitionActivator.Fading(1);
+            await LoadScene(sceneIndex, loadingAction, token);
+            await transitionActivator.Fading(0);
+        }
+        catch (OperationCanceledException e)
+        {
+            Debug.LogWarning(e);
+        }
+    }
+    
+    private static async UniTask LoadScene(int sceneIndex, Action<float> loadingAction, CancellationToken token = default)
+    {
+        if (token == CancellationToken.None) token = ServiceLocator.Instance.GetCancellationTokenOnDestroy();
+        await BaseLoadScene(sceneIndex, loadingAction, token);
+    }
+    
+    public static async UniTask BaseLoadScene(int sceneIndex, Action<float> loadingAction, CancellationToken token)
     {
         var asyncOperation = SceneManager.LoadSceneAsync(sceneIndex);
         asyncOperation.allowSceneActivation = false;
@@ -50,30 +70,19 @@ public static class CustomSceneManager
         while (asyncOperation.progress < 0.9f)
         {
             loadingAction.Invoke(asyncOperation.progress);
-            yield return null;
+            await UniTask.Yield(cancellationToken: token);
         }
         
         loadingAction.Invoke(1f);
         asyncOperation.allowSceneActivation = true;
+        
+        while (!asyncOperation.isDone)
+        {
+            await UniTask.Yield(cancellationToken: token);
+        }
     }
 
-    private static void MainMenuLoadingAction(float progress)
-    {
-        
-    }
-
-    private static void BattleSceneLoadingAction(float progress)
-    {
-        
-    }
-    
-    private static void IntroOutroLoadingAction(float progress)
-    {
-        
-    }
-    
-    
-    private static void GameOverLoadingAction(float progress)
+    private static void LoadingAction(float progress)
     {
         
     }
