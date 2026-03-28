@@ -1,11 +1,25 @@
 using System;
 using System.Linq;
+using R3;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MatchManager : MonoBehaviour, IService
 {
-    [field:SerializeField] public State CurrentMatchState {get; set;}
+    [field:SerializeField] public State CurrentMatchState
+    {
+        get => _currentMatchState;
+        set
+        {
+            _currentStateProperty.Value = value; 
+            _currentMatchState = value;
+        }
+    }
+
+    private State _currentMatchState;
+    
+    public ReadOnlyReactiveProperty<State> CurrentStateProperty => _currentStateProperty;
+    private ReactiveProperty<State> _currentStateProperty = new ReactiveProperty<State>();
     
     public enum State { Transiting, Battle, Recrouting, Waiting }
         

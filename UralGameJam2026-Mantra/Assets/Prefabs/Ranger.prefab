@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1562081291196121389
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3757487733438122675}
+  m_Layer: 0
+  m_Name: Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3757487733438122675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562081291196121389}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0}
+  m_LocalScale: {x: 1.15, y: 1.15, z: 1.15}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 4804194453415632902}
+  m_Father: {fileID: 683471047548211384}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3662050779870009345
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,6 +43,8 @@ GameObject:
   - component: {fileID: 4804194453415632902}
   - component: {fileID: 6720136826825459697}
   - component: {fileID: 5420129698339659422}
+  - component: {fileID: 1724717201689400732}
+  - component: {fileID: 2729960433121401391}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -26,13 +60,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3662050779870009345}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: -10, z: 0}
-  m_LocalScale: {x: 1, y: 1.13, z: 1}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 1.08, y: -10.56, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3491138236797506658}
-  m_Father: {fileID: 683471047548211384}
+  m_Father: {fileID: 3757487733438122675}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &6720136826825459697
 Animator:
@@ -100,17 +134,47 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 1194675489752431235, guid: d12eacd659b4d3a4fa5085e12079c543, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 16a0accfc5316124491ec78d049771eb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 20.48, y: 20.48}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1724717201689400732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3662050779870009345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 2446ccbd31af6704090854731a9a017e, type: 3}
+--- !u!114 &2729960433121401391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3662050779870009345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CategoryHash: 5.6927352e-30
+  m_labelHash: 1.8323383e-29
+  m_SpriteKey: 0
+  m_SpriteHash: 508865258
 --- !u!1 &4711881969993555622
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +423,7 @@ Transform:
   - {fileID: 6411153150140909402}
   - {fileID: 1075929346049605092}
   - {fileID: 7386312218925282164}
-  - {fileID: 4804194453415632902}
+  - {fileID: 3757487733438122675}
   - {fileID: 2818714932869982754}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -457,9 +521,6 @@ MonoBehaviour:
   _auraPoint: {fileID: 7386312218925282164}
   _healthbarPrefab: {fileID: 2338016816414332837, guid: 69b39b346f05d4099871c76a76a65284, type: 3}
   _auraPrefab: {fileID: 9210947660843906074, guid: 37f77c80bc034c64b8e87dd119e4343b, type: 3}
-  OnTakeDamageRespond:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &7624932100761901221
 MonoBehaviour:
   m_ObjectHideFlags: 0
