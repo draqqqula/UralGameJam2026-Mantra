@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using R3;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
@@ -42,7 +43,11 @@ public class Unit : MonoBehaviour
     private TurnManager _turnManager;
 
     public event Action OnDestroyed;
+    public event Action<UnitAttachedSkill> OnAttachedSkillAdded;
+    public event Action<UnitAttachedSkill> OnAttachedSkillRemoved;
+    
     public List<UnitAttachedSkill> AttachedSkills = new();
+    [SerializeField] private UnitModifiersViewController _modifiersViewController;
         
 
     private void Start()
@@ -79,6 +84,12 @@ public class Unit : MonoBehaviour
         Damage.MaxDamage.ClearModifiers();
         Damage.CritMultiplyer.ClearModifiers();
         Damage.CritChance.ClearModifiers();
+
+        foreach (var skill in AttachedSkills)
+        {
+            OnAttachedSkillRemoved?.Invoke(skill);
+        }
+        
         AttachedSkills.Clear();
     }
 
@@ -99,6 +110,7 @@ public class Unit : MonoBehaviour
         if (attachedBefore != null) return;
 
         AttachedSkills.Add(skill);
+        OnAttachedSkillAdded?.Invoke(skill);
     }
 
     public void CheckAttached()
@@ -108,6 +120,7 @@ public class Unit : MonoBehaviour
             if (!attached.UpdateTurns())
             {
                 AttachedSkills.Remove(attached);
+                OnAttachedSkillRemoved?.Invoke(attached);
             }
         }
     }
@@ -198,8 +211,11 @@ public class Unit : MonoBehaviour
     {
         Health.Setup();
         Damage.Setup();
-    }
 
+        Health.OnDeath += ClearModifiers;
+        _modifiersViewController.Init(this);
+    }
+    
     public async UniTask Use<T>(Unit target) where T : UnitAction
     {
         var action = UnitActions.FirstOrDefault(x => x.GetType() == typeof(T));
@@ -340,6 +356,8 @@ public class Unit : MonoBehaviour
             Destroy(_ultimateTransform.gameObject);
         }
         OnDestroyed?.Invoke();
+        Health.OnDeath -= ClearModifiers;
+        _modifiersViewController.Disable(this);
     }
 }
 
