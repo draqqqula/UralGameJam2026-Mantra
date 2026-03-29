@@ -12,6 +12,8 @@ public class RoomsController : MonoBehaviour, IService
 
     public void Init()
     {
+        RoomsCount = Mathf.Clamp(RoomsCount + SaveService.SaveData.VictoryCounts * 2, RoomsCount, 20);
+        
         if (SaveService.SaveData.PreviousPlayerParty.Count > 0)
         {
             _isHaveRecruitsRoom = true;

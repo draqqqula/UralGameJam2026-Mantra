@@ -62,6 +62,8 @@ public class SaveData
     public float SoundsSetting = 0.7f;
     public float MusicSetting = 0.7f;
 
+    public int VictoryCounts = 0;
+
     public List<SerializeUnit> PreviousPlayerParty = new List<SerializeUnit>();
     public SerializeUnit PreviousPlayer;
 }

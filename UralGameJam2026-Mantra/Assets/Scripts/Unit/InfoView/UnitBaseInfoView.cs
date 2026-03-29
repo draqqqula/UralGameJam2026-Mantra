@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -66,13 +67,17 @@ public class UnitBaseInfoView : MonoBehaviour, IService
         _critChanceText.text = $"{_crit.Item1 * 100}%";
         _critMultiText.text = $"{_crit.Item2}x";
         _nameText.text = _unit.UnitName;
-
-        ChangeCameraPosition(_unit.RenderCameraPoint);
-
+        
         _unitImage.material = _material;
 
         _unitSkillInfo.ShowSkill(_unit);
         _unitStatusesInfo.Show(_unit);
+    }
+
+    private void Update()
+    {
+        if (_unit == null || !_viewObject.activeInHierarchy) return;
+        ChangeCameraPosition(_unit.RenderCameraPoint);
     }
 
     public void ResetInfo()
