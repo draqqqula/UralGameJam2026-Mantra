@@ -23,6 +23,7 @@ public class PointerHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointer
     public void OnPointerEnter(PointerEventData eventData)
     {
         TargetSystem.Instance.TrySetTarget(_targetable);
+        StartCoroutine(CheckTargetable());
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -30,6 +31,16 @@ public class PointerHoverHandler : MonoBehaviour, IPointerEnterHandler, IPointer
         if (TargetSystem.Instance.Current == _targetable)
         {
             TargetSystem.Instance.TrySetTarget(null);
+        }
+        StopAllCoroutines();
+    }
+
+    private IEnumerator CheckTargetable()
+    {
+        while (TargetSystem.Instance.Current != _targetable)
+        {
+            TargetSystem.Instance.TrySetTarget(_targetable);
+            yield return new WaitForEndOfFrame();
         }
     }
 }

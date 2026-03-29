@@ -37,7 +37,8 @@ public static class SaveService
         }
         else SaveData = new SaveData();
     }
-    
+
+#if UNITY_EDITOR
     [MenuItem("Tools/Delete Save")]
     public static void DeleteSave()
     {
@@ -51,6 +52,7 @@ public static class SaveService
             Debug.LogWarning("Save file not found");
         }
     }
+#endif
 }
 
 [Serializable]

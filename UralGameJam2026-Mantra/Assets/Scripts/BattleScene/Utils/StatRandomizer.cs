@@ -21,6 +21,8 @@ public class StatRandomizer : MonoBehaviour, IService
 
         unit.Health.MaxDefaultHealth = (float)Math.Round(Random.Range(data.MinHealth, data.MaxHealth));
 
+        unit.Variant = Random.Range(0, data.VariantCount);
+
         unit.Init();
     }
 }

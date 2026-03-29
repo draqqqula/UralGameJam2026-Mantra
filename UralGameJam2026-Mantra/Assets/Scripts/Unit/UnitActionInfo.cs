@@ -5,4 +5,5 @@ public class UnitActionInfo : ScriptableObject
 {
     public string ActionName;
     public string ActionDescription;
+    public Sprite Icon;
 }

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class HealthbarView : MonoBehaviour
 {
     [SerializeField] private Image _healthBar;
+    [SerializeField] private Image _healthBarDelayImage;
     [SerializeField] private Unit _unit;
 
     [SerializeField] private float _textDuration;
@@ -21,6 +22,10 @@ public class HealthbarView : MonoBehaviour
     [SerializeField] private Color _healColor;
 
     [SerializeField] private AnimationCurve _fadeCurve;
+    
+    [SerializeField] private float _animationDuration;
+    [SerializeField] private float _delayDuration;
+    private Sequence _healthBarSequence;
     
     public void Init(Unit unit)
     {
@@ -47,7 +52,14 @@ public class HealthbarView : MonoBehaviour
     
     private void OnHealthChanged()
     {
+        _healthBarSequence?.Kill();
+        
+        _healthBarSequence = DOTween.Sequence();
+        _healthBarSequence.Insert(_delayDuration, _healthBarDelayImage
+            .DOFillAmount(_unit.Health.CurrentHealth / _unit.Health.MaxHealth, _animationDuration))
+            .SetLink(gameObject);
         _healthBar.fillAmount = _unit.Health.CurrentHealth / _unit.Health.MaxHealth;
+        
         _healthProgressText.text = Mathf.Clamp(_unit.Health.CurrentHealth, 0, _unit.Health.MaxHealth) + " / " + _unit.Health.MaxHealth;
     }
     

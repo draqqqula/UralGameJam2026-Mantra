@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: StatsData_Warrior
   m_EditorClassIdentifier: 
   UnitType: 0
+  VariantCount: 4
   MinMinDamage: 5
   MaxMinDamage: 7
   MinMaxDamage: 8
