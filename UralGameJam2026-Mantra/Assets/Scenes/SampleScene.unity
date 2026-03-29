@@ -554,6 +554,7 @@ MonoBehaviour:
   _recruitingSystem: {fileID: 806422621}
   _nextRoomActivator: {fileID: 1275764719}
   _recruitingTipActivator: {fileID: 831202121}
+  _tutorialTipsActivator: {fileID: 1968578552}
 --- !u!1 &263459936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,85 +1258,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 681490827729165049, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 681490827729165049, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 5299075443048611204, guid: 5edda9b2f5af8a143b5f5f9bc621c3a1, type: 3}
-    - target: {fileID: 681490827729165049, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_PixelsPerUnitMultiplier
-      value: 2.28
-      objectReference: {fileID: 0}
     - target: {fileID: 2929935344703804771, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
       propertyPath: m_Name
       value: TipCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 2963616771201609099, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5090919543792762114, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: _inaccuracy
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5090919543792762114, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: _border.TopBorder
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5090919543792762114, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: _border.LeftBorder
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5090919543792762114, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: _border.RightBorder
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5090919543792762114, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: _border.BottomBorder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5579179878349023753, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 104
-      objectReference: {fileID: 0}
-    - target: {fileID: 5700016429438361827, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5700016429438361827, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5700016429438361827, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5700016429438361827, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 104
-      objectReference: {fileID: 0}
-    - target: {fileID: 6114546142469714708, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6114546142469714708, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6114546142469714708, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6114546142469714708, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6114546142469714708, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -52
       objectReference: {fileID: 0}
     - target: {fileID: 8470868663303193914, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
       propertyPath: m_Pivot.x
@@ -4193,6 +4118,17 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1968578552 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3882173724869170649, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
+  m_PrefabInstance: {fileID: 831202120}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbe2e94cedf4688805b73f0a2b5028d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2024018919
 GameObject:
   m_ObjectHideFlags: 0

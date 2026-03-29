@@ -8,12 +8,14 @@ public class RoomInitializer : MonoBehaviour, IService
     private PartyManager _partyManager;
     private EnvironmentGenerator _environmentGenerator;
     private RoomsController _roomsController;
+    private TutorialTipsActivator _tutorialTipsActivator;
     
     public void Init()
     {
         _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
         _environmentGenerator = ServiceLocator.Instance.GetService<EnvironmentGenerator>();
         _roomsController = ServiceLocator.Instance.GetService<RoomsController>();
+        _tutorialTipsActivator = ServiceLocator.Instance.GetService<TutorialTipsActivator>();
     }
     
     public void InitializeRoom()
@@ -21,6 +23,8 @@ public class RoomInitializer : MonoBehaviour, IService
         _partyManager.InitializePlayerParty(new List<UnitType>() { UnitType.Warrior });
 
         var evaluate = _evaluate.GetEnemyCount(_roomsController.CurrentRoom, _roomsController.RoomsCount);
+        
+        if (_tutorialTipsActivator.IsActivated) evaluate = 1;
         _partyManager.InitializeEnemyParty(evaluate);
         
         _environmentGenerator.CreateRandom();
@@ -39,7 +43,10 @@ public class RoomInitializer : MonoBehaviour, IService
         _partyManager.HidePlayerParty();
         
         _partyManager.RemoveAllEnemyPartyMembers();
+        
         var evaluate = _evaluate.GetEnemyCount(_roomsController.CurrentRoom, _roomsController.RoomsCount);
+
+        if (_tutorialTipsActivator.IsActivated) evaluate = 2;
         _partyManager.InitializeEnemyParty(evaluate);
         
         _environmentGenerator.CreateRandom();
