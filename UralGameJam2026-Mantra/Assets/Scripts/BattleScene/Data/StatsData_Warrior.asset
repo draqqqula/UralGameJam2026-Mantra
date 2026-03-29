@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitType: 0
   VariantCount: 4
-  MinMinDamage: 1
-  MaxMinDamage: 3
+  MinMinDamage: 2
+  MaxMinDamage: 4
   MinMaxDamage: 4
   MaxMaxDamage: 8
   MinHealth: 20

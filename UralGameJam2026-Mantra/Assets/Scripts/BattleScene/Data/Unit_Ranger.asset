@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f16b78205348e2441a1ae0133450c218, type: 3}
   m_Name: Unit_Ranger
   m_EditorClassIdentifier: 
-  Cost: 50
+  Cost: 85
   Prefab: {fileID: 3462002425916617404, guid: d2c7d4273a65e3f4ba19b89b5d89fe45, type: 3}
   UnitType: 1
