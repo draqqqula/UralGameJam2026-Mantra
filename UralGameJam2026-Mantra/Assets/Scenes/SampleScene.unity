@@ -3609,6 +3609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _origin: {fileID: 1388775809}
   _rooms: {fileID: 11400000, guid: 787250558158f0949b4052d36211dd77, type: 2}
+  _lastRoom: {fileID: 7619838765249618250, guid: fa75807e9f1386d4d88b88484e888aca, type: 3}
 --- !u!1 &1683864738
 GameObject:
   m_ObjectHideFlags: 0

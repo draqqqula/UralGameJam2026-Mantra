@@ -15,3 +15,9 @@ MonoBehaviour:
   _rooms:
   - {fileID: 6019201112294924389, guid: 9fb94358640f7a245a1c667d8ae6d79c, type: 3}
   - {fileID: 3881977391649694791, guid: 116ca83d342d9304da5a50fb85f37ffa, type: 3}
+  - {fileID: 4195935070060311754, guid: a50a7dbc14d8e5143bd328793f62d3e9, type: 3}
+  - {fileID: 1369673676940016902, guid: aae05a4dbdb534f4f98a3482d199897d, type: 3}
+  - {fileID: 1058542254374897534, guid: 2edb2f971f810e649ac99025c5d723bd, type: 3}
+  - {fileID: 3879988420589895265, guid: 14bcce5379e2abf4eaee83b2f1e7a36a, type: 3}
+  - {fileID: 1217485760690686135, guid: 3229648dbb9adbf45bc2fcbe9207bf8d, type: 3}
+  - {fileID: 9062377113192253561, guid: ad7954b4bb0ce7c45ad714393083d1da, type: 3}
