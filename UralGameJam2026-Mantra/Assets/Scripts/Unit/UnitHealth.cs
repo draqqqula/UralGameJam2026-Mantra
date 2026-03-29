@@ -44,7 +44,8 @@ public class UnitHealth : IDisposable
     {
         var defensePercent = Mathf.Max((100 - CurrentDefense.ModValue) * .01f, 0);
         var calcDamage = Mathf.Round(damage * defensePercent);
-        TakeDamage(calcDamage);
+        var clamped = Mathf.Max(calcDamage, 1);
+        TakeDamage(clamped);
 
         OnTakeDamage?.Invoke(calcDamage);
     }
