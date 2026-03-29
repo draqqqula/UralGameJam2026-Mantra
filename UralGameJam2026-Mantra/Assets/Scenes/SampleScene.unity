@@ -1955,54 +1955,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 1aef05f599aae3f4d9d5948afed197d8, type: 2}
     - {fileID: 11400000, guid: cd8722fea579a0d449f1708d821f0fc3, type: 2}
     - {fileID: 11400000, guid: 98f491becdfc08a4c9c78e3d4150cb92, type: 2}
-    _curve:
+    _enemyProgress:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0.75982314
-        outSlope: 0.75982314
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 2.8449216
-        value: 3.1616373
-        inSlope: 1.4368562
-        outSlope: 1.4368562
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.25077268
-      - serializedVersion: 3
-        time: 5
-        value: 5
-        inSlope: 0.25985205
-        outSlope: 0.25985205
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 8
-        value: 4
-        inSlope: -0.9166667
-        outSlope: -0.9166667
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 10
-        value: 1
-        inSlope: -1.5
-        outSlope: -1.5
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -3613,7 +3568,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1690728018
 RectTransform:
   m_ObjectHideFlags: 0

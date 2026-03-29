@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _halo: {fileID: 3626762875314944235}
-  _force: 1
+  _force: 0.1
   _magnitude: 0.6
 --- !u!223 &6106573594234922084
 Canvas:
