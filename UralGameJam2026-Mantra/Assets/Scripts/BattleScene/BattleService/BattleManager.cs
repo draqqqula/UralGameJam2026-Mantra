@@ -46,7 +46,12 @@ public class BattleManager : MonoBehaviour, IService
         _token = _tokenSource.Token;
     }
 
-    public void SetPlayerTurn() => _currentTurn = Turn.Player;
+    public void SetPlayerTurn()
+    {
+        UpdateModifiers(_allUnits.ToList());
+
+        _currentTurn = Turn.Player;
+    }
     public void SetEnemyTurn()
     {
         _currentTurn = Turn.Bot;
@@ -100,8 +105,6 @@ public class BattleManager : MonoBehaviour, IService
 
     private void CheckBattlefield()
     {
-        CheckParty();
-
         DetermineTurn().Forget();
     }
 
@@ -128,6 +131,8 @@ public class BattleManager : MonoBehaviour, IService
             if (!unit.IsAlive) _allUnits.Remove(unit);
             unit.UpdateUIPosition();
             unit.ShowHealthbars();
+            unit.ShowHalo();
+            unit.ShowUltimate();
 
             _allUnits.Add(unit);
         }
@@ -137,6 +142,8 @@ public class BattleManager : MonoBehaviour, IService
             if (!unit.IsAlive) _allUnits.Remove(unit);
             unit.UpdateUIPosition();
             unit.ShowHealthbars();
+            unit.ShowHalo();
+            unit.ShowUltimate();
 
             _allUnits.Add(unit);
         }
@@ -145,8 +152,6 @@ public class BattleManager : MonoBehaviour, IService
     private async UniTaskVoid DetermineTurn()
     {
         if (IsNoneTurn()) return;
-
-        UpdateModifiers(_allUnits.ToList());
 
         if(IsPlayerTurn())
         {
@@ -264,8 +269,6 @@ public class BattleManager : MonoBehaviour, IService
             _currentPipeline = null;
             _matchManager.DeclareDefeat();
 
-            _infoViewController.ResetInfo();
-
             SetNoneTurn();
 
             callback?.Invoke();
@@ -277,6 +280,8 @@ public class BattleManager : MonoBehaviour, IService
         {
             _currentPipeline = null;
             _matchManager.DeclareVictory();
+
+            _infoViewController.ResetInfo();
 
             SetNoneTurn();
 

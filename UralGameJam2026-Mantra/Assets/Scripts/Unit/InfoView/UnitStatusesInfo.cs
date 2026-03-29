@@ -24,7 +24,7 @@ public class UnitStatusesInfo : MonoBehaviour
         AddAttachedSprite();
     }
 
-    private void Hide()
+    public void Hide()
     {
         foreach(Transform child in _statusFieldObject.transform)
         {

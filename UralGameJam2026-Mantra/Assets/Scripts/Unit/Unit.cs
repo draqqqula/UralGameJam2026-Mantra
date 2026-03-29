@@ -27,14 +27,19 @@ public class Unit : MonoBehaviour
     public List<UnitAction> UnitActions = new();
 
     [SerializeField] private bool _isUniqueUnit = false;
-    [SerializeField] private int _attackCooldown;
+    private float _currentUltimateCooldown, _maxUltimateCooldown;
 
     [SerializeField] private Transform _healthbarPoint;
+    [SerializeField] private Transform _haloPoint;
     [SerializeField] private Transform _auraPoint;
+    [SerializeField] private Transform _ultimatePoint;
+
     [SerializeField] private HealthbarView _healthbarPrefab;
     [SerializeField] private TurnAuraView _auraPrefab;
+    [SerializeField] private UnitHaloView _haloPrefab;
+    [SerializeField] private UnitUltimateCooldownView _ultimatePrefab;
 
-    private Transform _healthBarTransform, _auraTransform;
+    private Transform _healthBarTransform, _auraTransform, _haloTransform, _ultimateTransform;
     private TurnManager _turnManager;
 
     public event Action OnDestroyed;
@@ -56,6 +61,14 @@ public class Unit : MonoBehaviour
         //{
         //    InstantiateAura();
         //}
+
+        var halo = Instantiate(_haloPrefab, canvas.transform);
+        halo.transform.position = _haloPoint.position;
+        _haloTransform = halo.transform;
+
+        var ultimate = Instantiate(_ultimatePrefab, canvas.transform);
+        ultimate.transform.position = _ultimatePoint.position;
+        _ultimateTransform = ultimate.transform;
 
         var healthbar =  Instantiate(_healthbarPrefab, canvas.transform);
         healthbar.transform.position = _healthbarPoint.position;
@@ -141,7 +154,13 @@ public class Unit : MonoBehaviour
         if (!_healthBarTransform) return;
         _healthBarTransform.position = _healthbarPoint.position;
 
-        if(!_auraTransform) return;
+        if (!_ultimateTransform) return;
+        _ultimateTransform.position = _ultimatePoint.position;
+
+        if (!_haloTransform) return;
+        _haloTransform.position = _haloPoint.position;
+
+        if (!_auraTransform) return;
         _auraTransform.position = _auraPoint.position;
     }
 
@@ -166,6 +185,27 @@ public class Unit : MonoBehaviour
     {
         _healthBarTransform.gameObject.SetActive(true);
     }
+    
+    public void HideHalo()
+    {
+        _haloTransform.gameObject.SetActive(false);
+    }
+
+    public void ShowHalo()
+    {
+        _haloTransform.gameObject.SetActive(true);
+    }
+
+    public void HideUltimate()
+    {
+        _haloTransform.gameObject.SetActive(false);
+    }
+
+    public void ShowUltimate()
+    {
+        _haloTransform.gameObject.SetActive(true);
+    }
+
 
     public void Init()
     {
@@ -184,6 +224,13 @@ public class Unit : MonoBehaviour
         _turnManager.AddTurn(this, action);
 
         action.Plan(this, target);
+
+        var ultimate = UnitActions.FirstOrDefault(x => x.GetType() == typeof(UltimateAttackAction)) as UltimateAttackAction;
+        ultimate?.IncreaseCooldown(out _currentUltimateCooldown, out _maxUltimateCooldown, action.CooldownStep);
+
+        _haloTransform.GetComponent<UnitHaloView>().SetHalo(_currentUltimateCooldown, _maxUltimateCooldown);
+        _ultimateTransform.GetComponent<UnitUltimateCooldownView>().UpdateView(_currentUltimateCooldown, _maxUltimateCooldown);
+
         await action.Execute();
     }
 
@@ -201,11 +248,16 @@ public class Unit : MonoBehaviour
         if (action == null) return;
 
         var ultimate = action as UltimateAttackAction;
-        ultimate.DecreaseCooldown();
+        ultimate.IncreaseCooldown(out _currentUltimateCooldown, out _maxUltimateCooldown);
+
+        _haloTransform.GetComponent<UnitHaloView>().SetHalo(_currentUltimateCooldown, _maxUltimateCooldown);
+        _ultimateTransform.GetComponent<UnitUltimateCooldownView>().UpdateView(_currentUltimateCooldown, _maxUltimateCooldown);
 
         if (ultimate.CanUse())
         {
             ultimate.Plan(this, target);
+            _ultimateTransform.GetComponent<UnitUltimateCooldownView>()?.Hide();
+
             await ultimate.Execute();
         }
     }
@@ -231,8 +283,6 @@ public class Unit : MonoBehaviour
             Defense = Health.CurrentDefense.ModValue,
             MaxDefense = Health.MaxDefense,
             MaxDefaultDefense = Health.MaxDefaultDefense,
-
-            UltimateAttackCooldown = _attackCooldown,
 
             ModifierEffectsMinDamage = new(Damage.MinDamage.Modifiers),
             ModifierEffectsMaxDamage = new(Damage.MaxDamage.Modifiers),
@@ -262,8 +312,6 @@ public class Unit : MonoBehaviour
         Health.CurrentDefense = new(serializeUnit.Defense);
         Health.MaxDefense = serializeUnit.MaxDefense;
         Health.MaxDefaultDefense = serializeUnit.MaxDefaultDefense;
-
-        _attackCooldown = serializeUnit.UltimateAttackCooldown;
         
         Damage.MinDefaultDamage = serializeUnit.MinDefaultDamage;
         Damage.MaxDefaultDamage = serializeUnit.MaxDefaultDamage;
@@ -298,6 +346,14 @@ public class Unit : MonoBehaviour
         if (_auraTransform)
         {
             Destroy(_auraTransform.gameObject);
+        }
+        if (_haloTransform)
+        {
+            Destroy(_haloTransform.gameObject);
+        }
+        if (_ultimateTransform)
+        {
+            Destroy(_ultimateTransform.gameObject);
         }
         OnDestroyed?.Invoke();
         Health.OnDeath -= ClearModifiers;

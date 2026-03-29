@@ -8,7 +8,7 @@ public class UnitSkillInfo : MonoBehaviour
 
     [SerializeField] private ActionEffectInfo _prefab;
 
-    private void Hide()
+    public void Hide()
     {
         foreach (Transform child in _actionFieldObject.transform)
         {

@@ -256,7 +256,7 @@ public class TestBattleManager : MonoBehaviour, IService
             {
                 await action.Execute(_turnManager.Token);
             }
-            if (action is UltimateAttackAction ultimate) ultimate.DecreaseCooldown();
+            //if (action is UltimateAttackAction ultimate) ultimate.DecreaseCooldown();
 
             UpdateOrder();
         }
