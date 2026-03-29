@@ -4765,6 +4765,10 @@ PrefabInstance:
       value: -0.5549927
       objectReference: {fileID: 0}
     - target: {fileID: 4911773112970552743, guid: d4a0d70e4e94b41fb93174101116304c, type: 3}
+      propertyPath: _material
+      value: 
+      objectReference: {fileID: 2100000, guid: 4a241b69f33ab5d4eaba69085a8c6fc4, type: 2}
+    - target: {fileID: 4911773112970552743, guid: d4a0d70e4e94b41fb93174101116304c, type: 3}
       propertyPath: _renderTextureCamera
       value: 
       objectReference: {fileID: 169270595}
@@ -4873,6 +4877,10 @@ PrefabInstance:
       propertyPath: _renderTextureCamera
       value: 
       objectReference: {fileID: 274446926}
+    - target: {fileID: 6357936072384183257, guid: d4a0d70e4e94b41fb93174101116304c, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: b6576718395699045928e0bdd98877f7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

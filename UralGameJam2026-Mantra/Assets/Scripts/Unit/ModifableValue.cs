@@ -5,6 +5,8 @@ using UnityEngine;
 public class ModifableValue
 {
     public Action<float> OnUpdateValue;
+    public Action<ModifierEffect> OnModifierAdded;
+    public Action<ModifierEffect> OnModifierRemoved;
     public List<ModifierEffect> Modifiers { get; set; }
 
     public float ModValue { get; private set; }
@@ -23,6 +25,7 @@ public class ModifableValue
             modifier.ModifierName, 
             modifier.ModifierDescription);
         Modifiers.Add(effect);
+        OnModifierAdded?.Invoke(effect);
 
         ModValue = _value;
 
@@ -40,6 +43,7 @@ public class ModifableValue
         {
             if (!Modifiers[i].UpdateTurns())
             {
+                OnModifierRemoved?.Invoke(Modifiers[i]);
                 Modifiers.Remove(Modifiers[i]);
             }
         }
@@ -47,6 +51,10 @@ public class ModifableValue
 
     public void ClearModifiers()
     {
+        foreach (var modifier in Modifiers)
+        {
+            OnModifierRemoved?.Invoke(modifier);
+        }
         Modifiers.Clear();
     }
 }
