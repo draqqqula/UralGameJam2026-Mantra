@@ -76,12 +76,12 @@ public class MatchManager : MonoBehaviour, IService
         else
         {
             CurrentMatchState = State.Waiting;
-            
+
+            _partyManager.HidePlayerPartyUltimate();
+
             foreach (var unit in _partyManager.PlayerParty.Members)
             {
                 unit.Resurrect();
-                unit.HideHalo();
-                unit.HideUltimate();
             }
 
             _audioManager.PlaySound("RoomVictory");

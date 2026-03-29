@@ -285,7 +285,7 @@ Transform:
   m_GameObject: {fileID: 4711881969993555622}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: -6.5, z: 0}
+  m_LocalPosition: {x: 0, y: -6.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -366,6 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f27809bade9a6ee4898211fbefaf3af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CooldownStep: 0.5
   ActionInfo: {fileID: 11400000, guid: 3bdbef6720053af4395a4e6fc272c935, type: 2}
   _skill: {fileID: 11400000, guid: a7ae4166ae97a2c40915005e62c55ff7, type: 2}
   _attackCooldown: 5
@@ -413,6 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444607536dc9f0748a647891b05aac59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CooldownStep: 0.5
   ActionInfo: {fileID: 11400000, guid: 13fd9c3547e73134995f3bbd960bf151, type: 2}
   _skill: {fileID: 0}
 --- !u!1 &7318213688681915289
@@ -459,6 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba65882d20e5c5438a90f1fefbbf88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CooldownStep: 0.5
   ActionInfo: {fileID: 11400000, guid: be2eb541c7d245f41b8c5b2d8c17d651, type: 2}
   _skill: {fileID: 11400000, guid: db325960c075b254bbf11aae48752c57, type: 2}
 --- !u!1 &7637924686098206839
@@ -839,7 +842,7 @@ Transform:
   m_GameObject: {fileID: 8757280367703717349}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: -12, z: 0}
+  m_LocalPosition: {x: 0, y: -12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
