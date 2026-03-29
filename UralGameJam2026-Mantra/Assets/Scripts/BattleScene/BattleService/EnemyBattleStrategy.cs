@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using Random = UnityEngine.Random;
 
 public class EnemyBattleStrategy : BattleStrategy
@@ -56,7 +58,20 @@ public class EnemyBattleStrategy : BattleStrategy
         {
             case UnitRelationship.Self: await source.UpdateUltimateCooldown(target); break;
             case UnitRelationship.Friend: await source.Use<SupportAction>(target); break;
-            case UnitRelationship.Enemy: await source.Use<AttackAction>(target); break;
+            case UnitRelationship.Enemy:
+                if (source.TryGetComponent<UnitAttackDistance>(out var distance))
+                {
+                    var enemies = _battleManager.GetAliveEnemyUnits(source);
+                    var enemyIndex = enemies.FindIndex(x => x == target) + 1;
+
+                    if (distance.MaxUnitDistance < enemyIndex)
+                    {
+                        target = TryGetAnotherEnemy(source, distance.MaxUnitDistance);
+                        break;
+                    }
+                }
+                await source.Use<AttackAction>(target); 
+                break;
         }
 
         _initiatorUnit.Value = null;
@@ -70,5 +85,22 @@ public class EnemyBattleStrategy : BattleStrategy
         }
 
         _battleManager.CheckParty();
+    }
+
+    private Unit TryGetAnotherEnemy(Unit source, int maxDistance)
+    {
+        var enemies = _battleManager.GetAliveEnemyUnits(source);
+        var alive = enemies.Where(x => x.IsAlive).ToList();
+
+        var target = alive[Random.Range(0, maxDistance)];
+
+        //var enemyIndex = enemies.FindIndex(x => x == target) + 1;
+
+        //if (maxDistance < enemyIndex)
+        //{
+        //    target = TryGetAnotherEnemy(source, maxDistance);
+        //}
+
+        return target;
     }
 }
