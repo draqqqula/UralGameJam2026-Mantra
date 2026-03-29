@@ -66,14 +66,15 @@ public class Unit : MonoBehaviour
         halo.transform.position = _haloPoint.position;
         halo.Init(_haloPoint);
         _haloTransform = halo.transform;
-
-        var ultimate = Instantiate(_ultimatePrefab, canvas.transform);
-        ultimate.transform.position = _ultimatePoint.position;
-        _ultimateTransform = ultimate.transform;
+        halo.Init(this);
 
         var healthbar =  Instantiate(_healthbarPrefab, canvas.transform);
         healthbar.transform.position = _healthbarPoint.position;
         healthbar.Init(this);
+
+        var ultimate = Instantiate(_ultimatePrefab, canvas.transform);
+        ultimate.transform.position = _ultimatePoint.position;
+        _ultimateTransform = ultimate.transform;
 
         _healthBarTransform = healthbar.transform; 
     }
@@ -199,12 +200,12 @@ public class Unit : MonoBehaviour
 
     public void HideUltimate()
     {
-        _haloTransform.gameObject.SetActive(false);
+        _ultimateTransform.gameObject.SetActive(false);
     }
 
     public void ShowUltimate()
     {
-        _haloTransform.gameObject.SetActive(true);
+        _ultimateTransform.gameObject.SetActive(true);
     }
 
 

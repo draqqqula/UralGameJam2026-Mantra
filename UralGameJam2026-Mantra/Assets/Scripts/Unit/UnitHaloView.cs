@@ -7,6 +7,8 @@ public class UnitHaloView : MonoBehaviour
     [SerializeField] private Image _halo;
     [SerializeField] private float _duration = .2f, _force = .8f, _magnitude = .2f;
 
+    private Unit _unit;
+
     private Vector3 _originalScale;
     private Transform _posPoint;
 
@@ -30,5 +32,29 @@ public class UnitHaloView : MonoBehaviour
         _max = max;
         float newFillAmount = _current / _max;
         _halo.DOFade(newFillAmount, _duration);
+    }
+
+    private void Hide()
+    {
+        _halo.gameObject.SetActive(false);
+    }
+
+    private void Show()
+    {
+        _halo.gameObject.SetActive(true);
+    }
+
+    public void Init(Unit unit)
+    {
+        _unit = unit;
+
+        _unit.Health.OnDeath += Hide;
+        _unit.Health.OnResurrect += Show;
+    }
+
+    private void OnDestroy()
+    {
+        _unit.Health.OnDeath -= Hide;
+        _unit.Health.OnResurrect -= Show;
     }
 }
