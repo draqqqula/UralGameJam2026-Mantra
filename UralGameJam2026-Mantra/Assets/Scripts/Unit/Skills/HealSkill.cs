@@ -12,8 +12,8 @@ public class HealSkill : Skill
         var healing = Mathf.Round(Random.Range(_healValue, units[1].Health.MaxHealth));
         var target = 0f;
 
-        units[1].Health.ApplyHeal(healing);
-        if (units[1].IsAlive) units[1].GetComponent<UnitAnimator>().Play(UnitAnimation.Idle, out target);
+        if (!units[1].IsAlive) units[1].Resurrect(healing);
+        else units[1].Health.ApplyHeal(healing);
 
         _animDelay = Mathf.Max(source, target);
     }
