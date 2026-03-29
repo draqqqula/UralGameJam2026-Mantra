@@ -1271,7 +1271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090919543792762114, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
       propertyPath: _border.LeftBorder
-      value: 0.8
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 5090919543792762114, guid: 51af387d6e6a646f78e6afde65a820d4, type: 3}
       propertyPath: _border.RightBorder
