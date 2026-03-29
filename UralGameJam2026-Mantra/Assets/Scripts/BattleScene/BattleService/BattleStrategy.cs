@@ -69,7 +69,21 @@ public class BattleStrategy
         {
             case UnitRelationship.Self: await source.UpdateUltimateCooldown(target); break;
             case UnitRelationship.Friend: await source.Use<SupportAction>(target); break;
-            case UnitRelationship.Enemy: await source.Use<AttackAction>(target); break;
+            case UnitRelationship.Enemy: 
+                if(source.TryGetComponent<UnitAttackDistance>(out var distance))
+                {
+                    var enemies = _battleManager.GetAliveEnemyUnits(source);
+                    enemies.Reverse();
+                    var enemyIndex = enemies.FindIndex(x => x == target) + 1;
+
+                    if(distance.MaxUnitDistance < enemyIndex)
+                    {
+                        CancelTurn(source);
+                        break;
+                    }
+                }
+                await source.Use<AttackAction>(target); 
+                break;
         }
 
         _initiatorUnit.Value = null;
@@ -83,6 +97,12 @@ public class BattleStrategy
         }
 
         _battleManager.CheckParty();
+    }
+
+    public void CancelTurn(Unit unit)
+    {
+        unit.UnitTurn.SetMove(true);
+        _awaiableUnits.Add(unit);
     }
 
     public void RemoveTurn()

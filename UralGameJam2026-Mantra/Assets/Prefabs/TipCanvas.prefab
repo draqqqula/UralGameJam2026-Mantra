@@ -368,7 +368,16 @@ MonoBehaviour:
   _tipObject: {fileID: 2963616771201609099}
   _effectTipText: {fileID: 6198173918648050513}
   _tipTransform: {fileID: 5579179878349023753}
-  _inaccuracy: 0.2
+  _border:
+    LeftBorder: 0.9
+    RightBorder: 0.8
+    TopBorder: 0.5
+    BottomBorder: 1
+  _pivotPosition:
+    PositiveX: 1
+    NegativeX: 0
+    PositiveY: 1
+    NegativeY: 0
 --- !u!225 &8009764896459106980
 CanvasGroup:
   m_ObjectHideFlags: 0
