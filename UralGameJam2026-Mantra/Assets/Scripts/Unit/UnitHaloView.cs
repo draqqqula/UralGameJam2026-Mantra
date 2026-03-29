@@ -44,7 +44,7 @@ public class UnitHaloView : MonoBehaviour
         }
     }
 
-    private void Hide()
+    public void Hide()
     {
         _halo.gameObject.SetActive(false);
     }

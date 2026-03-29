@@ -69,7 +69,7 @@ public class UnitHealth : IDisposable
         
         Heal(heal);
         OnHeal?.Invoke(heal);
-        OnResurrect?.Invoke();
+
     }
 
     public void ApplyFatalDamage()
@@ -82,6 +82,7 @@ public class UnitHealth : IDisposable
     private void Heal(float heal)
     {
         CurrentHealth = Mathf.Min(CurrentHealth + heal, MaxHealth);
+        OnResurrect?.Invoke();
     }
 
     private void TakeDamage(float damage)

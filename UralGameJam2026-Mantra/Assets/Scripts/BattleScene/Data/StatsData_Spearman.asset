@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: StatsData_Spearman
   m_EditorClassIdentifier: 
   UnitType: 2
-  MinMinDamage: 7
-  MaxMinDamage: 10
-  MinMaxDamage: 11
-  MaxMaxDamage: 15
+  VariantCount: 3
+  MinMinDamage: 2
+  MaxMinDamage: 4
+  MinMaxDamage: 5
+  MaxMaxDamage: 7
   MinHealth: 10
-  MaxHealth: 20
+  MaxHealth: 15
   MinCritChance: 0.1
-  MaxCritChance: 0.4
+  MaxCritChance: 0.2
   MinCritMulti: 1.25
-  MaxCritMulti: 1.75
-  MinDefense: 20
-  MaxDefense: 30
+  MaxCritMulti: 1.5
+  MinDefense: 80
+  MaxDefense: 90

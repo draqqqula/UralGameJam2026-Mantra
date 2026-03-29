@@ -7,6 +7,8 @@ using R3;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
+using Unity.VisualScripting;
 
 public class Unit : MonoBehaviour
 {
@@ -258,6 +260,7 @@ public class Unit : MonoBehaviour
         if (ultimate.CanUse())
         {
             ultimate.Plan(this, target);
+            _haloTransform.GetComponent<UnitHaloView>().Hide();
             _ultimateTransform.GetComponent<UnitUltimateCooldownView>()?.Hide();
 
             await ultimate.Execute();
@@ -335,6 +338,32 @@ public class Unit : MonoBehaviour
         Health.ApplyHealToMax(); 
         GetComponent<UnitAnimator>()?.Play(UnitAnimation.Idle, out _);
         GetComponent<UnitRetired>()?.Resurrect();
+    }
+
+    public void ResurrectPartly()
+    {
+        var heal = Random.Range(Damage.MinDamage.ModValue, Damage.MaxDamage.ModValue);
+
+        Health.ApplyHeal(heal);
+        GetComponent<UnitAnimator>()?.Play(UnitAnimation.Idle, out _);
+        GetComponent<UnitRetired>()?.Resurrect();
+    }
+
+    public bool PlayerEnemyInDistance(Unit enemy)
+    {
+        var enemies = ServiceLocator.Instance.GetService<BattleManager>().GetAliveEnemyUnits(this);
+        var enemyIndex = enemies.FindIndex(x => x == enemy) + 1;
+
+        return GetComponent<UnitAttackDistance>().MaxUnitDistance < enemyIndex;
+    }
+
+    public bool BotEnemyInDistance(Unit enemy)
+    {
+        var enemies = ServiceLocator.Instance.GetService<BattleManager>().GetAliveEnemyUnits(this);
+        enemies.Reverse();
+        var enemyIndex = enemies.FindIndex(x => x == enemy) + 1;
+
+        return GetComponent<UnitAttackDistance>().MaxUnitDistance < enemyIndex;
     }
 
     public void Resurrect(float heal)

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 using Random = UnityEngine.Random;
 
 public class EnemyBattleStrategy : BattleStrategy
@@ -61,10 +60,7 @@ public class EnemyBattleStrategy : BattleStrategy
             case UnitRelationship.Enemy:
                 if (source.TryGetComponent<UnitAttackDistance>(out var distance))
                 {
-                    var enemies = _battleManager.GetAliveEnemyUnits(source);
-                    var enemyIndex = enemies.FindIndex(x => x == target) + 1;
-
-                    if (distance.MaxUnitDistance < enemyIndex)
+                    if (!source.PlayerEnemyInDistance(target))
                     {
                         target = TryGetAnotherEnemy(source, distance.MaxUnitDistance);
                         break;
@@ -93,13 +89,6 @@ public class EnemyBattleStrategy : BattleStrategy
         var alive = enemies.Where(x => x.IsAlive).ToList();
 
         var target = alive[Random.Range(0, maxDistance)];
-
-        //var enemyIndex = enemies.FindIndex(x => x == target) + 1;
-
-        //if (maxDistance < enemyIndex)
-        //{
-        //    target = TryGetAnotherEnemy(source, maxDistance);
-        //}
 
         return target;
     }

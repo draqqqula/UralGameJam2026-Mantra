@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: StatsData_Ranger
   m_EditorClassIdentifier: 
   UnitType: 1
+  VariantCount: 3
   MinMinDamage: 5
-  MaxMinDamage: 7
-  MinMaxDamage: 8
-  MaxMaxDamage: 12
-  MinHealth: 10
-  MaxHealth: 20
-  MinCritChance: 0.5
+  MaxMinDamage: 6
+  MinMaxDamage: 7
+  MaxMaxDamage: 10
+  MinHealth: 5
+  MaxHealth: 10
+  MinCritChance: 0.6
   MaxCritChance: 0.95
   MinCritMulti: 1.8
   MaxCritMulti: 2
-  MinDefense: 10
-  MaxDefense: 15
+  MinDefense: 5
+  MaxDefense: 10

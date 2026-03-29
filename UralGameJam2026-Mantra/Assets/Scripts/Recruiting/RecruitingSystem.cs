@@ -127,7 +127,7 @@ public class RecruitingSystem : MonoBehaviour, IService
     private void OnBeforeRecruit(Unit newUnit)
     {
         _partyManager.EnemyParty.RemoveMember(newUnit);
-        newUnit.Resurrect();
+        newUnit.ResurrectPartly();
         _unitInfoController.HideInfo();
     }
     
