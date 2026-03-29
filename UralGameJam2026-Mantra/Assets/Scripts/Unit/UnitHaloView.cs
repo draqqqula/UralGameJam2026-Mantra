@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class UnitHaloView : MonoBehaviour
 {
     [SerializeField] private Image _halo;
-    [SerializeField] private float _duration = .2f, _force = .8f, _magnitude = .2f;
+    [SerializeField] private float _force = .8f, _magnitude = .2f;
 
     private Unit _unit;
 
@@ -27,8 +27,18 @@ public class UnitHaloView : MonoBehaviour
     {
         _current = current;
         _max = max;
-        float newFillAmount = _current / _max;
-        _halo.DOFade(newFillAmount, _duration);
+
+        var min05 = Mathf.Min(_current + 0.5f, _max);
+        var min1 = Mathf.Min(_current + 1f, _max);
+
+        if (min05 == _max || min1 == _max)
+        {
+            Show();
+        }
+        else
+        {
+            Hide();
+        }
     }
 
     private void Hide()
