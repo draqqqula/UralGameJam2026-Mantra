@@ -18,4 +18,11 @@ public class ScreenTransitionActivator : MonoBehaviour, IService
         
         _fadingImage.color = new Color(0, 0, 0, to);
     }
+    
+    public YieldInstruction FadingCoroutine(float to, float duration = -1)
+    {
+        if (duration < 0) duration = _fadeDefaultDuration;
+        return _fadingImage.DOFade(to, duration).SetEase(Ease.InOutSine)
+            .SetLink(gameObject).WaitForCompletion();
+    }
 }
