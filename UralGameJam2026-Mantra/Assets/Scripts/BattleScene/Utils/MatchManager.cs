@@ -82,7 +82,7 @@ public class MatchManager : MonoBehaviour, IService
 
             foreach (var unit in _partyManager.PlayerParty.Members)
             {
-                unit.Resurrect();
+                unit.ResurrectPartly();
             }
 
             _audioManager.PlaySound("RoomVictory");

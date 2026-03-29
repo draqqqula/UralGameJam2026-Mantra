@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class UnitSelector
 {
     [SerializeField] private UnitCost[] _pool;
-    [SerializeField] private AnimationCurve _curve;
+    [SerializeField] private AnimationCurve _enemyProgress;
     [SerializeField] private Unit[] _unitPrefabs;
 
     public Unit RandomSelect()
@@ -21,7 +21,7 @@ public class UnitSelector
         var cost = 0f;
         foreach (var unit in orderedPool)
         {
-            cost += unit.Cost + _curve.Evaluate(currentRoom) * 10;
+            cost += unit.Cost + _enemyProgress.Evaluate(currentRoom) * 5;
             if(random <= cost)
             {
                 return unit.Prefab;

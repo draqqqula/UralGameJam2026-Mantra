@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitType: 0
   VariantCount: 4
-  MinMinDamage: 5
-  MaxMinDamage: 7
-  MinMaxDamage: 8
-  MaxMaxDamage: 12
+  MinMinDamage: 1
+  MaxMinDamage: 3
+  MinMaxDamage: 4
+  MaxMaxDamage: 8
   MinHealth: 20
   MaxHealth: 40
-  MinCritChance: 0.5
-  MaxCritChance: 0.8
+  MinCritChance: 0.2
+  MaxCritChance: 0.4
   MinCritMulti: 1.25
   MaxCritMulti: 1.75
-  MinDefense: 10
-  MaxDefense: 25
+  MinDefense: 5
+  MaxDefense: 15

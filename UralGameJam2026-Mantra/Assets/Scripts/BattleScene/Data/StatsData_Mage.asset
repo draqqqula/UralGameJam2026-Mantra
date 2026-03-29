@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: StatsData_Mage
   m_EditorClassIdentifier: 
   UnitType: 3
-  MinMinDamage: 5
-  MaxMinDamage: 7
-  MinMaxDamage: 8
-  MaxMaxDamage: 9
+  VariantCount: 3
+  MinMinDamage: 2
+  MaxMinDamage: 3
+  MinMaxDamage: 4
+  MaxMaxDamage: 5
   MinHealth: 15
-  MaxHealth: 25
+  MaxHealth: 20
   MinCritChance: 0.1
   MaxCritChance: 0.3
-  MinCritMulti: 1.25
-  MaxCritMulti: 1.3
-  MinDefense: 10
-  MaxDefense: 12
+  MinCritMulti: 1.1
+  MaxCritMulti: 1.15
+  MinDefense: 5
+  MaxDefense: 7

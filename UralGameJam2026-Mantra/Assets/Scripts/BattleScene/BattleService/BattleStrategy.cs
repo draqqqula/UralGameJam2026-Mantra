@@ -72,11 +72,7 @@ public class BattleStrategy
             case UnitRelationship.Enemy: 
                 if(source.TryGetComponent<UnitAttackDistance>(out var distance))
                 {
-                    var enemies = _battleManager.GetAliveEnemyUnits(source);
-                    enemies.Reverse();
-                    var enemyIndex = enemies.FindIndex(x => x == target) + 1;
-
-                    if(distance.MaxUnitDistance < enemyIndex)
+                    if (!source.BotEnemyInDistance(target))
                     {
                         CancelTurn(source);
                         break;
