@@ -8,6 +8,7 @@ public class RecruitingSystem : MonoBehaviour, IService
 {
     private PartyManager _partyManager;
     private AudioManager _audioManager;
+    private InfoViewController _unitInfoController;
     
     public bool IsChoosingPlayerUnitToSwitch {get; private set;}
     
@@ -29,6 +30,7 @@ public class RecruitingSystem : MonoBehaviour, IService
     {
         _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
         _audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        _unitInfoController = ServiceLocator.Instance.GetService<InfoViewController>();
     }
 
     public void ChooseUnit(Unit unit)
@@ -126,6 +128,7 @@ public class RecruitingSystem : MonoBehaviour, IService
     {
         _partyManager.EnemyParty.RemoveMember(newUnit);
         newUnit.Resurrect();
+        _unitInfoController.HideInfo();
     }
     
     public void KillAllAnimations()
