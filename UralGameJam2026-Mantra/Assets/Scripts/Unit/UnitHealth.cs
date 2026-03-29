@@ -44,7 +44,8 @@ public class UnitHealth : IDisposable
     {
         var defensePercent = Mathf.Max((100 - CurrentDefense.ModValue) * .01f, 0);
         var calcDamage = Mathf.Round(damage * defensePercent);
-        TakeDamage(calcDamage);
+        var clamped = Mathf.Max(calcDamage, 1);
+        TakeDamage(clamped);
 
         OnTakeDamage?.Invoke(calcDamage);
     }
@@ -62,6 +63,16 @@ public class UnitHealth : IDisposable
         OnTakeDamage?.Invoke(directDamage);
     }
 
+    public void ApplyHealToMiddle()
+    {
+        var heal = (MaxHealth - CurrentHealth) / 2;
+        if (heal == 0) return;
+
+        Heal(heal);
+        OnHeal?.Invoke(heal);
+        OnResurrect?.Invoke();
+    }
+
     public void ApplyHealToMax()
     {
         var heal = MaxHealth - CurrentHealth;
@@ -69,7 +80,7 @@ public class UnitHealth : IDisposable
         
         Heal(heal);
         OnHeal?.Invoke(heal);
-
+        OnResurrect?.Invoke();
     }
 
     public void ApplyFatalDamage()
@@ -82,7 +93,6 @@ public class UnitHealth : IDisposable
     private void Heal(float heal)
     {
         CurrentHealth = Mathf.Min(CurrentHealth + heal, MaxHealth);
-        OnResurrect?.Invoke();
     }
 
     private void TakeDamage(float damage)

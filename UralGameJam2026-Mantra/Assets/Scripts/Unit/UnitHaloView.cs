@@ -14,6 +14,11 @@ public class UnitHaloView : MonoBehaviour
 
     private float _current, _max = 1;
 
+    private void Start()
+    {
+        Hide();
+    }
+
     public void Init(Transform posPoint)
     {
         _originalScale = _halo.transform.localScale;
