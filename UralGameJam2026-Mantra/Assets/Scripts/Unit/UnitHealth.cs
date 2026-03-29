@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class UnitHealth : IDisposable
 {
+    public Action OnResurrect;
     public Action OnDeath;
     public Action<float> OnTakeDamage;
     public Action<float> OnHeal;
@@ -68,6 +69,7 @@ public class UnitHealth : IDisposable
         
         Heal(heal);
         OnHeal?.Invoke(heal);
+        OnResurrect?.Invoke();
     }
 
     public void ApplyFatalDamage()

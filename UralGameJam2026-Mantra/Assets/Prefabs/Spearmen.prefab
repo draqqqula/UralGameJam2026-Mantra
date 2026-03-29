@@ -615,6 +615,7 @@ MonoBehaviour:
   _auraPrefab: {fileID: 9210947660843906074, guid: 37f77c80bc034c64b8e87dd119e4343b, type: 3}
   _haloPrefab: {fileID: 5656655812131614792, guid: cecf37ce594512a4d83609a1e903dc98, type: 3}
   _ultimatePrefab: {fileID: 6799580571988569389, guid: f3b58f0793148624d8d44d68ba6eea95, type: 3}
+  _modifiersViewController: {fileID: 8292535944681258686, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
 --- !u!114 &7624932100761901221
 MonoBehaviour:
   m_ObjectHideFlags: 0
