@@ -8,10 +8,11 @@ public class MageAttackSkill : Skill
     public override void Use(params Unit[] units)
     {
         var damage = units[0].Damage.DealBaseDamage();
+        var target = 0f;
 
         units[0].GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out var source);
 
-        units[1].GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out var target);
+        if (units[1].IsAlive) units[1].GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out target);
         units[1].Health.CurrentDefense.ApplyModifier(_dropDefense);
         units[1].Health.ApplyDamage(damage);
 

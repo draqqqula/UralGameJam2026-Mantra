@@ -34,6 +34,6 @@ public class UnitAttachedSkill : ModifierEffect
         var damage = _source.Damage.DealCritDamage(extraCritMulti: 1);
         _source.GetComponent<UnitAnimator>().Play(UnitAnimation.Attack, out _);
         enemy.Health.ApplyDamage(damage);
-        enemy.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
+        if(enemy.IsAlive) enemy.GetComponent<UnitAnimator>().Play(UnitAnimation.Damaged, out _);
     }
 }
