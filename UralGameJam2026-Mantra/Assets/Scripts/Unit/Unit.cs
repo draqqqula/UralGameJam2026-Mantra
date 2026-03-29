@@ -64,6 +64,7 @@ public class Unit : MonoBehaviour
 
         var halo = Instantiate(_haloPrefab, canvas.transform);
         halo.transform.position = _haloPoint.position;
+        halo.Init(_haloPoint);
         _haloTransform = halo.transform;
         halo.Init(this);
 

@@ -66,6 +66,7 @@ public class MatchManager : MonoBehaviour, IService
 
             SaveService.SaveData.PreviousPlayer = BuffKing(serializedPlayer);
             SaveService.SaveData.PreviousPlayerParty = playerParty;
+            SaveService.SaveData.VictoryCounts++;
             SaveService.Save();
             
             _matchResultHandler.MatchResult = MatchResultHandler.Result.Victory;
