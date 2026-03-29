@@ -17,7 +17,6 @@ public class UnitAnimator : MonoBehaviour
 
     public void Play(UnitAnimation unitAnimation, out float duration)
     {
-
         var name = unitAnimation switch
         {
             UnitAnimation.Attack => "Attack",

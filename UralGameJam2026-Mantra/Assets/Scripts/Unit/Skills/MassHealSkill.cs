@@ -15,8 +15,8 @@ public class MassHealSkill : Skill
         units[0].Health.ApplyHeal(_healValue);
         foreach(var unit in friends)
         {
-            unit.GetComponent<UnitAnimator>().Play(UnitAnimation.Idle, out _);
-            unit.Health.ApplyHeal(_healValue);
+            if (!unit.IsAlive) unit.Resurrect(_healValue);
+            else unit.Health.ApplyHeal(_healValue);
         }
     }
 

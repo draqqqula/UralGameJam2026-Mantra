@@ -9,12 +9,11 @@ public class InspirationSkill : Skill
     public override void Use(params Unit[] units)
     {
         units[0].GetComponent<UnitAnimator>().Play(UnitAnimation.Support, out var source);
-        units[1].GetComponent<UnitAnimator>().Play(UnitAnimation.Idle, out var target);
 
         units[1].Damage.MinDamage.ApplyModifier(_inspiration);
         units[1].Damage.MaxDamage.ApplyModifier(_inspiration);
 
-        _animDelay = Mathf.Max(source, target);
+        _animDelay = source;
     }
 
     public override float UseDelay()

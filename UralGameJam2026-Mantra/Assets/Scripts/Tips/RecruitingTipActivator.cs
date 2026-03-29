@@ -36,6 +36,8 @@ public class RecruitingTipActivator : MonoBehaviour, IService
 
     private void OnChoosedUnitChanged()
     {
+        if (_matchManager.CurrentMatchState != MatchManager.State.Recrouting) return;
+        
         if (_partyManager.EnemyParty.Members.Count <= 0) Hide();
         else Show();
     }

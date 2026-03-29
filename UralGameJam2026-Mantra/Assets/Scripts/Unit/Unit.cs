@@ -335,6 +335,13 @@ public class Unit : MonoBehaviour
         GetComponent<UnitRetired>()?.Resurrect();
     }
 
+    public void Resurrect(float heal)
+    {
+        Health.ApplyHeal(heal);
+        GetComponent<UnitAnimator>()?.Play(UnitAnimation.Idle, out _);
+        GetComponent<UnitRetired>()?.Resurrect();
+    }
+
     [ContextMenu("KillUnit")]
     private void KillUnit()
     {
