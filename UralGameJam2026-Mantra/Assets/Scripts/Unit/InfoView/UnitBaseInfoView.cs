@@ -85,6 +85,9 @@ public class UnitBaseInfoView : MonoBehaviour, IService
         _critChanceText.text = $"0%";
         _critMultiText.text = $"0x";
         _nameText.text = string.Empty;
+
+        _unitSkillInfo.Hide();
+        _unitStatusesInfo.Hide();
     }
 
     public bool IsEmpty()
@@ -123,13 +126,13 @@ public class UnitBaseInfoView : MonoBehaviour, IService
     {
         _health.Item1 = value;
 
-        _healthText.text = $"{_health.Item2}/{_health.Item1}";
+        _healthText.text = $"{Mathf.Round(_health.Item2)}/{Mathf.Round(_health.Item1)}";
     }
     private void UpdateCurrentHealth(float value)
     {
         _health.Item2 = value;
 
-        _healthText.text = $"{_health.Item2}/{_health.Item1}";
+        _healthText.text = $"{Mathf.Round(_health.Item2)}/{Mathf.Round(_health.Item1)}";
     }
 
     private void UpdateCritMultiInfo(float value)
@@ -150,11 +153,13 @@ public class UnitBaseInfoView : MonoBehaviour, IService
     {
         _damage.Item2 = value;
 
-        _damageText.text = $"{_damage.Item1}-{_damage.Item2}";
+        _damageText.text = $"{Mathf.Round(_damage.Item1)}-{Mathf.Round(_damage.Item2)}";
     }
 
     private void UpdateMinDamageInfo(float value)
     {
         _damage.Item1 = value;
+
+        _damageText.text = $"{Mathf.Round(_damage.Item1)}-{Mathf.Round(_damage.Item2)}";
     }
 }

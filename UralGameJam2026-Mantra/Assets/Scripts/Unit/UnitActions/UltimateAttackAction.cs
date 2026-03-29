@@ -17,11 +17,11 @@ public class UltimateAttackAction : UnitAction
         return _currentCooldown == _attackCooldown;
     }
 
-    public void IncreaseCooldown(out float current, out float max)
+    public void IncreaseCooldown(out float current, out float max, float step = 1)
     {
         if (_currentCooldown < _attackCooldown)
         {
-            _currentCooldown = Mathf.Clamp(_currentCooldown + 1, 0, _attackCooldown);
+            _currentCooldown = Mathf.Clamp(_currentCooldown + step, 0, _attackCooldown);
         }
         current = _currentCooldown;
         max = _attackCooldown;

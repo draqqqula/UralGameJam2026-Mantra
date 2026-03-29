@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class UnitAction : MonoBehaviour
 {
+    public float CooldownStep = .5f;
     public UnitActionInfo ActionInfo;
     [SerializeField] protected Skill _skill;
     protected float _animDelay;

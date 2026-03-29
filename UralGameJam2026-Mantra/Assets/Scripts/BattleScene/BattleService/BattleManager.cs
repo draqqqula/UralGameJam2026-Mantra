@@ -136,6 +136,8 @@ public class BattleManager : MonoBehaviour, IService
             if (!unit.IsAlive) _allUnits.Remove(unit);
             unit.UpdateUIPosition();
             unit.ShowHealthbars();
+            unit.ShowHalo();
+            unit.ShowUltimate();
 
             _allUnits.Add(unit);
         }
@@ -145,6 +147,8 @@ public class BattleManager : MonoBehaviour, IService
             if (!unit.IsAlive) _allUnits.Remove(unit);
             unit.UpdateUIPosition();
             unit.ShowHealthbars();
+            unit.ShowHalo();
+            unit.ShowUltimate();
 
             _allUnits.Add(unit);
         }
@@ -270,8 +274,6 @@ public class BattleManager : MonoBehaviour, IService
             _currentPipeline = null;
             _matchManager.DeclareDefeat();
 
-            _infoViewController.ResetInfo();
-
             SetNoneTurn();
 
             callback?.Invoke();
@@ -283,6 +285,8 @@ public class BattleManager : MonoBehaviour, IService
         {
             _currentPipeline = null;
             _matchManager.DeclareVictory();
+
+            _infoViewController.ResetInfo();
 
             SetNoneTurn();
 

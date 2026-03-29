@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &968065741534442069
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1485622066385439507}
-  m_Layer: 0
-  m_Name: UltimatePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1485622066385439507
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 968065741534442069}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.26, y: 10.54, z: 0}
-  m_LocalScale: {x: 1, y: 0.99998486, z: 0.99998486}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 683471047548211384}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1562081291196121389
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,6 +30,37 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4804194453415632902}
+  m_Father: {fileID: 683471047548211384}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3204535025568623069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2840149832541725133}
+  m_Layer: 0
+  m_Name: UltimatePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2840149832541725133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3204535025568623069}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -10.12, z: 0}
+  m_LocalScale: {x: 1, y: 0.99998486, z: 0.99998486}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
   m_Father: {fileID: 683471047548211384}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3662050779870009345
@@ -291,37 +291,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4804194453415632902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6515077376398314115
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3464087651302012619}
-  m_Layer: 0
-  m_Name: HaloPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3464087651302012619
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6515077376398314115}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.85, y: 7.07, z: 0}
-  m_LocalScale: {x: 1, y: 0.99998486, z: 0.99998486}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 683471047548211384}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6746475338391275582
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,6 +338,37 @@ MonoBehaviour:
   ActionInfo: {fileID: 11400000, guid: ee3df563acc2edf4583e78ace8d4682d, type: 2}
   _skill: {fileID: 11400000, guid: d27f14c309f82fe45b55dfd59973a50d, type: 2}
   _attackCooldown: 5
+--- !u!1 &7226970221610634908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7564445699380871313}
+  m_Layer: 0
+  m_Name: HaloPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7564445699380871313
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7226970221610634908}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.02, y: 2.56, z: 0}
+  m_LocalScale: {x: 1, y: 0.99998486, z: 0.99998486}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 683471047548211384}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7318136119364406056
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,11 +505,11 @@ Transform:
   m_LocalScale: {x: 0.19, y: 0.19000287, z: 0.19000287}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 3464087651302012619}
-  - {fileID: 1485622066385439507}
   - {fileID: 6411153150140909402}
   - {fileID: 1075929346049605092}
   - {fileID: 7386312218925282164}
+  - {fileID: 7564445699380871313}
+  - {fileID: 2840149832541725133}
   - {fileID: 3757487733438122675}
   - {fileID: 2818714932869982754}
   m_Father: {fileID: 0}
@@ -605,9 +605,9 @@ MonoBehaviour:
   - {fileID: 4973877450969783446}
   _isUniqueUnit: 0
   _healthbarPoint: {fileID: 1075929346049605092}
-  _haloPoint: {fileID: 3464087651302012619}
+  _haloPoint: {fileID: 7564445699380871313}
   _auraPoint: {fileID: 7386312218925282164}
-  _ultimatePoint: {fileID: 1485622066385439507}
+  _ultimatePoint: {fileID: 2840149832541725133}
   _healthbarPrefab: {fileID: 2338016816414332837, guid: 69b39b346f05d4099871c76a76a65284, type: 3}
   _auraPrefab: {fileID: 9210947660843906074, guid: 37f77c80bc034c64b8e87dd119e4343b, type: 3}
   _haloPrefab: {fileID: 5656655812131614792, guid: cecf37ce594512a4d83609a1e903dc98, type: 3}

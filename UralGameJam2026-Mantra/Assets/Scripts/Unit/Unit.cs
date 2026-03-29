@@ -208,6 +208,13 @@ public class Unit : MonoBehaviour
         _turnManager.AddTurn(this, action);
 
         action.Plan(this, target);
+
+        var ultimate = UnitActions.FirstOrDefault(x => x.GetType() == typeof(UltimateAttackAction)) as UltimateAttackAction;
+        ultimate?.IncreaseCooldown(out _currentUltimateCooldown, out _maxUltimateCooldown, action.CooldownStep);
+
+        _haloTransform.GetComponent<UnitHaloView>().SetHalo(_currentUltimateCooldown, _maxUltimateCooldown);
+        _ultimateTransform.GetComponent<UnitUltimateCooldownView>().UpdateView(_currentUltimateCooldown, _maxUltimateCooldown);
+
         await action.Execute();
     }
 
@@ -323,6 +330,14 @@ public class Unit : MonoBehaviour
         if (_auraTransform)
         {
             Destroy(_auraTransform.gameObject);
+        }
+        if (_haloTransform)
+        {
+            Destroy(_haloTransform.gameObject);
+        }
+        if (_ultimateTransform)
+        {
+            Destroy(_ultimateTransform.gameObject);
         }
         OnDestroyed?.Invoke();
     }
