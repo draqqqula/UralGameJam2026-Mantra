@@ -65,7 +65,7 @@ public class UnitHealth : IDisposable
 
     public void ApplyHealToMiddle()
     {
-        var heal = (MaxHealth - CurrentHealth) / 2;
+        var heal = Mathf.Round((MaxHealth - CurrentHealth) / 2);
         if (heal == 0) return;
 
         Heal(heal);

@@ -370,7 +370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CooldownStep: 0.5
   ActionInfo: {fileID: 11400000, guid: ee3df563acc2edf4583e78ace8d4682d, type: 2}
-  _skill: {fileID: 11400000, guid: d27f14c309f82fe45b55dfd59973a50d, type: 2}
+  _skill: {fileID: 11400000, guid: 7941aef109359f749810be5c18379d9d, type: 2}
   _attackCooldown: 5
 --- !u!1 &7226970221610634908
 GameObject:

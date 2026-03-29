@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13c6648b5dabaea47abd5f39208799dd, type: 3}
-  m_Name: XSlash_Warrior
+  m_Script: {fileID: 11500000, guid: 127dc6322d8c5b046a2bb5ca2860fc75, type: 3}
+  m_Name: XSlashRanger
   m_EditorClassIdentifier: 
   _repeats: 2
-  _attackModifier: {fileID: 11400000, guid: ca34e3c0948e3094b92099765a276178, type: 2}
+  _attackModifier: {fileID: 11400000, guid: aa55c6fd4b72dae4bbb9e56882102e8c, type: 2}
