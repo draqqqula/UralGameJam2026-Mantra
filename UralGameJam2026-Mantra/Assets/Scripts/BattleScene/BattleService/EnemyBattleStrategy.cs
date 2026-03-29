@@ -23,7 +23,7 @@ public class EnemyBattleStrategy : BattleStrategy
 
     private async UniTask DoSetUnit(Action callback = null, CancellationToken token = default)
     {
-        do
+        while (CanMoves())
         {
             var canMoving = _awaiableUnits.Where(x => x.UnitTurn.CanMove);
             var aliveUnits = _battleManager.GetAliveUnits();
@@ -41,7 +41,7 @@ public class EnemyBattleStrategy : BattleStrategy
             _selectedUnit.Value = target;
 
             await UseActionOn(callback, token);
-        } while (CanMoves());
+        }
     }
 
     protected override async UniTask UseActionOn(Action callback = null, CancellationToken token = default)

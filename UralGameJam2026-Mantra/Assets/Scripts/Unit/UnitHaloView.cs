@@ -18,16 +18,7 @@ public class UnitHaloView : MonoBehaviour
 
     private void Update()
     {
-        if(_current + 1 == _max)
-        {
-            _halo.gameObject.SetActive(true);
-            _halo.transform.localScale = _originalScale * Mathf.Sin(Time.time * _force) * _magnitude;
-        }
-        else
-        {
-            _halo.transform.localScale = _originalScale;
-            _halo.gameObject.SetActive(false);
-        }
+        _halo.transform.localScale = _originalScale * Mathf.Sin(Time.time * _force * _current) * _magnitude;
     }
 
     public void SetHalo(float current, float max)

@@ -55,12 +55,17 @@ public class PartyManager : MonoBehaviour, IService
         return PlayerParty.Members.FirstOrDefault(m => m.IsMainHero);
     }
 
-    public void HidePlayerParty(bool hideHealthbars = true)
+    public void HidePlayerParty(bool hideHealthbars = true, bool hideUltimate = true)
     {
         foreach (var unit in PlayerParty.Members)
         {
             unit.gameObject.SetActive(false);
             if (hideHealthbars) unit.HideHealthbars();
+            if (hideUltimate)
+            {
+                unit.HideHalo();
+                unit.HideUltimate();
+            }
         }
     }
 
@@ -70,6 +75,15 @@ public class PartyManager : MonoBehaviour, IService
         {
             unit.gameObject.SetActive(true);
             if (showHealthbars) unit.ShowHealthbars();
+        }
+    }
+
+    public void HidePlayerPartyUltimate()
+    {
+        foreach(var unit in PlayerParty.Members)
+        {
+            unit.HideUltimate();
+            unit.HideHalo();
         }
     }
 

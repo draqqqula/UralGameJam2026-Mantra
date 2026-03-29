@@ -9,7 +9,8 @@ public class EffectTip : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _effectTipText;
     [SerializeField] private RectTransform _tipTransform;
 
-    [SerializeField] private float _inaccuracy = 0.2f;
+    [SerializeField] private Border _border;
+    [SerializeField] private PivotPosition _pivotPosition;
 
     private Camera _camera;
 
@@ -42,25 +43,38 @@ public class EffectTip : MonoBehaviour
         var mousePosition = _camera.WorldToViewportPoint(pos).normalized;
 
         var pivot = _tipTransform.pivot;
-        if (mousePosition.x + _inaccuracy > 1f)
+        if (mousePosition.x + _border.RightBorder > 1f)
         {
-            pivot.x = 1;
+            pivot.x = _pivotPosition.PositiveX;
         }
-        if(mousePosition.x - _inaccuracy < 0f)
+        if(mousePosition.x - _border.LeftBorder < 0f)
         {
-            pivot.x = 0;
+            pivot.x = _pivotPosition.NegativeX;
         }
-        if(mousePosition.y + _inaccuracy > 1f)
+        if(mousePosition.y + _border.TopBorder > 1f)
         {
-            pivot.y = 1;
+            pivot.y = _pivotPosition.PositiveY;
         }
-        if(mousePosition.y - _inaccuracy < 0f)
+        if(mousePosition.y - _border.BottomBorder < 0f)
         {
-            pivot.y = 0;
+            pivot.y = _pivotPosition.NegativeY;
         }
 
         _tipTransform.pivot = pivot;
 
         _tipObject.transform.position = pos;
     }
+}
+
+[System.Serializable]
+public class PivotPosition
+{
+    public float PositiveX = 1, NegativeX = 0;
+    public float PositiveY = 1, NegativeY = 0;
+}
+
+[System.Serializable] 
+public class Border
+{
+    public float LeftBorder = 1, RightBorder = .5f, TopBorder = 1, BottomBorder = .5f;
 }

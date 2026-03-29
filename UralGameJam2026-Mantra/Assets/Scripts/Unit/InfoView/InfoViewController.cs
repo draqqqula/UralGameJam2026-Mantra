@@ -28,6 +28,7 @@ public class InfoViewController : MonoBehaviour, IService
     {
         _initiator.ResetInfo();
         _target.ResetInfo();
+        _target.HideView();
     }
 
     public void Hide()

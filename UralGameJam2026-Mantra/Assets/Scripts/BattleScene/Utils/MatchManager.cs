@@ -91,6 +91,7 @@ public class MatchManager : MonoBehaviour, IService
             {
                 _nextRoomActivator.ActivateNextRoomUI();
                 _partyManager.HidePlayerPartyAuras();
+                _partyManager.HidePlayerPartyUltimate();
             }
             else
             {
