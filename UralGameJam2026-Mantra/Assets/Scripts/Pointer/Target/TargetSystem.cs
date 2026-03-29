@@ -38,7 +38,7 @@ public class TargetSystem : MonoBehaviour
         }
         else if (_matchManager.CurrentMatchState == MatchManager.State.Battle)
         {
-            if (!newTarget.IsTargetable || CheckSelectingCondition(newTarget)) return false;
+            if (!newTarget.IsTargetable || (CheckSelectingCondition(newTarget) || CheckDistanceCondition(newTarget))) return false;
             else return true;
         }
         else return false;
@@ -68,12 +68,26 @@ public class TargetSystem : MonoBehaviour
         OnSetTarget?.Invoke(Current);
     }
 
+    private bool CheckDistanceCondition(Targetable newTarget)
+    {
+        var battle = ServiceLocator.Instance.GetService<BattleManager>();
+        var current = battle.GetCurrentUnit();
+        if (battle.IsPlayerTurn() && current != null && battle.GetRelationShipToCurrent(newTarget.Unit) == UnitRelationship.Enemy)
+        {
+            var isOutOfReach = !current.BotEnemyInDistance(newTarget.Unit);
+            return isOutOfReach;
+        }
+        return false;
+    }
+
     private bool CheckSelectingCondition(Targetable newTarget)
     {
         var battle = ServiceLocator.Instance.GetService<BattleManager>();
         var selecting = battle.IsSelecting();
         if (selecting)
         {
+            var initiator = battle.GetCurrentUnit();
+
             var partyMember = battle.IsPlayerPartyMember(newTarget.Unit);
             var canMove = newTarget.Unit.UnitTurn.CanMove;
             return !(partyMember && canMove);
