@@ -342,9 +342,7 @@ public class Unit : MonoBehaviour
 
     public void ResurrectPartly()
     {
-        var heal = Mathf.Round(Random.Range(Damage.MinDamage.ModValue, Damage.MaxDamage.ModValue));
-
-        Health.ApplyHeal(heal);
+        Health.ApplyHealToMiddle();
         GetComponent<UnitAnimator>()?.Play(UnitAnimation.Idle, out _);
         GetComponent<UnitRetired>()?.Resurrect();
     }
