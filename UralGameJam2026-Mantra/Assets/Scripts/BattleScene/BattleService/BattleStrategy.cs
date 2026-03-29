@@ -69,14 +69,11 @@ public class BattleStrategy
         {
             case UnitRelationship.Self: await source.UpdateUltimateCooldown(target); break;
             case UnitRelationship.Friend: await source.Use<SupportAction>(target); break;
-            case UnitRelationship.Enemy: 
-                if(source.TryGetComponent<UnitAttackDistance>(out var distance))
+            case UnitRelationship.Enemy:
+                if (!source.BotEnemyInDistance(target))
                 {
-                    if (!source.BotEnemyInDistance(target))
-                    {
-                        CancelTurn(source);
-                        break;
-                    }
+                    CancelTurn(source);
+                    break;
                 }
                 await source.Use<AttackAction>(target); 
                 break;

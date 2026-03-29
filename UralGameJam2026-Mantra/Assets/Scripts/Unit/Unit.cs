@@ -342,7 +342,7 @@ public class Unit : MonoBehaviour
 
     public void ResurrectPartly()
     {
-        var heal = Random.Range(Damage.MinDamage.ModValue, Damage.MaxDamage.ModValue);
+        var heal = Mathf.Round(Random.Range(Damage.MinDamage.ModValue, Damage.MaxDamage.ModValue));
 
         Health.ApplyHeal(heal);
         GetComponent<UnitAnimator>()?.Play(UnitAnimation.Idle, out _);
@@ -354,7 +354,7 @@ public class Unit : MonoBehaviour
         var enemies = ServiceLocator.Instance.GetService<BattleManager>().GetAliveEnemyUnits(this);
         var enemyIndex = enemies.FindIndex(x => x == enemy) + 1;
 
-        return GetComponent<UnitAttackDistance>().MaxUnitDistance < enemyIndex;
+        return GetComponent<UnitAttackDistance>().MaxUnitDistance >= enemyIndex;
     }
 
     public bool BotEnemyInDistance(Unit enemy)
@@ -363,7 +363,7 @@ public class Unit : MonoBehaviour
         enemies.Reverse();
         var enemyIndex = enemies.FindIndex(x => x == enemy) + 1;
 
-        return GetComponent<UnitAttackDistance>().MaxUnitDistance < enemyIndex;
+        return GetComponent<UnitAttackDistance>().MaxUnitDistance >= enemyIndex;
     }
 
     public void Resurrect(float heal)

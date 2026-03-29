@@ -24,5 +24,5 @@ MonoBehaviour:
   MaxCritChance: 0.95
   MinCritMulti: 1.8
   MaxCritMulti: 2
-  MinDefense: 5
-  MaxDefense: 10
+  MinDefense: 10
+  MaxDefense: 15

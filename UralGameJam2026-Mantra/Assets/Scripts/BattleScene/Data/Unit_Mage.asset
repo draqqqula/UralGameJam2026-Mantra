@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f16b78205348e2441a1ae0133450c218, type: 3}
   m_Name: Unit_Mage
   m_EditorClassIdentifier: 
-  Cost: 80
+  Cost: 100
   Prefab: {fileID: 3462002425916617404, guid: 4f7f7b5136354da43a182ce1b589e058, type: 3}
   UnitType: 3

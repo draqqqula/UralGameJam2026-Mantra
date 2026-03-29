@@ -88,7 +88,9 @@ public class EnemyBattleStrategy : BattleStrategy
         var enemies = _battleManager.GetAliveEnemyUnits(source);
         var alive = enemies.Where(x => x.IsAlive).ToList();
 
-        var target = alive[Random.Range(0, maxDistance)];
+        var min = Mathf.Min(maxDistance, alive.Count);
+
+        var target = alive[Random.Range(0, min)];
 
         return target;
     }
