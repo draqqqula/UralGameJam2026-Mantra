@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,8 @@ public class NextRoomActivator : MonoBehaviour, IService
     private MatchManager _matchManager;
     private AudioManager _audioManager;
     
+    private PartyManager _partyManager;
+    
     private void Awake()
     {
         _roomTransitionHandler = ServiceLocator.Instance.GetService<RoomTransitionHandler>();
@@ -25,6 +28,7 @@ public class NextRoomActivator : MonoBehaviour, IService
         _battleStarter = ServiceLocator.Instance.GetService<BattleStarter>();
         _matchManager = ServiceLocator.Instance.GetService<MatchManager>();
         _audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
         
         _nextRoomButton = _nextRoomUI.GetComponentInChildren<Button>();
         _nextRoomButton.onClick.AddListener(NextRoom);
@@ -58,6 +62,12 @@ public class NextRoomActivator : MonoBehaviour, IService
 
     private void OnReadyToUpdateRoom()
     {
+        var allUnits = _partyManager.EnemyParty.Members.Concat(_partyManager.PlayerParty.Members);
+        foreach (var unit in allUnits)
+        {
+            unit.ClearModifiers();
+        }
+        
         _recruitingSystem.KillAllAnimations();
         _roomInitializer.UpdateRoom();
     }

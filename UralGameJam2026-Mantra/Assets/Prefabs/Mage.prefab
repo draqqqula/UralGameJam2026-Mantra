@@ -416,6 +416,7 @@ Transform:
   - {fileID: 7386312218925282164}
   - {fileID: 3122826504500251791}
   - {fileID: 5990670336973839762}
+  - {fileID: 5447247958040538372}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &6398310200167985995
@@ -513,6 +514,7 @@ MonoBehaviour:
   _auraPoint: {fileID: 7386312218925282164}
   _healthbarPrefab: {fileID: 2338016816414332837, guid: 69b39b346f05d4099871c76a76a65284, type: 3}
   _auraPrefab: {fileID: 9210947660843906074, guid: 37f77c80bc034c64b8e87dd119e4343b, type: 3}
+  _modifiersViewController: {fileID: 2930214919768802764}
 --- !u!114 &7624932100761901221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -865,4 +867,77 @@ Transform:
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 7707555547867812072, guid: 54b5b289cc8ff5c4c9a80e5e83de05cd, type: 3}
   m_PrefabInstance: {fileID: 4418573160403536079}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6611063733617490802
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 683471047548211384}
+    m_Modifications:
+    - target: {fileID: 1164097320422643318, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.46816054
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164097320422643318, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.908287
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164097320422643318, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.01123264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164097320422643318, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164097320422643318, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164097320422643318, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164097320422643318, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164097320422643318, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164097320422643318, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164097320422643318, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595326212963833901, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+      propertyPath: m_Name
+      value: ModifierVFXView
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+--- !u!114 &2930214919768802764 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8292535944681258686, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+  m_PrefabInstance: {fileID: 6611063733617490802}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3626c11cfdae4fce882ce0dd6f87f0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &5447247958040538372 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1164097320422643318, guid: c3f956b8cba194d7eb3674c090cbb643, type: 3}
+  m_PrefabInstance: {fileID: 6611063733617490802}
   m_PrefabAsset: {fileID: 0}
