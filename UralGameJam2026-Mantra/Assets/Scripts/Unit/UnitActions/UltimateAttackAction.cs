@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class UltimateAttackAction : UnitAction
 {
-    [SerializeField] private int _attackCooldown;
-    private int _currentCooldown;
+    [SerializeField] private float _attackCooldown;
+    private float _currentCooldown;
 
     private void Awake()
     {
-        _currentCooldown = _attackCooldown;
+        _currentCooldown = 0;
     }
 
     public override bool CanUse()
     {
-        return _attackCooldown == 0;
+        return _currentCooldown == _attackCooldown;
     }
 
-    public void DecreaseCooldown()
+    public void IncreaseCooldown(out float current, out float max)
     {
-        if(_currentCooldown > 0)
+        if (_currentCooldown < _attackCooldown)
         {
-            _currentCooldown--;
+            _currentCooldown = Mathf.Clamp(_currentCooldown + 1, 0, _attackCooldown);
         }
+        current = _currentCooldown;
+        max = _attackCooldown;
     }
 
     public override async UniTask Execute(CancellationToken token = default)
@@ -48,7 +50,7 @@ public class UltimateAttackAction : UnitAction
             _animDelay = _skill.UseDelay();
         }
 
-        _currentCooldown = _attackCooldown;
+        _currentCooldown = 0;
 
         await UniTask.WaitForSeconds(_animDelay, cancellationToken: token);
 
