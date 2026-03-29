@@ -12,6 +12,7 @@ public class DialoguePlayer : MonoBehaviour, IService
     [SerializeField] private InputActionReference _continueInput;
     private PartyManager _partyManager;
     private AudioManager _audioManager;
+    private TutorialTipsActivator _tutorialTipsActivator;
         
     private bool _isActive = false;
         
@@ -21,6 +22,8 @@ public class DialoguePlayer : MonoBehaviour, IService
     {
         _partyManager = ServiceLocator.Instance.GetService<PartyManager>();
         _audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        _tutorialTipsActivator = ServiceLocator.Instance.GetService<TutorialTipsActivator>();
+        
         _continueInput.action.performed += OnContinuePerformed;
     }
     
@@ -31,6 +34,12 @@ public class DialoguePlayer : MonoBehaviour, IService
     
     public void PlayDialogueWithChance(string groupKey, int speakerCount, Action finishCallback = null)
     {
+        if (_tutorialTipsActivator.IsActivated)
+        {
+            finishCallback?.Invoke();
+            return;
+        }
+        
         var group = _dialogueGroups.FirstOrDefault(g => g.GroupKey == groupKey);
         var randomValue = Random.Range(0, 1f);
 

@@ -11,6 +11,7 @@ using TMPro;
 public class BattleManager : MonoBehaviour, IService
 {
     public event Action OnBattleStarted;
+    public event Action<BattleStrategy> OnCurrentPipelineChanged;
 
     [SerializeField] private Party _enemyParty;
     [SerializeField] private Party _playerParty;
@@ -159,6 +160,7 @@ public class BattleManager : MonoBehaviour, IService
             var set = new HashSet<Unit>(alive);
 
             _currentPipeline = new BattleStrategy(set, this);
+            OnCurrentPipelineChanged?.Invoke(_currentPipeline);
             return;
         }
 
@@ -168,6 +170,7 @@ public class BattleManager : MonoBehaviour, IService
             var set = new HashSet<Unit>(alive);
 
             _currentPipeline = new EnemyBattleStrategy(set, this);
+            OnCurrentPipelineChanged?.Invoke(_currentPipeline);
             await DoBotMove();
         }
     }
@@ -267,6 +270,8 @@ public class BattleManager : MonoBehaviour, IService
         if (!playerUnits)
         {
             _currentPipeline = null;
+            OnCurrentPipelineChanged?.Invoke(_currentPipeline);
+            
             _matchManager.DeclareDefeat();
 
             SetNoneTurn();
@@ -279,6 +284,8 @@ public class BattleManager : MonoBehaviour, IService
         if (!enemyUnits)
         {
             _currentPipeline = null;
+            OnCurrentPipelineChanged?.Invoke(_currentPipeline);
+            
             _matchManager.DeclareVictory();
 
             _infoViewController.ResetInfo();

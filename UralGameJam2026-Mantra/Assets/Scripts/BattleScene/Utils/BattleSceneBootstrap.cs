@@ -24,6 +24,7 @@ public class BattleSceneBootstrap : MonoBehaviour
     
     [SerializeField] private NextRoomActivator _nextRoomActivator;
     [SerializeField] private RecruitingTipActivator _recruitingTipActivator;
+    [SerializeField] private TutorialTipsActivator _tutorialTipsActivator;
     
     private void Awake()
     {
@@ -51,6 +52,7 @@ public class BattleSceneBootstrap : MonoBehaviour
         
         ServiceLocator.Instance.RegisterService(_nextRoomActivator);
         ServiceLocator.Instance.RegisterService(_recruitingTipActivator);
+        ServiceLocator.Instance.RegisterService(_tutorialTipsActivator);
 
         var battlesStarter = new BattleStarter(_dialoguePlayer, _battleManager, _roomsController);
         ServiceLocator.Instance.RegisterService(battlesStarter);
@@ -63,6 +65,9 @@ public class BattleSceneBootstrap : MonoBehaviour
         _roomTransitionHandler.Init();
         _roomInitializer.Init();
         _dialoguePlayer.Init();
+        
+        _tutorialTipsActivator.Init();
+        if (SaveService.SaveData.VictoryCounts < 1) _tutorialTipsActivator.StartTutorial();
         
         _roomInitializer.InitializeRoom();
         _roomTransitionHandler.ActivatePlayerTransition(battlesStarter.StartBattleWithDialogueChance);
