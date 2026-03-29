@@ -48,7 +48,10 @@ public class UnitHaloView : MonoBehaviour
 
     private void Show()
     {
-        _halo.gameObject.SetActive(true);
+        var min05 = Mathf.Min(_current + 0.5f, _max);
+        var min1 = Mathf.Min(_current + 1f, _max);
+        if (min05 == _max || min1 == _max)
+            _halo.gameObject.SetActive(true);
     }
 
     public void Init(Unit unit)

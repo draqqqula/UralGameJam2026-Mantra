@@ -488,6 +488,7 @@ GameObject:
   - component: {fileID: 66884746930759062}
   - component: {fileID: 8496566977925616760}
   - component: {fileID: 2827364108566935349}
+  - component: {fileID: -5775140896106990186}
   m_Layer: 0
   m_Name: Ranger
   m_TagString: Untagged
@@ -784,6 +785,19 @@ MonoBehaviour:
   _unit: {fileID: 3462002425916617404}
   _turn: {fileID: 5369966021156880858}
   _targetable: {fileID: 7624932100761901221}
+--- !u!114 &-5775140896106990186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7637924686098206839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fab59e364547f1345874a6da0f129d4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxUnitDistance: 4
 --- !u!1 &8327885249390361778
 GameObject:
   m_ObjectHideFlags: 0
