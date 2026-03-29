@@ -558,6 +558,10 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5759841603568786181, guid: 67ff2330f6a10472cbd2aa53504dc001, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5856288398272114699, guid: 67ff2330f6a10472cbd2aa53504dc001, type: 3}
       propertyPath: m_IsActive
       value: 0
